@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "eugene",
+    "password": "king5681",
+    "database": "test_messenger",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "eugene",
+    "password": "king5681",
+    "database": "test_messenger",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "eugene",
+    "password": "king5681",
+    "database": "test_messenger",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
