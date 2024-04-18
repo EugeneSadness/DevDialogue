@@ -38,7 +38,8 @@ io.on("connection", (socket) => {
             
             const message = await Models.Message.create(newMessage);
             
-            io.emit("chat message", message);
+            io.emit("chat message", {content: msg.content, senderId: msg.senderId, username: msg.username});
+            
         } catch (error) {
             console.error("Error saving message: ", error);
         }

@@ -62,6 +62,15 @@ class UserController {
         return res.json({ name });
     }
 
+    async getNameById(req, res, next){
+        const id = req.params.id;
+        const user = User.findOne({where: { id: id}});
+        if(!User){
+            return next(ApiError.badRequest("User was not found!"));
+        }
+        return res.json(user.name);
+    }
+
     
 }
 

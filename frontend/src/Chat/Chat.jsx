@@ -38,9 +38,9 @@ function Chat() {
 
 
     const sendMessageAndPicture = () => {
-        const messageData = { content: message, senderId: userid };
+        const messageData = { content: message, senderId: userid, username: username };
         socket.emit('chatMessage', messageData);
-        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid}]);
+        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username}]);
         setMessage('');
 
     };
@@ -54,7 +54,7 @@ function Chat() {
     useEffect(() => {
         socket.on("chat message", async (data) => {
             const isMessageAlreadyPresent = messages.some(
-                (msg) => msg.content === data.content && msg.senderId === data.senderId
+                (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
     
             if (!isMessageAlreadyPresent) {
@@ -86,7 +86,7 @@ function Chat() {
                                 key={index}
                                 className={`${msg.senderId === userid ? "sent" : "received"}`}
                             >
-                                {`${msg.senderId}: ${msg.content}`}
+                                {`${msg.username}: ${msg.content}`}
                             </li>
                         ))}
                     </ul>
