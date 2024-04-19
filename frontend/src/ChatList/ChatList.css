@@ -1,0 +1,22 @@
+.main-page {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-left: -20px; /* Пример отрицательного margin-left */
+}
+
+.chat-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.chat-list li {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.chat-list li:hover {
+    background-color: #e0e0e0;
+}

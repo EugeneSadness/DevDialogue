@@ -8,6 +8,7 @@ import Chat from "./Chat/Chat";
 
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import ChatList from "./ChatList/ChatList";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/user" element={<Chat/>} />
                   <Route path="/" element={<SignIn />} />
+                  <Route path="/chatlist" element={<ChatList/>}/>
+
               </Routes>
           </Router>
 
