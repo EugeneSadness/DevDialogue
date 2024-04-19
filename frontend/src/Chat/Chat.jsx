@@ -56,7 +56,7 @@ function Chat() {
             const isMessageAlreadyPresent = messages.some(
                 (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
-    
+            
             if (!isMessageAlreadyPresent) {
                 setMessages((prevMessages) => [...prevMessages, data]);
             }
