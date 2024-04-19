@@ -1,21 +1,29 @@
-const { Message } = require('../../models/models');
+const { Message, Chat, ChatMessages } = require('../../models/models');
+const ApiError = require("../../Error/ApiError");
+const { json } = require('express');
+require("dotenv").config();
 
-function handleMessage(io, msg) {
+async function handleMessage(io, msg) {
     try {
         console.log("Received message data:", msg);
+
+        if(msg.content.length > process.env.MESSAGE_LENGTH_LIMIT){
+            throw ApiError.badRequest("Message is too long!");
+        }
             
         const newMessage = {
             content: msg.content,
             senderId: msg.senderId
         };
         
-        Message.create(newMessage)
-            .then((message) => {
-                io.emit("chat message", { content: msg.content, senderId: msg.senderId, username: msg.username });
-            })
-            .catch((error) => {
-                console.error("Error saving message: ", error);
-            });
+        const message = await Message.create(newMessage)
+        io.emit("chat message", { content: msg.content, senderId: msg.senderId, username: msg.username });
+        await ChatMessages.create({
+            name: msg.content, 
+            messageId: message.id, 
+            chatId: msg.chatId
+        });
+
             
     } catch (error) {
         console.error("Error handling message: ", error);

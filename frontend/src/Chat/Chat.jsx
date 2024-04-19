@@ -18,6 +18,7 @@ function Chat() {
 
 
     const { username, userid } = location.state;
+    const chatId = 1;
 
 
 
@@ -38,9 +39,9 @@ function Chat() {
 
 
     const sendMessageAndPicture = () => {
-        const messageData = { content: message, senderId: userid, username: username };
+        const messageData = { content: message, senderId: userid, username: username, chatId : chatId};
         socket.emit('chatMessage', messageData);
-        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username}]);
+        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username, chatId}]);
         setMessage('');
 
     };
