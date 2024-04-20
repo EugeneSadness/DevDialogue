@@ -6,7 +6,6 @@ require("dotenv").config();
 async function handleMessage(io, msg) {
     try {
         console.log("Received message data:", msg);
-
         if(msg.content.length > process.env.MESSAGE_LENGTH_LIMIT){
             throw ApiError.badRequest("Message is too long!");
         }

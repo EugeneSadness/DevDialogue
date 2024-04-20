@@ -24,7 +24,7 @@ function Chat() {
 
     const[theme, setTheme] = useState("light");
 
-    const switchTheme = ()=>{
+    const switchTheme = ()=>{   
         setTheme((cur)=>(cur === "light"?"dark":"light"))
     }
 
@@ -36,12 +36,22 @@ function Chat() {
         console.log("No token provided!");
     }
 
+    const fetchMessagesFromDatabase = async () => {
+        try {
+            const response = await Axios.post('http://localhost:4000/api/message/getAllMessagesFromChat', { chatId });
+            const data = response.data; 
+            setMessages(data);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
+
 
 
     const sendMessageAndPicture = () => {
         const messageData = { content: message, senderId: userid, username: username, chatId : chatId};
         socket.emit('chatMessage', messageData);
-        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username, chatId}]);
+        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username, chatId : chatId}]);
         setMessage('');
 
     };
@@ -52,6 +62,10 @@ function Chat() {
         navigate('/', {replace: true})
     }
     
+    useEffect(() => {
+        fetchMessagesFromDatabase();
+    }, []);
+
     useEffect(() => {
         socket.on("chat message", async (data) => {
             const isMessageAlreadyPresent = messages.some(

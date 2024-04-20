@@ -4,7 +4,8 @@ const sequelize = require("./db.js");
 const cors = require("cors");
 const router = require("./routes/index");
 const errorHandler = require("./middleware/ErrorHandlingMiddleware.js");
-const setupSocket = require("./socket/index.js"); // Импортируем функцию для настройки socket.io
+const setupSocket = require("./socket/index.js");
+const Models = require("./models/models");
 require("dotenv").config();
 
 const PORT = +process.env.PORT;
@@ -17,7 +18,6 @@ app.use(errorHandler);
 
 const httpServer = http.createServer(app);
 
-// Передайте http сервер в функцию setupSocket для настройки socket.io
 const io = setupSocket(httpServer);
 
 app.get("/", (req, res) => {

@@ -28,13 +28,13 @@ const Chat = sequelize.define('chat', {
 
 const ChatMessages = sequelize.define('chatMessages', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true, allowNull: true}
+    name: {type: DataTypes.STRING, unique: false, allowNull: false}
 });
 
 const Message = sequelize.define('message', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     senderId: {type: DataTypes.INTEGER, allowNull: false},
-    content: {type: DataTypes.STRING}
+    content: {type: DataTypes.STRING, unique: false}
 });
 
 const MessageFiles = sequelize.define('messageFiles',{

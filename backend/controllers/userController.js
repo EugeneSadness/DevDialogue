@@ -13,61 +13,86 @@ const generateJWT = (id, name, email) => {
 
 class UserController {
     async registration(req, res, next) {
-        const { name, email, password } = req.body;
-        if (!email || !password || !name) {
-            return next(ApiError.badRequest('Uncorrect password or email!'));
+        try {
+            const { name, email, password } = req.body;
+            if (!email || !password || !name) {
+                return next(ApiError.badRequest('Uncorrect password or email!'));
+            }
+            const candidate = await User.findOne({ where: { email } });
+            if (candidate) {
+                return next(ApiError.badRequest('User was registered already!'));
+            }
+            const hashPassword = await bcrypt.hash(password, 5);
+            const user = await User.create({ name, email, password: hashPassword });
+            const token = generateJWT(user.id, user.name, user.email);
+            return res.json({ token });
+        } catch (error) {
+            console.error("Error with registration", error);
+            return next(ApiError.internal("Error with registration"));
         }
-        const candidate = await User.findOne({ where: { email } });
-        if (candidate) {
-            return next(ApiError.badRequest('User was registered already!'));
-        }
-        const hashPassword = await bcrypt.hash(password, 5);
-        const user = await User.create({ name, email, password: hashPassword });
-        const token = generateJWT(user.id, user.name, user.email);
-        return res.json({ token });
     };
 
     async login(req, res, next) {
-        const { email, password } = req.body;
-        const user = await User.findOne({ where: { email } });
-        if (!user) {
-            return next(ApiError.badRequest('User was not found!'));
+        try {
+            const { email, password } = req.body;
+            const user = await User.findOne({ where: { email } });
+            if (!user) {
+                return next(ApiError.badRequest('User was not found!'));
+            }
+            let comparePassword = bcrypt.compareSync(password, user.password);
+            if (!comparePassword) {
+                return next(ApiError.badRequest('Uncorrect password'));
+            }
+            const token = generateJWT(user.id, user.name, user.email);
+            return res.json({ token: token });
+        } catch (error) {
+            console.error("Error with login", error);
+            return next(ApiError.internal("Error with login"));
         }
-        let comparePassword = bcrypt.compareSync(password, user.password);
-        if (!comparePassword) {
-            return next(ApiError.badRequest('Uncorrect password'));
-        }
-        const token = generateJWT(user.id, user.name, user.email);
-        return res.json({ token: token });
     }
 
     async getUserId(req, res, next) {
-        const token = req.headers.authorization.split(' ')[1];
-        if (!token) {
-            return next(ApiError.badRequest('Token is empty'));
+        try {
+            const token = req.headers.authorization.split(' ')[1];
+            if (!token) {
+                return next(ApiError.badRequest('Token is empty'));
+            }
+            const decoded = jwt.verify(token, "random_secret");
+            const userId = decoded.id;
+            return res.json({ userId });
+        } catch (error) {
+            console.error("Can't recieve user id", error);
+            return next(ApiError.internal("Can't recieve user id"));
         }
-        const decoded = jwt.verify(token, "random_secret");
-        const userId = decoded.id;
-        return res.json({ userId });
     }
 
     async getName(req, res, next) {
-        const token = req.headers.authorization.split(' ')[1];
-        if (!token) {
-            return next(ApiError.badRequest('Token is empty'));
+        try {
+            const token = req.headers.authorization.split(' ')[1];
+            if (!token) {
+                return next(ApiError.badRequest('Token is empty'));
+            }
+            const decoded = jwt.verify(token, "random_secret");
+            const name = decoded.name;
+            return res.json({ name });
+        } catch (error) {
+            console.error("Can't recieve user name", error);
+            return next(ApiError.internal("Can't recieve user name"));
         }
-        const decoded = jwt.verify(token, "random_secret");
-        const name = decoded.name;
-        return res.json({ name });
     }
 
     async getNameById(req, res, next) {
-        const id = req.params.id;
-        const user = User.findOne({ where: { id: id } });
-        if (!User) {
-            return next(ApiError.badRequest("User was not found!"));
+        try {
+            const id = req.params.id;
+            const user = User.findOne({ where: { id: id } });
+            if (!User) {
+                return next(ApiError.badRequest("User was not found!"));
+            }
+            return res.json(user.name);
+        } catch (error) {
+            console.error("Can't recieve user name by id", error);
+            return next(ApiError.internal("Can't recieve user name by id"));
         }
-        return res.json(user.name);
     }
 
 
