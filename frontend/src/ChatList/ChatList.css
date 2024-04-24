@@ -1,13 +1,29 @@
+.header{
+    background-color:yellow;
+    color: #fff;
+    height: 100px;
+    color: black;
+    font-weight: bold;
+    font-size: 50px;
+}
+
 .main-page {
     display: flex;
     justify-content: flex-start;
     padding: 20px;
-    margin-left: -20px; /* Пример отрицательного margin-left */
+    margin-left: -20px;
+    border: black;
 }
 
-.chat-list {
+.chat-list ul{
     list-style-type: none;
     padding: 0;
+}
+
+.chat-list{
+    width: 600px;
+    background-color: blue;
+    padding: 20px;
 }
 
 .chat-list li {
@@ -20,3 +36,10 @@
 .chat-list li:hover {
     background-color: #e0e0e0;
 }
+
+
+
+
+
+
+

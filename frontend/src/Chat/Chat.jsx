@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import "./Chat.css";
+//import "./Chat.css";
 
 
 const socket = io("http://localhost:4000");
