@@ -10,10 +10,10 @@ function ChatList() {
     const [chatNameForDelete, setChatNameForDelete] = useState('');
     const [chatNameForFind, setChatNameForFind] = useState('');
     const {username, userId} = location.state;
-    const [modalWindowActive, setModalWindowActive] = useState(true) 
+    const [modalWindowActive, setModalWindowActive] = useState(false)
 
 
-     
+   
     const addChat = () => {
         const newChat = {
             id: chats.length + 1,
@@ -21,8 +21,9 @@ function ChatList() {
         };
         setChats([...chats, newChat]);
         setChatName('');
+        setModalWindowActive(false)
     }
-
+    
     const deleteChat = () => {
     
         setChats(chats => chats.filter(chat => chat.text !== chatNameForDelete));
@@ -49,11 +50,10 @@ function ChatList() {
                 <h1>Chats:</h1>
 
 
-                {/* <input  value={chatName} onChange={e => setChatName(e.target.value)} placeholder='Enter new chat' /> */}
-                <button onClick={() => setModalWindowActive(true)}>Add chat</button>
-
                
-                <input value={chatNameForDelete} onChange={e => setChatNameForDelete(e.target.value)} placeholder='Enter chat name for delete' />
+                <button onClick={() => setModalWindowActive(true)}>Жопа</button>
+
+                {/*<input value={chatNameForDelete} onChange={e => setChatNameForDelete(e.target.value)} placeholder='Enter chat name for delete' />*/}
                 <button onClick={deleteChat}>Delete chat</button>
             
                 <input value={chatNameForFind} onChange={e => setChatNameForFind(e.target.value)} placeholder='Enter chat name to find' />
@@ -70,7 +70,18 @@ function ChatList() {
                
             </ul>
 
-            <ModalWindow active={modalWindowActive} setActive={setModalWindowActive}/>
+            <ModalWindow active={modalWindowActive} setActive={setModalWindowActive}>
+               
+               <form className="form-content">
+                  
+                   <input value={chatName} onChange={e=>setChatName(e.target.value)} placeholder='Enter chat name to add'/>
+
+                   <input type='text' placeholder='Enter the chat participants'/>
+
+                  <button onClick={addChat}>Add chat</button>
+               </form>
+
+            </ModalWindow>
 
         </div>
         
