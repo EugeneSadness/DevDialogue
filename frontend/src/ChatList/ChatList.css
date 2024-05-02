@@ -1,0 +1,54 @@
+.header{
+    background-color:yellow;
+    color: #fff;
+    height: 100px;
+    color: black;
+    font-weight: bold;
+    font-size: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2{
+   margin: 0;
+}
+
+.main-page {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-left: -20px;
+    border: black;
+}
+
+.chat-list ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.chat-list{
+    width: 100%;
+    background-color: blue;
+    padding: 20px;
+    text-align: center;
+}
+
+.chat-list li {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.chat-list li:hover {
+    background-color: #e0e0e0;
+}
+
+
+
+
+
+
+
