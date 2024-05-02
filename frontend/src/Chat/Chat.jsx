@@ -17,8 +17,7 @@ function Chat() {
     const [messages, setMessages] = useState([]);
 
 
-    const { username, userid } = location.state;
-    const chatId = 1;
+    const { username, userid, chatId, chatName } = location.state;
 
 
 
@@ -93,16 +92,11 @@ function Chat() {
     return (
         <div className="UserForm" id={theme}>
             <button className="log-out-button" onClick={handleLogOut}>Log out</button>
-            <input onChange={switchTheme} type="checkbox" id="toggle-btn" />
-            <label htmlFor="toggle-btn" className="toggle-label"></label>
-            <h2 style={{ color: theme === "light" ? "black" : "yellow" }} className="heading">
+            {/*<input onChange={switchTheme} type="checkbox" id="toggle-btn" />
+            <label htmlFor="toggle-btn" className="toggle-label"></label>*/}
+            <h2  className="heading">
                 User: {username}
             </h2>
-            <h1 style={{ color: theme === "light" ? "black" : "blue" }}>
-                Chat
-            </h1>
-
-            {/*Messages*/}
             <div className="chat-container">
                 <div style={{ color: theme === "light" ? "black" : "yellow" }} className="messages">
                     <ul>

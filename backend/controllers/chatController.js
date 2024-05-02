@@ -4,24 +4,28 @@ const { extractUserDataFromToken } = require("../middleware/tokenService");
 require("dotenv").config();
 
 class chatController {
+
+    constructor() {
+        this.createChat = this.createChat.bind(this);
+        this.deleteChat = this.deleteChat.bind(this);
+        this.getChatById = this.getChatById.bind(this);
+        this.getUserChats = this.getUserChats.bind(this);
+        this.getUserByToken = this.getUserByToken.bind(this);
+    };  
+
     async createChat(req, res, next) {
         try {
             const { title } = req.body;
             const id = await this.getUserByToken(req);
-            const chatCheck = await ChatUsers.findOne({ where: { title: title, userId: id } });
-            if (chatCheck !== 0) {
-                return next(ApiError.badRequest('Chat with this title was already created!'));
-            }
             if (!title) {
                 return next(ApiError.badRequest('Chat title is empty!'));
             }
             if (title.length > process.env.CHAT_TITLE_LIMIT) {
                 return next(ApiError.badRequest('Title is too long!'));
             }
-            const chat = await Chat.create({ title });
-            const userType = await UserType.create({ id: process.env.USER_TYPE_CREATOR });
-            await ChatUsers.create({ userId: id, chatId: chat.id, userTypeId: userType.id });
-            return res.json({ status: 200 });
+            const chat = await Chat.create({ title: title });
+            await ChatUsers.create({ userId: id, chatId: chat.id, userTypeId: process.env.USER_TYPE_CREATOR });
+            return res.json({ status: 200, id: chat.id});
         } catch (error) {
             console.error("Error creating the chat", error);
             return next(ApiError.internal("Error creating the chat"));
@@ -68,16 +72,18 @@ class chatController {
 
     }
 
-    async getUserByToken(req, next) {
+    async getUserChats(req, res, next){
+
+    }
+
+    async getUserByToken(req) {
         try {
             const token = req.headers.authorization.split(' ')[1];
             const { id } = extractUserDataFromToken(token);
-
             return id;
-
         } catch (error) {
             console.error("Error extracting user data from token:", error);
-            return next(ApiError.internal("Error extracting user data from token"));
+            throw new ApiError(500, "Error extracting user data from token");
         }
     }
 
