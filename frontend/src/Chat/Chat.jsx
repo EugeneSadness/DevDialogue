@@ -22,10 +22,10 @@ function Chat() {
 
 
 
-    const[theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState("light");
 
-    const switchTheme = ()=>{   
-        setTheme((cur)=>(cur === "light"?"dark":"light"))
+    const switchTheme = () => {
+        setTheme((cur) => (cur === "light" ? "dark" : "light"))
     }
 
 
@@ -39,7 +39,7 @@ function Chat() {
     const fetchMessagesFromDatabase = async () => {
         try {
             const response = await Axios.post('http://localhost:4000/api/message/getAllMessagesFromChat', { chatId });
-            const data = response.data; 
+            const data = response.data;
             setMessages(data);
         } catch (error) {
             console.error('Error fetching messages:', error);
@@ -49,19 +49,29 @@ function Chat() {
 
 
     const sendMessageAndPicture = () => {
-        const messageData = { content: message, senderId: userid, username: username, chatId : chatId};
+        const messageData = { content: message, senderId: userid, username: username, chatId: chatId };
         socket.emit('chatMessage', messageData);
-        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username, chatId : chatId}]);
+        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username, chatId: chatId }]);
         setMessage('');
 
     };
 
 
-    const handleLogOut = () =>{
+    const handleLogOut = () => {
         localStorage.removeItem('token');
-        navigate('/', {replace: true})
+        navigate('/', { replace: true })
     }
-    
+
+    const deleteAllMessagesFromChat = async () => {
+        try {
+            const response = await Axios.post('http://localhost:4000/api/message/delAllMessagesFromChat', { chatId });
+            // При успешном удалении всех сообщений из чата
+            setMessages([]); // Очищаем список сообщений
+        } catch (error) {
+            console.error('Error deleting all messages:', error);
+        }
+    };
+
     useEffect(() => {
         fetchMessagesFromDatabase();
     }, []);
@@ -71,7 +81,7 @@ function Chat() {
             const isMessageAlreadyPresent = messages.some(
                 (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
-            
+
             if (!isMessageAlreadyPresent) {
                 setMessages((prevMessages) => [...prevMessages, data]);
             }
@@ -83,18 +93,18 @@ function Chat() {
     return (
         <div className="UserForm" id={theme}>
             <button className="log-out-button" onClick={handleLogOut}>Log out</button>
-            <input onChange={switchTheme} type="checkbox" id="toggle-btn"/>
+            <input onChange={switchTheme} type="checkbox" id="toggle-btn" />
             <label htmlFor="toggle-btn" className="toggle-label"></label>
-            <h2 style={{color: theme === "light" ? "black" : "yellow"}} className="heading">
+            <h2 style={{ color: theme === "light" ? "black" : "yellow" }} className="heading">
                 User: {username}
             </h2>
-            <h1 style={{color: theme === "light" ? "black" : "blue"}}>
+            <h1 style={{ color: theme === "light" ? "black" : "blue" }}>
                 Chat
             </h1>
 
             {/*Messages*/}
             <div className="chat-container">
-                <div style={{color: theme === "light" ? "black" : "yellow"}} className="messages">
+                <div style={{ color: theme === "light" ? "black" : "yellow" }} className="messages">
                     <ul>
                         {messages.map((msg, index) => (
                             <li
@@ -120,6 +130,11 @@ function Chat() {
 
             </div>
 
+            {/* Delete All Messages Button
+            <div className="delete-all-button">
+                <button className="delete-button" onClick={deleteAllMessagesFromChat}>Delete All Messages</button>
+            </div>
+            */}
         </div>
     );
 

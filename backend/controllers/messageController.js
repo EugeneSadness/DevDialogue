@@ -32,6 +32,23 @@ class messageController {
             return next(ApiError.internal("Error with getting all messages from chat"));
         }
     }
+    async deleteAllMessagesFromChat(req, res, next){
+        try{
+            const {chatId} = req.body;
+            const messageIds = await ChatMessages.findAll({where: {chatId: chatId}});
+            if(messageIds === 0){
+                return res.status(200).json({message: "This chat was empty!"});
+            }
+            for(const message of messageIds){
+                await Message.destroy({where: {id: message.messageId}});
+            }
+            await ChatMessages.destroy({where: {chatId: chatId}});
+            return res.status(200).json({message: "Chat history has cleared!"});
+        } catch (error){
+            console.error("Error with deleting all messages from chat", error);
+            return next(ApiError.internal("Error with deleting all messages from chat"));
+        }
+    }
 }
 
 module.exports = new messageController();

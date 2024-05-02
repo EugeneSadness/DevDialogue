@@ -25,7 +25,7 @@ class UserController {
             const hashPassword = await bcrypt.hash(password, 5);
             const user = await User.create({ name, email, password: hashPassword });
             const token = generateJWT(user.id, user.name, user.email);
-            return res.json({ token });
+            return res.json({ token: token });
         } catch (error) {
             console.error("Error with registration", error);
             return next(ApiError.internal("Error with registration"));

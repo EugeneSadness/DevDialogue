@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  db:
+    image: database
+    container_name: dockerdb
+    environment: 
+      POSTGRES_USER: eugene
+      POSTGRES_PASSWORD: king5681
+      POSTGRES_DB: test_messenger
+    ports:
+      - "5411:5411"
+  backend:
+    image: back
+    container_name: backend
+    ports:
+      - "4000:4000"
+    environment: 
+      DB_HOST: 172.18.0.2
+      DB_USER: eugene
+      DB_PASS: king5681
+      DB_NAME: test_messenger
+    depends_on:
+      - db

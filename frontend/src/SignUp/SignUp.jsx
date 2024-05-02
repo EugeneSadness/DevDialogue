@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import {Link,useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./SignUp.css"
 
 
@@ -34,13 +34,13 @@ function RegistrationForm() {
             const response = await Axios.post('http://localhost:4000/api/user/registration', formData);
             console.log('Ответ от сервера:', response.data);
 
-            localStorage.setItem('token', response.data.token);
             const token = response.data.token;
+            localStorage.setItem("token", token);
 
             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const idResp = await Axios.get('http://localhost:4000/api/user/getId');
 
-            navigate('/user', { state: {userId: idResp.data.id, username: formData.name }, replace: true });
+            navigate('/user', { state: {userid: idResp.data.userId, username: formData.name }, replace: true });
 
         } catch (error) {
             console.error('Ошибка при отправке данных:', error);

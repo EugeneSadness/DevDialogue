@@ -3,4 +3,5 @@ const router = new Router();
 const messageController = require('../controllers/messageController');
 
 router.post('/getAllMessagesFromChat', messageController.getMessagesFromChat);
+router.post('/delAllMessagesFromChat', messageController.deleteAllMessagesFromChat);
 module.exports = router;

@@ -25,7 +25,7 @@ function Login() {
             const response = await Axios.post('http://localhost:4000/api/user/login', formData);
             console.log('Ответ от сервера:', response.data);
 
-            const token = response.data.token; // Получаем токен из ответа
+            const token = response.data.token;
 
             // Сохр.токен в хранилище на стороне клиента
             localStorage.setItem("token", token);
