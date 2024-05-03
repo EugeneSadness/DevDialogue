@@ -1,23 +1,44 @@
 version: '3.7'
 services:
-  db:
-    image: database
-    container_name: dockerdb
+  postgres:
+    image: postgres:latest
     environment: 
       POSTGRES_USER: eugene
       POSTGRES_PASSWORD: king5681
       POSTGRES_DB: test_messenger
     ports:
-      - "5411:5411"
+      - "5432:5432"
+    networks:
+      - mynetwork
+    volumes:
+      - /home/eugene/testFullStack/db:/var/lib/postgresql/data
+
   backend:
     image: back
-    container_name: backend
     ports:
       - "4000:4000"
     environment: 
-      DB_HOST: 172.18.0.2
+      DB_HOST: postgres
       DB_USER: eugene
       DB_PASS: king5681
       DB_NAME: test_messenger
+    networks:
+      - mynetwork
     depends_on:
-      - db
+      - postgres
+
+  frontend:
+    image: front
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - postgres
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  pgdata:

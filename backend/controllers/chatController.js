@@ -1,5 +1,5 @@
 const ApiError = require("../Error/ApiError");
-const { Chat, ChatUsers, UserType } = require('../models/models');
+const { Chat, ChatUsers, UserType, User } = require('../models/models');
 const { extractUserDataFromToken } = require("../middleware/tokenService");
 require("dotenv").config();
 
@@ -24,6 +24,10 @@ class chatController {
                 return next(ApiError.badRequest('Title is too long!'));
             }
             const chat = await Chat.create({ title: title });
+            const checkType = await UserType.findOne({where:{id: process.env.USER_TYPE_CREATOR}});
+            if(!checkType){
+                await UserType.create({id: process.env.USER_TYPE_CREATOR});
+            }
             await ChatUsers.create({ userId: id, chatId: chat.id, userTypeId: process.env.USER_TYPE_CREATOR });
             return res.json({ status: 200, id: chat.id });
         } catch (error) {
