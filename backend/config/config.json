@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "eugene",
-    "password": "king5681",
-    "database": "test_messenger",
+    "username": "bulbazavr",
+    "password": "QWE123",
+    "database": "new_bd",
     "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
-    "username": "eugene",
-    "password": "king5681",
-    "database": "test_messenger",
+    "username": "bulbazavr",
+    "password": "QWE123",
+    "database": "new_bd",
     "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
-    "username": "eugene",
-    "password": "king5681",
-    "database": "test_messenger",
+    "username": "bulbazavr",
+    "password": "QWE123",
+    "database": "new_bd",
     "host": "localhost",
     "dialect": "postgres"
   }

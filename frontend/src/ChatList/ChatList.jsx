@@ -13,7 +13,7 @@ function ChatList() {
     const [chatNameForDelete, setChatNameForDelete] = useState('');
     const [chatNameForFind, setChatNameForFind] = useState('');
     const token = localStorage.getItem('token');
-    const { username, userid } = location.state;
+    const { username, userid , email} = location.state;
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
 
@@ -54,42 +54,52 @@ function ChatList() {
     };
 
     const goToChat = (chatId, chatName) => {
-        navigate(`/chat/${chatId}`, { state: { username, userid, chatId, chatName } });
+        navigate(`/chat/${chatId}`, { state: { username, userid, chatId, chatName, email:email } });
     };
+
+    const handleLogOut = ()=>{
+        localStorage.removeItem('token');
+        navigate('/', {replace: true})
+    }
 
 
     return (
-        <div className="chat-container">
-            <div className="chat-header">
-                <h1>Welcome, {username}!</h1>
-                <div className="button-container">
-                    <button className="add-button" onClick={openModal}><FaPlus /> Add Chat</button>
-                    <input value={chatNameForFind} onChange={e => setChatNameForFind(e.target.value)} placeholder='Search for chat' />
-                    <button className="button-find" onClick={findChat}>Find Chat</button>
-                </div>
-            </div>
-
-            <ul className='chat-list'>
-                {chats.map((chat) => (
-                    <li key={chat.id} className="chat-list-item">
-                        <span>{chat.text}</span>
-                        <button onClick={() => goToChat(chat.id, chat.text)} className="chat-link">Go to Chat</button>
-                    </li>
-                ))}
-            </ul>
-
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="add-chat-modal" ariaHideApp={false}>
-                <h2>Add Chat</h2>
-                <form className="modal-form">
-                    <input value={chatName} onChange={e => setChatName(e.target.value)} placeholder='Enter chat name' />
-                    <input type='text' placeholder='Enter participants' />
-                    <div className="modal-buttons">
-                        <button onClick={addChat}>Add Chat</button>
-                        <button onClick={closeModal}>Close</button>
+        <div className='body-chatlist'>
+            <div className="chat-container">
+                
+                <div className="chat-header">
+                    <h1>Welcome, {username}!</h1>
+                    <div className="button-container">
+                        <button className="add-button" onClick={openModal}><FaPlus /> Add Chat</button>
+                        <input value={chatNameForFind} onChange={e => setChatNameForFind(e.target.value)} placeholder='Search for chat' />
+                        <button className="button-find" onClick={findChat}>Find Chat</button>
                     </div>
-                </form>
-            </Modal>
+                </div>
+
+                <ul className='chat-list'>
+                    {chats.map((chat) => (
+                        <li key={chat.id} className="chat-list-item">
+                            <span>{chat.text}</span>
+                            <button onClick={() => goToChat(chat.id, chat.text)} className="chat-link">Go to Chat</button>
+                        </li>
+                    ))}
+                </ul>
+
+                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="add-chat-modal" ariaHideApp={false}>
+                    <h2>Add Chat</h2>
+                    <form className="modal-form">
+                        <input value={chatName} onChange={e => setChatName(e.target.value)} placeholder='Enter chat name' />
+                        <input type='text' placeholder='Enter participants' />
+                        <div className="modal-buttons">
+                            <button onClick={addChat}>Add Chat</button>
+                            <button onClick={closeModal}>Close</button>
+                        </div>
+                    </form>
+                </Modal>
+            </div>
+            <button className='button-log-out' onClick={handleLogOut}>Log out</button>
         </div>
+        
     );
 };
 

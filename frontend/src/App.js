@@ -6,12 +6,14 @@ import Chat from "./Chat/Chat";
 import ChatList from "./ChatList/ChatList";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
+
 function App() {
     return (
         <React.StrictMode>
-            <Router>
+            <Router> 
                 <Routes>
-                    <Route path="/signin" element={<SignIn />} />
+                   <Route path="/signin" element={<SignIn />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/user" element={<ChatList />} />
                     <Route path="/" element={<SignIn />} />

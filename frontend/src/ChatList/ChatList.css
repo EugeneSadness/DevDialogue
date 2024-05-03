@@ -1,19 +1,44 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
+    background-color:#eee;
     margin: 0;
     padding: 0;
 }
 
+.body-chatlist {
+    display: flex;
+    flex-direction: row;
+}
+
 .chat-container {
     max-width: 800px;
-    margin: 50px auto;
+    margin: 5% auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    /* transition: all 0.3s ease; */
+}
+
+.button-log-out{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 24px 36px;
+    margin: 24px;
+    cursor: pointer;
+    border-radius: 18px;
+    transition: all 0.3s;
+    /* display: inline-block; */
+
+    /* position: absolute; */
+    /* top: 0; */
+    /* right: 0; */
+    margin: 10px;
+    height: 5%;
+    width: 11%;
+    min-width: 50px;
 }
 
 .chat-container:hover {

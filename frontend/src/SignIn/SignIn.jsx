@@ -33,7 +33,7 @@ function Login() {
             const nameResp = await Axios.get('http://localhost:4000/api/user/getName');
             const idResp = await Axios.get('http://localhost:4000/api/user/getId');
             // После успешного входа, перенаправить
-            navigate('/user', { state: {userid: idResp.data.userId, username:  nameResp.data.name}, replace: true });
+            navigate('/user', { state: {userid: idResp.data.userId, username:  nameResp.data.name, email: formData.email}, replace: true });
 
         } catch (error) {
             console.error('Ошибка при отправке данных:', error);

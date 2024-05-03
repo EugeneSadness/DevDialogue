@@ -40,7 +40,7 @@ function RegistrationForm() {
             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const idResp = await Axios.get('http://localhost:4000/api/user/getId');
 
-            navigate('/user', { state: {userid: idResp.data.userId, username: formData.name }, replace: true });
+            navigate('/user', { state: {userid: idResp.data.userId, username: formData.name , email: formData.email}, replace: true });
 
         } catch (error) {
             console.error('Ошибка при отправке данных:', error);

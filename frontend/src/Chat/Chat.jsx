@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import "./Chat.css";
+import Modal from 'react-modal'
 
 
 const socket = io("http://localhost:4000");
@@ -15,9 +16,11 @@ function Chat() {
 
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [modalUsernameModalWindowIsOpen, setModalUsernameWindowIsOpen] = useState(false);
+    const [modalUsernameWindowData, setModalUsernameWindowData] = useState(null);
 
 
-    const { username, userid, chatId, chatName } = location.state;
+    const { username, userid, chatId, chatName, email} = location.state;
 
 
 
@@ -56,9 +59,8 @@ function Chat() {
     };
 
 
-    const handleLogOut = () => {
-        localStorage.removeItem('token');
-        navigate('/', { replace: true })
+    const handleBackToChats = () => {
+        navigate('/user', { state: { username: username}, replace: true })
     }
 
     const deleteAllMessagesFromChat = async () => {
@@ -88,10 +90,19 @@ function Chat() {
         return () => socket.off('chat message');
     }, [messages, socket]);
 
+    const openModalUsernameWindow = () =>{
+          setModalUsernameWindowIsOpen(true)
+    }
+     
+    const closeModalUsernameWindow =() =>{
+        setModalUsernameWindowIsOpen(false)
+    }
+
+
 
     return (
         <div className="UserForm" id={theme}>
-            <button className="log-out-button" onClick={handleLogOut}>Log out</button>
+            <button className="log-out-button" onClick={handleBackToChats}>Back to chats</button>
             {/*<input onChange={switchTheme} type="checkbox" id="toggle-btn" />
             <label htmlFor="toggle-btn" className="toggle-label"></label>*/}
             <h2  className="heading">
@@ -105,7 +116,12 @@ function Chat() {
                                 key={index}
                                 className={`${msg.senderId === userid ? "sent" : "received"}`}
                             >
-                                {`${msg.username}: ${msg.content}`}
+
+                                <button className='username-button' onClick={openModalUsernameWindow}>
+                                    {msg.username}
+                                </button>:
+                                {msg.content}
+
                             </li>
                         ))}
                     </ul>
@@ -123,6 +139,18 @@ function Chat() {
 
 
             </div>
+    
+            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} ariaHideApp={false} className='modal-window-user-info'>
+                <h2>User info</h2>
+                
+                <form className='modal-username-form'>
+                      <option>Email: {email}</option>
+                      
+
+                      <option>Name:  {username}</option>
+                     
+                </form>
+            </Modal>
 
             {/* Delete All Messages Button
             <div className="delete-all-button">
