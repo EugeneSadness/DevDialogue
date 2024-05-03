@@ -50,8 +50,23 @@ function ChatList() {
     };
 
     const findChat = () => {
-        // Здесь будет ваша логика поиска чата
+        
     };
+
+
+    const fetchChatsFromDatabase = async () => {
+        try{
+            const response = await Axios.get('http://localhost:4000/api/chat/getUserChats');
+            const chats = response.data;
+            setChats(chats);
+        } catch (error){
+            console.error("Error occured: ", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchChatsFromDatabase();
+    }, []);
 
     const goToChat = (chatId, chatName) => {
         navigate(`/chat/${chatId}`, { state: { username, userid, chatId, chatName, email:email } });

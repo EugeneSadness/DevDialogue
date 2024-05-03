@@ -1,5 +1,5 @@
 const ApiError = require("../Error/ApiError");
-const { Chat, ChatUsers, UserType } = require('../models/models');
+const { Chat, ChatUsers, UserType, User } = require('../models/models');
 const { extractUserDataFromToken } = require("../middleware/tokenService");
 require("dotenv").config();
 
@@ -11,7 +11,7 @@ class chatController {
         this.getChatById = this.getChatById.bind(this);
         this.getUserChats = this.getUserChats.bind(this);
         this.getUserByToken = this.getUserByToken.bind(this);
-    };  
+    };
 
     async createChat(req, res, next) {
         try {
@@ -24,8 +24,12 @@ class chatController {
                 return next(ApiError.badRequest('Title is too long!'));
             }
             const chat = await Chat.create({ title: title });
+            const checkType = await UserType.findOne({where:{id: process.env.USER_TYPE_CREATOR}});
+            if(!checkType){
+                await UserType.create({id: process.env.USER_TYPE_CREATOR});
+            }
             await ChatUsers.create({ userId: id, chatId: chat.id, userTypeId: process.env.USER_TYPE_CREATOR });
-            return res.json({ status: 200, id: chat.id});
+            return res.json({ status: 200, id: chat.id });
         } catch (error) {
             console.error("Error creating the chat", error);
             return next(ApiError.internal("Error creating the chat"));
@@ -72,7 +76,31 @@ class chatController {
 
     }
 
-    async getUserChats(req, res, next){
+    async getUserChats(req, res, next) {
+        try {
+            const userIdPromise = this.getUserByToken(req);
+            const userId = await userIdPromise;
+
+            const userChats = await ChatUsers.findAll({
+                where: { userId: userId },
+            });
+
+            const chatIds = userChats.map(userChat => userChat.chatId);
+
+            const chats = await Chat.findAll({
+                where: { id: chatIds },
+            });
+
+            const formattedChats = chats.map(chat => ({
+                id: chat.id,
+                text: chat.title
+            }));
+
+            return res.status(200).json(formattedChats);
+        } catch (error) {
+            console.error("Error retrieving all chats", error);
+            return next(ApiError.internal("Error retrieving all chats"));
+        }
 
     }
 
