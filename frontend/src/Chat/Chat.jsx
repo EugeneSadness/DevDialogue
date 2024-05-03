@@ -64,9 +64,7 @@ function Chat() {
     const deleteAllMessagesFromChat = async () => {
         try {
             const response = await Axios.post('http://localhost:4000/api/message/delAllMessagesFromChat', { chatId });
-            // При успешном удалении всех сообщений из чата
-            setMessages([]); // Очищаем список сообщений
-        } catch (error) {
+            setMessages([]);        } catch (error) {
             console.error('Error deleting all messages:', error);
         }
     };
@@ -92,8 +90,6 @@ function Chat() {
     return (
         <div className="UserForm" id={theme}>
             <button className="log-out-button" onClick={handleLogOut}>Log out</button>
-            {/*<input onChange={switchTheme} type="checkbox" id="toggle-btn" />
-            <label htmlFor="toggle-btn" className="toggle-label"></label>*/}
             <h2  className="heading">
                 User: {username}
             </h2>
