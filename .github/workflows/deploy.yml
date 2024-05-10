@@ -2,9 +2,11 @@ name: deploy
 
 on:
   push:
-  branches: [ "master" ]
+    branches: 
+      -master
   pull_request:
-    branches: [master" ]
+    branches: 
+      -master
   workflow_dispatch:
 
 jobs:
@@ -24,7 +26,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_DEPLOY}}
 
       - name: Copy project to
-  run: scp -r . bulba@92.124.115.20:/messenger
-
+        run: scp -r . bulba@92.124.115.20:/messenger
       - name: SSH into server
         run: ssh -p 2426 bulba@92.124.115.20 'cd /messenger && docker-compose up -d'
