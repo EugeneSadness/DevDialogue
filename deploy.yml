@@ -1,0 +1,27 @@
+name: deploy
+
+on:
+  push:
+ branches: [ "master" ]
+  pull_request:
+    branches: [master" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH key for deployment}}
+
+      - name: Copy project to
+ run: scp -r . bulba@92.124.115.20:/messenger
+
+      - name: SSH into server
+        run: ssh -p 2426 bulba@92.124.115.20 'cd /messenger && docker-compose up -d'
