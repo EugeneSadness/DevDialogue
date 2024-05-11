@@ -100,13 +100,8 @@ function Chat() {
 
     return (
         <div className="UserForm" id={theme}>
-<<<<<<< HEAD
-            <button className="log-out-button" onClick={handleBackToChats}>Back to chats</button>
-            {/*<input onChange={switchTheme} type="checkbox" id="toggle-btn" />
-            <label htmlFor="toggle-btn" className="toggle-label"></label>*/}
-=======
             <button className="log-out-button" onClick={handleLogOut}>Log out</button>
->>>>>>> 81258efe665ed07b3626e8cb9924b2789839147b
+            
             <h2  className="heading">
                 User: {username}
             </h2>
