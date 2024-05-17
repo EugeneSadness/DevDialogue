@@ -6,7 +6,7 @@ import "./Chat.css";
 import Modal from 'react-modal';
 
 
-const socket = io(process.env.BACK_URL);
+const socket = io("http://192.168.0.33:4000");
 
 function Chat() {
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ function Chat() {
 
     const fetchMessagesFromDatabase = async () => {
         try {
-            const response = await Axios.post('http://localhost:4000/api/message/getAllMessagesFromChat', { chatId });
+            const response = await Axios.post('http://192.168.0.33:4000/api/message/getAllMessagesFromChat', { chatId });
             const data = response.data;
             setMessages(data);
         } catch (error) {
@@ -71,7 +71,7 @@ function Chat() {
 
     const deleteAllMessagesFromChat = async () => {
         try {
-            const response = await Axios.post('http://localhost:4000/api/message/delAllMessagesFromChat', { chatId });
+            const response = await Axios.post('http://192.168.0.33:4000/api/message/delAllMessagesFromChat', { chatId });
             setMessages([]);        } catch (error) {
             console.error('Error deleting all messages:', error);
         }
