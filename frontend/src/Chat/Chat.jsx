@@ -20,7 +20,7 @@ function Chat() {
     const [modalUsernameWindowData, setModalUsernameWindowData] = useState(null);
 
 
-    const { username, userid, chatId, chatName, email} = location.state;
+    const { username, userid, chatId, chatName, email } = location.state;
 
 
 
@@ -60,7 +60,13 @@ function Chat() {
 
 
     const handleBackToChats = () => {
-        navigate('/user', { state: { username: username}, replace: true })
+        navigate('/user', { state: { 
+            username: username,
+            userid: userid,
+            chatId: chatId,
+            chatName: chatName,
+            email: email
+            }, replace: true })
     }
 
     const deleteAllMessagesFromChat = async () => {
@@ -89,7 +95,7 @@ function Chat() {
     }, [messages, socket]);
 
     const openModalUsernameWindow = () =>{
-          setModalUsernameWindowIsOpen(true)
+        setModalUsernameWindowIsOpen(true)
     }
      
     const closeModalUsernameWindow =() =>{
@@ -100,8 +106,7 @@ function Chat() {
 
     return (
         <div className="UserForm" id={theme}>
-            <button className="log-out-button" onClick={handleLogOut}>Log out</button>
-            
+            <button className="log-out-button" onClick={handleBackToChats}>Back to chats</button>
             <h2  className="heading">
                 User: {username}
             </h2>
