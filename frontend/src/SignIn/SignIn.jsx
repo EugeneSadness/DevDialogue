@@ -23,7 +23,7 @@ function Login() {
         e.preventDefault();
         try {
 
-            const response = await Axios.post('http://192.168.0.33:4000/api/user/login', formData);
+            const response = await Axios.post('https://api.devdialogue/api/user/login', formData);
             console.log('Ответ от сервера:', response.data);
 
             const token = response.data.token;
@@ -31,8 +31,8 @@ function Login() {
             // Сохр.токен в хранилище на стороне клиента
             localStorage.setItem("token", token);
             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const nameResp = await Axios.get('http://192.168.0.33:4000/api/user/getName');
-            const idResp = await Axios.get('http://192.168.0.33:4000/api/user/getId');
+            const nameResp = await Axios.get('https://api.devdialogue/api/user/getName');
+            const idResp = await Axios.get('https://api.devdialogue/api/user/getId');
             // После успешного входа, перенаправить
             navigate('/user', { state: {userid: idResp.data.userId, username:  nameResp.data.name, email: formData.email}, replace: true });
 

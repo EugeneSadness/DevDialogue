@@ -35,7 +35,7 @@ function ChatList() {
     const addChat = async (e) => {
         e.preventDefault();
         try {
-            const response = await Axios.post('http://192.168.0.33:4000/api/chat/createChat', { title: chatName });
+            const response = await Axios.post('https://api.devdialogue/api/chat/createChat', { title: chatName });
             const {id} = response.data;
             const newChat = {
                 text: chatName,
@@ -56,7 +56,7 @@ function ChatList() {
 
     const fetchChatsFromDatabase = async () => {
         try{
-            const response = await Axios.get('http://192.168.0.33:4000/api/chat/getUserChats');
+            const response = await Axios.get('https://api.devdialogue/api/chat/getUserChats');
             const chats = response.data;
             setChats(chats);
         } catch (error){

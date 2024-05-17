@@ -31,14 +31,14 @@ function RegistrationForm() {
 
         try {
             // Выполнить POST-запрос на сервер, передав данные formData
-            const response = await Axios.post('http://192.168.0.33:4000/api/user/registration', formData);
+            const response = await Axios.post('https://api.devdialogue/api/user/registration', formData);
             console.log('Ответ от сервера:', response.data);
 
             const token = response.data.token;
             localStorage.setItem("token", token);
 
             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const idResp = await Axios.get('http://192.168.0.33:4000/api/user/getId');
+            const idResp = await Axios.get('https://api.devdialogue/api/user/getId');
 
             navigate('/user', { state: {userid: idResp.data.userId, username: formData.name , email: formData.email}, replace: true });
 
