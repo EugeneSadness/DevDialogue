@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import "./SignIn.css";
+require("dotenv").config();
+
 function Login() {
     const [formData, setFormData] = useState({
         email: '',
@@ -22,7 +24,7 @@ function Login() {
         e.preventDefault();
         try {
 
-            const response = await Axios.post('http://localhost:4000/api/user/login', formData);
+            const response = await Axios.post(process.env.BACK_URL+'/api/user/login', formData);
             console.log('Ответ от сервера:', response.data);
 
             const token = response.data.token;
@@ -30,8 +32,8 @@ function Login() {
             // Сохр.токен в хранилище на стороне клиента
             localStorage.setItem("token", token);
             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const nameResp = await Axios.get('http://localhost:4000/api/user/getName');
-            const idResp = await Axios.get('http://localhost:4000/api/user/getId');
+            const nameResp = await Axios.get(process.env.BACK_URL+'/api/user/getName');
+            const idResp = await Axios.get(process.env.BACK_URL+'/api/user/getId');
             // После успешного входа, перенаправить
             navigate('/user', { state: {userid: idResp.data.userId, username:  nameResp.data.name, email: formData.email}, replace: true });
 

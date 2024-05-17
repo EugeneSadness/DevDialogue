@@ -4,9 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import "./Chat.css";
 import Modal from 'react-modal'
+require("dotenv").config();
 
 
-const socket = io("http://192.168.0.33:4000");
+const socket = io(process.config.BACK_URL);
 
 function Chat() {
     const navigate = useNavigate();

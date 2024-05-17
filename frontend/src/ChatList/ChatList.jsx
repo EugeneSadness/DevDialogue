@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FaPlus } from 'react-icons/fa';
 import Axios from 'axios';
+require("dotenv").config();
 
 function ChatList() {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ function ChatList() {
     const addChat = async (e) => {
         e.preventDefault();
         try {
-            const response = await Axios.post('http://localhost:4000/api/chat/createChat', { title: chatName });
+            const response = await Axios.post(process.env.BACK_URL+'/api/chat/createChat', { title: chatName });
             const {id} = response.data;
             const newChat = {
                 text: chatName,
@@ -56,7 +57,7 @@ function ChatList() {
 
     const fetchChatsFromDatabase = async () => {
         try{
-            const response = await Axios.get('http://localhost:4000/api/chat/getUserChats');
+            const response = await Axios.get(process.env.BACK_URL+'/api/chat/getUserChats');
             const chats = response.data;
             setChats(chats);
         } catch (error){
