@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import "./SignIn.css";
-require("dotenv").config();
 
 function Login() {
     const [formData, setFormData] = useState({

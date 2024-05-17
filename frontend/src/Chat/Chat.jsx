@@ -3,11 +3,10 @@ import Axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import "./Chat.css";
-import Modal from 'react-modal'
-require("dotenv").config();
+import Modal from 'react-modal';
 
 
-const socket = io(process.config.BACK_URL);
+const socket = io(process.env.BACK_URL);
 
 function Chat() {
     const navigate = useNavigate();

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import "./SignUp.css"
-require("dotenv").config();
 
 
 function RegistrationForm() {

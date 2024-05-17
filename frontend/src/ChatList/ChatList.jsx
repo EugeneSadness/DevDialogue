@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FaPlus } from 'react-icons/fa';
 import Axios from 'axios';
-require("dotenv").config();
 
 function ChatList() {
     const navigate = useNavigate();
