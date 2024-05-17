@@ -6,7 +6,7 @@ import "./Chat.css";
 import Modal from 'react-modal'
 
 
-const socket = io("http://92.124.115.20:4000");
+const socket = io("http://192.168.0.33:4000");
 
 function Chat() {
     const navigate = useNavigate();
