@@ -18,8 +18,6 @@ function Chat() {
     const [messages, setMessages] = useState([]);
     const [modalUsernameModalWindowIsOpen, setModalUsernameWindowIsOpen] = useState(false);
     const [modalUsernameWindowData, setModalUsernameWindowData] = useState(null);
-
-
     const { username, userid, chatId, chatName, email } = location.state;
 
 
@@ -53,8 +51,14 @@ function Chat() {
     const sendMessageAndPicture = () => {
         const messageData = { content: message, senderId: userid, username: username, chatId: chatId };
         socket.emit('chatMessage', messageData);
-        setMessages(prevMessages => [...prevMessages, { content: message, senderId: userid, username: username, chatId: chatId }]);
-        setMessage('');
+        setMessages(prevMessages => [...prevMessages,
+            { 
+            content: message, 
+            senderId: userid,
+            username: username,
+            chatId: chatId
+        }]);
+        //setMessage('');
 
     };
 
