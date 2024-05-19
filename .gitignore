@@ -1,2 +1,9 @@
 db/
+
 .idea/
+
+backend/db.js
+
+backend/.env
+
+backend/database/
