@@ -1,0 +1,49 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Connect to remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+
+      - name: Navigate to project directory
+        run: cd fullStack/
+
+      - name: Stop the compose file
+        run: docker-compose down
+
+      - name: Pull latest changes
+        run: git pull
+
+      - name: Navigate to frontend
+        run: cd frontend/
+
+      - name: Build frontend image
+        run: docker build . -t front
+
+      - name: Navigate to backend
+        run: cd /home/bulba/fullStack/backend/
+
+      - name: Build backend image
+        run: docker build . -t back
+
+      - name: Navigate to project directory
+        run: cd /home/bulba/fullStack/
+
+      - name: Deploy application
+        run: docker-compose up -d
