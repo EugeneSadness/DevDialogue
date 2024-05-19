@@ -23,7 +23,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
 
       - name: Navigate to project directory
-        run: cd fullStack/
+        run: cd /home/bulba/fullStack/
 
       - name: Stop the compose file
         run: docker-compose down
@@ -32,7 +32,7 @@ jobs:
         run: git pull
 
       - name: Navigate to frontend
-        run: cd frontend/
+        run: cd /home/bulba/fullStack/frontend/
 
       - name: Build frontend image
         run: docker build . -t front
