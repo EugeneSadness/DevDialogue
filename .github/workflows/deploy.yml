@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Connect to remote server
+      - name: Connect to remote server and deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -21,30 +21,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
-
-      - name: Navigate to project directory
-        run: cd /home/bulba/fullStack/
-
-      - name: Stop the compose file
-        run: docker-compose down
-
-      - name: Pull latest changes
-        run: git pull
-
-      - name: Navigate to frontend
-        run: cd /home/bulba/fullStack/frontend/
-
-      - name: Build frontend image
-        run: docker build . -t front
-
-      - name: Navigate to backend
-        run: cd /home/bulba/fullStack/backend/
-
-      - name: Build backend image
-        run: docker build . -t back
-
-      - name: Navigate to project directory
-        run: cd /home/bulba/fullStack/
-
-      - name: Deploy application
-        run: docker-compose up -d
+          script: |
+            cd /home/bulba/fullStack/
+            docker-compose down
+            git pull
+            cd /home/bulba/fullStack/frontend/
+            docker build . -t front
+            cd /home/bulba/fullStack/backend/
+            docker build . -t back
+            cd /home/bulba/fullStack/
+            docker-compose up -d
