@@ -4,7 +4,9 @@ db/
 
 backend/db.js
 
-.env
+backend/.env
+
+frontend/.env
 
 backend/database/
 
