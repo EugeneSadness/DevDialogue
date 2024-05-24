@@ -107,7 +107,7 @@ function Chat() {
     };
 
     useEffect(() => {
-        socket.on("chat message", (data) => {
+        socket.on("chatMessage", (data) => {
             const isMessageAlreadyPresent = messages.some(
                 (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
