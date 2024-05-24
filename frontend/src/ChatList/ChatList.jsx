@@ -18,6 +18,7 @@ function ChatList() {
     const [modalData, setModalData] = useState(null);
     const [friends, setFriends] = useState(["Friend 1", "Friend 2", "Friend 3"]); // Список друзей
     const [selectedFriends, setSelectedFriends] = useState([]); // Выбранные друзья для создания чата
+    const [isExpanded, setIsExpanded] = useState(false);
     
     if (token) {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -53,6 +54,10 @@ function ChatList() {
 
     const findChat = () => {
         
+    };
+
+    const toggleFriendsList = () => {
+        setIsExpanded(!isExpanded);
     };
 
 
@@ -116,15 +121,17 @@ function ChatList() {
                     <h2>Add Chat</h2>
                     <form className="modal-form">
                         <input value={chatName} onChange={e => setChatName(e.target.value)} placeholder='Enter chat name' />
-                        <div>
-                            <h3>Select Friends:</h3>
-                            <ul className="friends-list">
-                                {friends.map((friend, index) => (
-                                    <li key={index} onClick={() => addFriendToChat(friend)}>
-                                        {friend}
-                                    </li>
-                                ))}
-                            </ul>
+                        <div className="friends-dropdown">
+                            <button onClick={toggleFriendsList} className="toggle-button">Add Friends</button>
+                            {isExpanded && (
+                                <ul className="friends-list">
+                                    {friends.map((friend, index) => (
+                                        <li key={index} onClick={() => addFriendToChat(friend)}>
+                                            {friend}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                         <div>
                             <h3>Selected Friends:</h3>
