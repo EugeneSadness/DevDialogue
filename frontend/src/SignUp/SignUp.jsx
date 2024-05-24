@@ -35,9 +35,11 @@ function RegistrationForm() {
 
             if (response.data.unvailableEmail) {
                 alert("Email is already registered");
+                return;
             }
             if (response.data.unavailableUserName) {
                 alert("Username is unavailable");
+                return;
             }
 
             const token = response.data.token;
