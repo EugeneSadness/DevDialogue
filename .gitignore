@@ -7,3 +7,5 @@ backend/db.js
 backend/.env
 
 backend/database/
+
+docker-compose.yml

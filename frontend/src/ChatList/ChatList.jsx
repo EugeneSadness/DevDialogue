@@ -69,7 +69,7 @@ function ChatList() {
     }, []);
 
     const goToChat = (chatId, chatName) => {
-        navigate(`/chat/${chatId}`, { state: { username, userid, chatId, chatName, email:email } });
+        navigate(`/chat/${chatId}`, { state: { username, userid, chatId:chatId, chatName, email:email } });
     };
 
     const handleLogOut = ()=>{

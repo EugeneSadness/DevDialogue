@@ -95,6 +95,24 @@ class UserController {
         }
     }
 
+    async checkUsername(req, res, next) {
+        try {
+            const { username } = req.query;
+            if (!username) {
+                return next(ApiError.badRequest('Username is empty'));
+            }
+            const user = await User.findOne({ where: { name: username } });
+            if (user) {
+                return res.json({ available: false });
+            } else {
+                return res.json({ available: true });
+            }
+        } catch (error) {
+            console.error("Error checking username availability", error);
+            return next(ApiError.internal("Error checking username availability"));
+        }
+    }
+
 
 }
 

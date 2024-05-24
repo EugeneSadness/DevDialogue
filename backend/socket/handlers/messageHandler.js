@@ -16,7 +16,6 @@ async function handleMessage(io, msg) {
         };
         
         const message = await Message.create(newMessage);
-        //io.emit("chat message", { content: msg.content, senderId: msg.senderId, username: msg.username });
         await ChatMessages.create({
             name: message.content,
             messageId: message.id, 

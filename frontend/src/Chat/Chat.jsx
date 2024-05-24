@@ -58,8 +58,6 @@ function Chat() {
             username: username,
             chatId: chatId
         }]);
-        //setMessage('');
-
     };
 
 
@@ -71,7 +69,7 @@ function Chat() {
             chatName: chatName,
             email: email
             }, replace: true })
-    }
+    };
 
     const deleteAllMessagesFromChat = async () => {
         try {
