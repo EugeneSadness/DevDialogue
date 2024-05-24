@@ -117,7 +117,7 @@ function Chat() {
             }
             fetchMessagesFromDatabase();
         });
-        return () => socket.off('chat message');
+        return () => socket.off('chatMessage');
     }, [messages, socket]);
 
     const openModalUsernameWindow = () => {
