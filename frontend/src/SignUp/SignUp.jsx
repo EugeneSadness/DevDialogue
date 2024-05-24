@@ -30,7 +30,7 @@ function RegistrationForm() {
         }
 
         try {
-            const response = await Axios.post('https://api.devdialogue.ru/api/user/registration', formData);
+            const response = await Axios.post(process.env.REACT_APP_BACK_URL+'/api/user/registration', formData);
             console.log('Ответ от сервера:', response.data);
 
             if (response.data.unvailableEmail) {

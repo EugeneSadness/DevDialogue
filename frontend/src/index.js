@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-//new
 import './App.css';
 import SignUp from "./SignUp/SignUp";
 import SignIn from "./SignIn/SignIn";
