@@ -49,7 +49,7 @@ function Chat() {
 
 
 
-    const sendMessageAndPicture = async () => {
+    const sendMessageAndPicture = () => {
         const messageData = { content: message, senderId: userid, username: username, chatId: chatId };
         socket.emit('chatMessage', messageData);
         setMessages(prevMessages => [...prevMessages,
@@ -107,7 +107,11 @@ function Chat() {
     };
 
     useEffect(() => {
-        socket.on("chatMessage", (data) => {
+        fetchMessagesFromDatabase();
+    }, []);
+
+    useEffect(() => {
+        socket.on("chat message", async (data) => {
             const isMessageAlreadyPresent = messages.some(
                 (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
@@ -115,9 +119,8 @@ function Chat() {
             if (!isMessageAlreadyPresent) {
                 setMessages((prevMessages) => [...prevMessages, data]);
             }
-            fetchMessagesFromDatabase();
         });
-        return () => socket.off('chatMessage');
+        return () => socket.off('chat message');
     }, [messages, socket]);
 
     const openModalUsernameWindow = () => {
