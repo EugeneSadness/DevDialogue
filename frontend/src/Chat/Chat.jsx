@@ -107,11 +107,7 @@ function Chat() {
     };
 
     useEffect(() => {
-        fetchMessagesFromDatabase();
-    }, []);
-
-    useEffect(() => {
-        socket.on("chat message", async (data) => {
+        socket.on("chat message", (data) => {
             const isMessageAlreadyPresent = messages.some(
                 (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
@@ -119,6 +115,7 @@ function Chat() {
             if (!isMessageAlreadyPresent) {
                 setMessages((prevMessages) => [...prevMessages, data]);
             }
+            fetchMessagesFromDatabase();
         });
         return () => socket.off('chat message');
     }, [messages, socket]);
