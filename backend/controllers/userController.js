@@ -16,21 +16,22 @@ class UserController {
         try {
             const { name, email, password } = req.body;
             if (!email || !password || !name) {
-                return next(ApiError.badRequest('Uncorrect password or email!'));
+                return next(ApiError.badRequest('Incorrect password or email!'));
             }
-            const candidate = await User.findOne({ where: { email } });
-            if (candidate) {
-                return next(ApiError.badRequest('User was registered already!'));
+            const checkEmail = await User.findOne({ where: { email } });
+            const checkUserName = await User.findOne({ where: { name } });
+            if(checkEmail || checkUserName){
+                return res.json({ unvailableEmail: !!checkEmail, unavailableUserName: !!checkUserName });
             }
             const hashPassword = await bcrypt.hash(password, 5);
             const user = await User.create({ name, email, password: hashPassword });
             const token = generateJWT(user.id, user.name, user.email);
-            return res.json({ token: token });
+            return res.json({ unvailableEmail: !!checkEmail, unavailableUserName: !!checkUserName, token: token, id: user.id });
         } catch (error) {
             console.error("Error with registration", error);
             return next(ApiError.internal("Error with registration"));
         }
-    };
+    }
 
     async login(req, res, next) {
         try {
@@ -94,26 +95,6 @@ class UserController {
             return next(ApiError.internal("Can't recieve user name by id"));
         }
     }
-
-    async checkUsername(req, res, next) {
-        try {
-            const { username } = req.query;
-            if (!username) {
-                return next(ApiError.badRequest('Username is empty'));
-            }
-            const user = await User.findOne({ where: { name: username } });
-            if (user) {
-                return res.json({ available: false });
-            } else {
-                return res.json({ available: true });
-            }
-        } catch (error) {
-            console.error("Error checking username availability", error);
-            return next(ApiError.internal("Error checking username availability"));
-        }
-    }
-
-
 }
 
 module.exports = new UserController();

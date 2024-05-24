@@ -11,29 +11,12 @@ function RegistrationForm() {
         password: ''
     });
 
-    const checkUsernameAvailability = async (username) => {
-        try {
-            const response = await Axios.get(`https://api.devdialogue.ru/api/user/checkUsername?username=${username}`);
-            setUsernameAvailable(response.data.available);
-        } catch (error) {
-            console.error('Error checking username availability:', error);
-        }
-    };
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'name') {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
-            checkUsernameAvailability(value);
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
-        }
+        setFormData({
+            ...formData,
+            [name]: value
+        });
     };
 
     const navigate = useNavigate();
@@ -47,17 +30,22 @@ function RegistrationForm() {
         }
 
         try {
-            // Выполнить POST-запрос на сервер, передав данные formData
             const response = await Axios.post('https://api.devdialogue.ru/api/user/registration', formData);
             console.log('Ответ от сервера:', response.data);
+
+            if (response.data.unvailableEmail) {
+                alert("Email is already registered");
+            }
+            if (response.data.unavailableUserName) {
+                alert("Username is unavailable");
+            }
 
             const token = response.data.token;
             localStorage.setItem("token", token);
 
             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const idResp = await Axios.get('https://api.devdialogue.ru/api/user/getId');
 
-            navigate('/user', { state: {userid: idResp.data.userId, username: formData.name , email: formData.email}, replace: true });
+            navigate('/user', { state: {userid: response.data.id, username: formData.name , email: formData.email}, replace: true });
 
         } catch (error) {
             console.error('Ошибка при отправке данных:', error);
