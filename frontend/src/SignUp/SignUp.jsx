@@ -11,12 +11,29 @@ function RegistrationForm() {
         password: ''
     });
 
+    const checkUsernameAvailability = async (username) => {
+        try {
+            const response = await Axios.get(`https://api.devdialogue.ru/api/user/checkUsername?username=${username}`);
+            setUsernameAvailable(response.data.available);
+        } catch (error) {
+            console.error('Error checking username availability:', error);
+        }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        if (name === 'name') {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+            checkUsernameAvailability(value);
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     const navigate = useNavigate();
