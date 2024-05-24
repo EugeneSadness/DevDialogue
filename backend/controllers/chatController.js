@@ -115,6 +115,32 @@ class chatController {
         }
     }
 
+    async addUserToChat(req, res, next){
+        try{
+            const {chatId, recieverId, inviterId} = req.body;
+            const checkChat = await Chat.findOne({id:chatId });
+            if(!checkChat){
+                return next(ApiError.internal("Chat wasnt found"));
+            }
+            const isInviterExistsInChat = await ChatUsers.findOne({where: {chatId: chatId, userId: inviterId}});
+            if(!isInviterExistsInChat){
+                return next(ApiError.internal("Inviter wasnt found"));
+            }
+            const isRecieverExistsInChat = await ChatUsers.findOne({where: {chatId: chatId, userId: recieverId}});
+            if(isRecieverExistsInChat){
+                return next(ApiError.badRequest("Reciever already in chat"));
+            }
+            const checkType = await UserType.findOne({where:{id: process.env.USER_TYPE_MEMBER}});
+            if(!checkType){
+                await UserType.create({id: process.env.USER_TYPE_MEMBER});
+            }
+            await ChatUsers.create({ userId: recieverId, chatId: chatId, userTypeId: process.env.USER_TYPE_MEMBER });
+            return res.json({status: 200});
+        } catch (error) {
+            console.error("Error adding member", error);
+            return res(ApiError.internal("Error adding member"));
+        }
+    }
 }
 
 module.exports = new chatController();

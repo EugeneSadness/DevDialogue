@@ -45,7 +45,7 @@ class UserController {
                 return next(ApiError.badRequest('Uncorrect password'));
             }
             const token = generateJWT(user.id, user.name, user.email);
-            return res.json({ token: token });
+            return res.json({ token: token, name: user.name, id: user.id, email: user.email});
         } catch (error) {
             console.error("Error with login", error);
             return next(ApiError.internal("Error with login"));
@@ -58,7 +58,7 @@ class UserController {
             if (!token) {
                 return next(ApiError.badRequest('Token is empty'));
             }
-            const decoded = jwt.verify(token, "random_secret");
+            const decoded = jwt.verify(token, process.env.SECRET_JWT);
             const userId = decoded.id;
             return res.json({ userId });
         } catch (error) {
@@ -73,7 +73,7 @@ class UserController {
             if (!token) {
                 return next(ApiError.badRequest('Token is empty'));
             }
-            const decoded = jwt.verify(token, "random_secret");
+            const decoded = jwt.verify(token, process.env.SECRET_JWT);
             const name = decoded.name;
             return res.json({ name });
         } catch (error) {
@@ -95,6 +95,22 @@ class UserController {
             return next(ApiError.internal("Can't recieve user name by id"));
         }
     }
+
+    async findByName(req, res, next){
+        try{
+            const {name} = req.body;
+            if(!name){
+                return next(ApiError.badRequest("Name is empty!"));
+            }
+            const user = await User.findOne({where: {name: name}});
+            return res.json({ username: user.name, userid: user.id, email: user.email });
+        } catch (error) {
+            console.error("User was not found!", error);
+            return next(ApiError.internal("User was not found!"));
+        }
+    }
+
+    
 }
 
 module.exports = new UserController();

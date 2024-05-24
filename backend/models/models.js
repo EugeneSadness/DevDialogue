@@ -1,61 +1,68 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
-const User = sequelize.define('user',{ 
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false, unique: true},
-    email: {type: DataTypes.STRING,allowNull: false, unique: true},
-    password: {type: DataTypes.STRING, allowNull: false},
-    profileInfo: {type: DataTypes.STRING}
+const User = sequelize.define('user', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, allowNull: false, unique: true },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: DataTypes.STRING, allowNull: false },
+    profileInfo: { type: DataTypes.STRING }
 });
 
-const ChatUsers = sequelize.define('chatUsers',{
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+const ChatUsers = sequelize.define('chatUsers', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
 });
 
-const UserType = sequelize.define('userType',{
-    id: {type: DataTypes.INTEGER, primaryKey: true}
+const UserType = sequelize.define('userType', {
+    id: { type: DataTypes.INTEGER, primaryKey: true }
 });
 
 const UserFriends = sequelize.define('userFriends', {
-    id: {type: DataTypes.INTEGER, primaryKey: true}
+    id: { type: DataTypes.INTEGER, primaryKey: true }
 });
 
 const Chat = sequelize.define('chat', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    title: {type: DataTypes.STRING, allowNull: false}
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    title: { type: DataTypes.STRING, allowNull: false }
+});
+
+const Friendship = sequelize.define('friendship', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user1Id: { type: DataTypes.INTEGER, allowNull: false },
+    user2Id: { type: DataTypes.INTEGER,allowNull: false},
+    status: { type: DataTypes.ENUM('pending', 'accepted', 'rejected'), allowNull: false, defaultValue: 'pending'}
 });
 
 const ChatMessages = sequelize.define('chatMessages', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: false, allowNull: false}
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, unique: false, allowNull: false }
 });
 
 const Message = sequelize.define('message', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    senderId: {type: DataTypes.INTEGER, allowNull: false},
-    content: {type: DataTypes.STRING, unique: false}
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    senderId: { type: DataTypes.INTEGER, allowNull: false },
+    content: { type: DataTypes.STRING, unique: false }
 });
 
-const MessageFiles = sequelize.define('messageFiles',{
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+const MessageFiles = sequelize.define('messageFiles', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
 });
 
 const File = sequelize.define('file', {
-    path: {type: DataTypes.STRING, unique:true}
+    path: { type: DataTypes.STRING, unique: true }
 });
 
-User.belongsToMany(Chat, {through: ChatUsers});
-Chat.belongsToMany( User, {through: ChatUsers});
+User.belongsToMany(Chat, { through: ChatUsers });
+Chat.belongsToMany(User, { through: ChatUsers });
 
-Message.belongsToMany(File, {through: MessageFiles});
-File.belongsToMany(Message, {through: MessageFiles});
+Message.belongsToMany(File, { through: MessageFiles });
+File.belongsToMany(Message, { through: MessageFiles });
 
-Chat.belongsToMany(Message, {through: ChatMessages});
-Message.belongsToMany(Chat, {through: ChatMessages});
+Chat.belongsToMany(Message, { through: ChatMessages });
+Message.belongsToMany(Chat, { through: ChatMessages });
 
-ChatUsers.belongsTo(UserType, {foreignKey: UserType.id});
-UserType.hasMany(ChatUsers, {foreignKey: UserType.id});
+ChatUsers.belongsTo(UserType, { foreignKey: UserType.id });
+UserType.hasMany(ChatUsers, { foreignKey: UserType.id });
 
 module.exports = {
     User, UserType, UserFriends,

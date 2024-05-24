@@ -1,6 +1,10 @@
-/* Chat.css */
+.log-out-button{
+    position: absolute;
+    right: 0;
+    top: 10px; /* Расположение кнопки относительно верхнего края экрана */
+}
+  
 
-/* General Styles */
 .UserForm {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
@@ -11,7 +15,6 @@
     color: #fff;
 }
 
-/* Chat Container */
 .chat-container {
     max-width: 800px;
     margin: 50px auto;
@@ -27,7 +30,6 @@
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
 }
 
-/* Message Styles */
 .messages {
     color: #333;
 }
@@ -46,7 +48,7 @@
     background-color: #f0f0f0;
 }
 
-/* Toggle Switch */
+
 #toggle-btn {
     display: none;
 }
@@ -83,30 +85,10 @@
     left: calc(100% - 60px);
 }
 
-/* Logout Button */
-.log-out-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 24px 36px;
-    margin: 24px;
-    cursor: pointer;
-    border-radius: 18px;
-    transition: all 0.3s;
-    display: inline-block;
-}
-
-.log-out-button:hover {
-    background-color: #0056b3;
-}
-
-/* Heading Styles */
 .heading {
     color: #333;
 }
 
-
-/* Input Styles */
 .input {
     margin-top: 28px;
 }
@@ -127,7 +109,6 @@ input:focus {
     border-color: #007bff;
 }
 
-/* Button Styles */
 button {
     background-color: #007bff;
     color: white;
@@ -174,3 +155,24 @@ button:hover {
 }
 
 
+.modal-window-add-user {
+    position: fixed; /* фиксированное положение для отображения поверх других элементов */
+    top: 50%; /* помещаем верхнюю часть модального окна на 50% высоты экрана */
+    left: 50%; /* помещаем левую часть модального окна на 50% ширины экрана */
+    transform: translate(-50%, -50%); /* сдвигаем модальное окно обратно на половину своей ширины и высоты, чтобы оно оказалось точно посередине экрана */
+    background-color: #fff; /* устанавливаем белый фон для модального окна */
+    padding: 20px; /* добавляем внутренний отступ вокруг содержимого модального окна */
+    border-radius: 10px; /* создаем скругленные углы для модального окна */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* добавляем тень для придания глубины */
+    z-index: 1000; /* устанавливаем высокий уровень z-index, чтобы гарантировать, что модальное окно будет отображаться поверх других элементов */
+  }
+  
+  .modal-window-add-user span {
+    display: block; /* устанавливаем span как блочный элемент, чтобы выровнять содержимое в центре модального окна */
+    text-align: center; /* выравниваем содержимое по центру */
+  }
+  
+  /* Дополнительный стиль для кнопок */
+  .modal-window-add-user button {
+    margin-top: 10px; /* добавляем отступ сверху для кнопок, размещая их друг под другом */
+  }

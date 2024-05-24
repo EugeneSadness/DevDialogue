@@ -16,10 +16,7 @@ function ChatList() {
     const { username, userid , email} = location.state;
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
-    const [friends, setFriends] = useState(["Friend 1", "Friend 2", "Friend 3"]); // Список друзей
-    const [selectedFriends, setSelectedFriends] = useState([]); // Выбранные друзья для создания чата
-    const [isExpanded, setIsExpanded] = useState(false);
-    
+
     if (token) {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
@@ -53,21 +50,6 @@ function ChatList() {
     };
 
     const findChat = () => {
-        
-    };
-
-    const toggleFriendsList = () => {
-        setIsExpanded(!isExpanded);
-    };
-
-
-    const addFriendToChat = (friend) => {
-        setSelectedFriends([...selectedFriends, friend]);
-    };
-
-    const removeFriendFromChat = (friend) => {
-        const updatedFriends = selectedFriends.filter((item) => item !== friend);
-        setSelectedFriends(updatedFriends);
     };
 
 
@@ -121,28 +103,7 @@ function ChatList() {
                     <h2>Add Chat</h2>
                     <form className="modal-form">
                         <input value={chatName} onChange={e => setChatName(e.target.value)} placeholder='Enter chat name' />
-                        <div className="friends-dropdown">
-                            <button onClick={toggleFriendsList} className="toggle-button">Add Friends</button>
-                            {isExpanded && (
-                                <ul className="friends-list">
-                                    {friends.map((friend, index) => (
-                                        <li key={index} onClick={() => addFriendToChat(friend)}>
-                                            {friend}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                        <div>
-                            <h3>Selected Friends:</h3>
-                            <ul className="selected-friends-list">
-                                {selectedFriends.map((friend, index) => (
-                                    <li key={index} onClick={() => removeFriendFromChat(friend)} className="selected-friend">
-                                        {friend}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        <input type='text' placeholder='Enter participants' />
                         <div className="modal-buttons">
                             <button onClick={addChat}>Add Chat</button>
                             <button onClick={closeModal}>Close</button>
