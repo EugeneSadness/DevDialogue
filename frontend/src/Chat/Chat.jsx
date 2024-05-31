@@ -36,7 +36,8 @@ function Chat() {
 
     const fetchMessagesFromDatabase = async () => {
         try {
-            const response = await Axios.post(process.env.REACT_APP_BACK_URL + '/api/message/getAllMessagesFromChat', { chatId });
+            const response = await Axios.post(process.env.REACT_APP_BACK_URL + 
+                '/api/message/getAllMessagesFromChat', { chatId });
             const data = response.data;
             setMessages(data);
         } catch (error) {
@@ -47,13 +48,14 @@ function Chat() {
 
 
     const sendMessageAndPicture = () => {
-        const messageData = { content: message, senderId: userid, username: username, chatId: chatId };
+        const messageData = { content: message, senderId: userid, username: username, email: email, chatId: chatId };
         socket.emit('chatMessage', messageData);
         setMessages(prevMessages => [...prevMessages,
         {
             content: message,
             senderId: userid,
             username: username,
+            email: email,
             chatId: chatId
         }]);
         setMessage('');
@@ -74,8 +76,8 @@ function Chat() {
 
     const deleteAllMessagesFromChat = async () => {
         try {
-            const response = await Axios.post(process.env.REACT_APP_BACK_URL + '/api/message/delAllMessagesFromChat',
-                { chatId });
+            const response = await Axios.post(process.env.REACT_APP_BACK_URL + 
+                '/api/message/delAllMessagesFromChat',{ chatId });
             setMessages([]);
             setMessage('');
         } catch (error) {
@@ -85,7 +87,8 @@ function Chat() {
 
     const findFriend = async (friendName) => {
         try {
-            const response = await Axios.post(process.env.REACT_APP_BACK_URL + '/api/user/findUserByName',
+            const response = await Axios.post(process.env.REACT_APP_BACK_URL 
+                + '/api/user/findUserByName',
                 { name: friendName });
             const userData = response.data;
             setModalAddUserWindowData(userData);
@@ -110,9 +113,9 @@ function Chat() {
     useEffect(() => {
         socket.on("chatMessage", async (data) => {
             const isMessageAlreadyPresent = messages.some(
-                (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
+                (msg) => msg.content === data.content && msg.senderId === data.senderId && 
+                msg.username === data.username && msg.email === data.email
             );
-
             if (!isMessageAlreadyPresent) {
                 setMessages((prevMessages) => [...prevMessages, data]);
             }
@@ -154,7 +157,8 @@ function Chat() {
                                 key={index}
                                 className={`${msg.senderId === userid ? "sent" : "received"}`}
                             >
-                                <button className='username-button' onClick={() => openModalUsernameWindow({ username: msg.username, email: msg.email })}>
+                                <button className='username-button' onClick={() => 
+                                    openModalUsernameWindow({ username: msg.username, email: msg.email })}>
                                     {msg.username}
                                 </button>:
                                 {msg.content}
@@ -173,7 +177,8 @@ function Chat() {
                 />
                 <button onClick={sendMessageAndPicture}>Send message</button>
             </div>
-            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} ariaHideApp={false} className='modal-window-user-info'>
+            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} 
+            ariaHideApp={false} className='modal-window-user-info'>
                 <h2>User info</h2>
                 <form className='modal-username-form'>
                     {selectedUserInfo && (
