@@ -172,11 +172,9 @@ function Chat() {
                     onChange={(event) => setMessage(event.target.value)}
                 />
                 <button onClick={sendMessageAndPicture}>Send message</button>
-
-
             </div>
-
-            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} ariaHideApp={false} className='modal-window-user-info'>
+            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} 
+            ariaHideApp={false} className='modal-window-user-info'>
                 <h2>User info</h2>
                 <form className='modal-username-form'>
                     <option>Email: {email}</option>
@@ -185,7 +183,8 @@ function Chat() {
                 </form>
             </Modal>
 
-            <Modal isOpen={modalAddUserModalWindowIsOpen} onRequestClose={closeModalAddUserWindow} ariaHideApp={false} className='modal-window-add-user'>
+            <Modal isOpen={modalAddUserModalWindowIsOpen} onRequestClose={closeModalAddUserWindow} 
+            ariaHideApp={false} className='modal-window-add-user'>
                 <span>
                     <h2>Add users:</h2>
                     <input
@@ -199,7 +198,8 @@ function Chat() {
                         <div className="user-info">
                             <p>Email: {modalAddUserWindowData.email}</p>
                             <p>Name: {modalAddUserWindowData.username}</p>
-                            <button onClick={() => addFriendToChat(modalAddUserWindowData)}>Add {modalAddUserWindowData.username} to chat</button>
+                            <button onClick={() => addFriendToChat(modalAddUserWindowData)}>
+                            Add {modalAddUserWindowData.username} to chat</button>
                         </div>
                     )}
                 </span>

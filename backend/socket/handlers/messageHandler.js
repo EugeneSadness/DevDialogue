@@ -21,6 +21,7 @@ async function handleMessage(io, msg) {
             messageId: message.id, 
             chatId: msg.chatId
         });
+        io.emit("chatMessage", msg);
 
             
     } catch (error) {
