@@ -20,6 +20,7 @@ function Chat() {
     const [modalAddUserModalWindowIsOpen, setModalAddUserWindowIsOpen] = useState(false);
     const [modalAddUserWindowData, setModalAddUserWindowData] = useState(null);
     const { username, userid, chatId, chatName, email } = location.state;
+    const [selectedUserInfo, setSelectedUserInfo] = useState(null);
     const [theme, setTheme] = useState("light");
 
     const switchTheme = () => {
@@ -119,12 +120,14 @@ function Chat() {
         return () => socket.off('chatMessage');
     }, [messages, socket]);
 
-    const openModalUsernameWindow = () => {
-        setModalUsernameWindowIsOpen(true)
+    const openModalUsernameWindow = (userInfo) => {
+        setSelectedUserInfo(userInfo);
+        setModalUsernameWindowIsOpen(true);
     }
 
     const closeModalUsernameWindow = () => {
-        setModalUsernameWindowIsOpen(false)
+        setSelectedUserInfo(null);
+        setModalUsernameWindowIsOpen(false);
     }
     const closeModalAddUserWindow = () => {
         setModalAddUserWindowIsOpen(false)
@@ -151,7 +154,7 @@ function Chat() {
                                 key={index}
                                 className={`${msg.senderId === userid ? "sent" : "received"}`}
                             >
-                                <button className='username-button' onClick={openModalUsernameWindow}>
+                                <button className='username-button' onClick={() => openModalUsernameWindow({ username: msg.username, email: msg.email })}>
                                     {msg.username}
                                 </button>:
                                 {msg.content}
@@ -170,18 +173,20 @@ function Chat() {
                 />
                 <button onClick={sendMessageAndPicture}>Send message</button>
             </div>
-            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} 
-            ariaHideApp={false} className='modal-window-user-info'>
+            <Modal isOpen={modalUsernameModalWindowIsOpen} onRequestClose={closeModalUsernameWindow} ariaHideApp={false} className='modal-window-user-info'>
                 <h2>User info</h2>
                 <form className='modal-username-form'>
-                    <option>Email: {email}</option>
-                    <option>Name:  {username}</option>
-
+                    {selectedUserInfo && (
+                        <>
+                            <option>Email: {selectedUserInfo.email}</option>
+                            <option>Name:  {selectedUserInfo.username}</option>
+                        </>
+                    )}
                 </form>
             </Modal>
 
-            <Modal isOpen={modalAddUserModalWindowIsOpen} onRequestClose={closeModalAddUserWindow} 
-            ariaHideApp={false} className='modal-window-add-user'>
+            <Modal isOpen={modalAddUserModalWindowIsOpen} onRequestClose={closeModalAddUserWindow}
+                ariaHideApp={false} className='modal-window-add-user'>
                 <span>
                     <h2>Add users:</h2>
                     <input
@@ -196,7 +201,7 @@ function Chat() {
                             <p>Email: {modalAddUserWindowData.email}</p>
                             <p>Name: {modalAddUserWindowData.username}</p>
                             <button onClick={() => addFriendToChat(modalAddUserWindowData)}>
-                            Add {modalAddUserWindowData.username} to chat</button>
+                                Add {modalAddUserWindowData.username} to chat</button>
                         </div>
                     )}
                 </span>
