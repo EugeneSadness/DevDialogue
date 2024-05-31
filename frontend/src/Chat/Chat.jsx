@@ -20,9 +20,6 @@ function Chat() {
     const [modalAddUserModalWindowIsOpen, setModalAddUserWindowIsOpen] = useState(false);
     const [modalAddUserWindowData, setModalAddUserWindowData] = useState(null);
     const { username, userid, chatId, chatName, email } = location.state;
-
-
-
     const [theme, setTheme] = useState("light");
 
     const switchTheme = () => {
@@ -110,7 +107,7 @@ function Chat() {
     }, []);
 
     useEffect(() => {
-        socket.on("chat message", async (data) => {
+        socket.on("chatMessage", async (data) => {
             const isMessageAlreadyPresent = messages.some(
                 (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
             );
@@ -119,7 +116,7 @@ function Chat() {
                 setMessages((prevMessages) => [...prevMessages, data]);
             }
         });
-        return () => socket.off('chat message');
+        return () => socket.off('chatMessage');
     }, [messages, socket]);
 
     const openModalUsernameWindow = () => {
