@@ -29,7 +29,6 @@ function Chat() {
         setTheme((cur) => (cur === "light" ? "dark" : "light"))
     }
 
-
     if (token) {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
