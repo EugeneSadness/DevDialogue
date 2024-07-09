@@ -41,11 +41,12 @@ function Login() {
 
     return (
         <div className="signIn">
-            <h2>Sign in</h2>
+            <h2 className="title">Sign in</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Email:</label>
                     <input
+                        className="input"
                         type="text"
                         name="email"
                         value={formData.email}
@@ -56,13 +57,14 @@ function Login() {
                 <div className="form-group">
                     <label>Password:</label>
                     <input
+                        className="input"
                         type="password"
                         name="password"
                         value={formData.password}
                         onChange={handleInputChange}
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button className="submit" type="submit">Submit</button>
                 <div></div>
                 <Link to="/signup" className="button-reg">Sign up</Link>
             </form>
