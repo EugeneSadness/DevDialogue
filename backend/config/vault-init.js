@@ -80,7 +80,7 @@ async function migrateDatabaseCredentials() {
 
   try {
     // Check if secrets already exist
-    const secretPath = 'kv/data/app/database';
+    const secretPath = 'secret/app/database';
     const exists = await secretExists(secretPath);
     
     if (exists) {
@@ -94,7 +94,7 @@ async function migrateDatabaseCredentials() {
     }
 
     // Write database credentials to Vault
-    await vault.writeSecret('kv/data/app/database', {
+    await vault.writeSecret('secret/app/database', {
       data: {
         username: dbCredentials.username,
         password: dbCredentials.password,
@@ -124,7 +124,7 @@ async function migrateJwtSecret() {
 
   try {
     // Check if secrets already exist
-    const secretPath = 'kv/data/app/jwt';
+    const secretPath = 'secret/app/jwt';
     const exists = await secretExists(secretPath);
     
     if (exists) {
@@ -138,7 +138,7 @@ async function migrateJwtSecret() {
     }
 
     // Write JWT secret to Vault
-    await vault.writeSecret('kv/data/app/jwt', {
+    await vault.writeSecret('secret/app/jwt', {
       data: {
         secret: jwtSecret
       }
@@ -164,13 +164,13 @@ async function initializeVaultAndMigrateSecrets() {
     // Enable KV secrets engine version 2 if not already enabled
     try {
       await (await vault.getClient()).mount({
-        mount_point: 'kv',
+        mount_point: 'secret',
         type: 'kv',
         options: {
           version: '2'
         }
       });
-      console.log('KV secrets engine v2 enabled at /kv');
+      console.log('KV secrets engine v2 enabled at /secret');
     } catch (error) {
       if (error.response && error.response.statusCode === 400) {
         console.log('KV secrets engine already enabled');
@@ -204,8 +204,8 @@ async function checkVaultSecrets() {
     console.log('Checking if necessary secrets exist in Vault...');
     await vault.initVault();
     
-    const dbSecretExists = await secretExists('kv/data/app/database');
-    const jwtSecretExists = await secretExists('kv/data/app/jwt');
+    const dbSecretExists = await secretExists('secret/app/database');
+    const jwtSecretExists = await secretExists('secret/app/jwt');
 
     console.log(`Database credentials: ${dbSecretExists ? 'FOUND' : 'MISSING'}`);
     console.log(`JWT
@@ -290,13 +290,13 @@ async function initializeVault() {
     // Enable KV secrets engine version 2 if not already enabled
     try {
       await (await vault.getClient()).mount({
-        mount_point: 'kv',
+        mount_point: 'secret',
         type: 'kv',
         options: {
           version: '2'
         }
       });
-      console.log('KV secrets engine v2 enabled at /kv');
+      console.log('KV secrets engine v2 enabled at /secret');
     } catch (error) {
       if (error.response && error.response.statusCode === 400) {
         console.log('KV secrets engine already enabled');
@@ -309,7 +309,7 @@ async function initializeVault() {
     const jwtSecret = process.env.SECRET_JWT;
     if (jwtSecret) {
       console.log('Storing JWT secret...');
-      await vault.writeSecret('kv/data/app/jwt', {
+      await vault.writeSecret('secret/app/jwt', {
         data: {
           secret: jwtSecret
         }
@@ -329,7 +329,7 @@ async function initializeVault() {
     const dbHost = process.env.DB_HOST || dbConfig.host;
     const dbPort = process.env.DB_PORT || dbConfig.port || 5432;
     
-    await vault.writeSecret('kv/data/app/database', {
+    await vault.writeSecret('secret/app/database', {
       data: {
         username: dbUser,
         password: dbPassword,

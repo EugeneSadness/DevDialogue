@@ -24,7 +24,6 @@ class chatController {
                 return next(ApiError.badRequest('Title is too long!'));
             }
             
-            // Получаем модели из промиса
             const { Chat, ChatUsers, UserType } = await modelsPromise;
             
             const chat = await Chat.create({ title: title });
@@ -44,7 +43,6 @@ class chatController {
             const { chatId } = req.body;
             const id = await this.getUserByToken(req);
             
-            // Получаем модели из промиса
             const { Chat, ChatUsers } = await modelsPromise;
             
             const isCreator = await ChatUsers.findOne({ where: { id: chatId, userId: id, userTypeId: process.env.USER_TYPE_CREATOR } })
@@ -68,7 +66,6 @@ class chatController {
             const id = await this.getUserByToken(req);
             const chatId = req.params.chatid;
             
-            // Получаем модели из промиса
             const { ChatUsers } = await modelsPromise;
             
             const isExist = await ChatUsers.findOne({ where: { chatId: chatId } });
@@ -93,7 +90,6 @@ class chatController {
             const userIdPromise = this.getUserByToken(req);
             const userId = await userIdPromise;
             
-            // Получаем модели из промиса
             const { Chat, ChatUsers } = await modelsPromise;
 
             const userChats = await ChatUsers.findAll({
@@ -134,7 +130,6 @@ class chatController {
         try{
             const {chatId, recieverId, inviterId} = req.body;
             
-            // Получаем модели из промиса
             const { Chat, ChatUsers, UserType } = await modelsPromise;
             
             const checkChat = await Chat.findOne({where: {id:chatId }});

@@ -6,10 +6,8 @@ const { tokenService } = require('../middleware/tokenService');
 const vault = require('../config/vault');
 require("dotenv").config();
 
-// Function to get JWT secret from Vault with fallback to environment variables
 async function getJwtSecret() {
     try {
-        // Try to get the secret from Vault
         await vault.initVault();
         const secret = await vault.readSecret('kv/data/app/jwt', 'secret');
         return secret;
@@ -18,8 +16,6 @@ async function getJwtSecret() {
         return process.env.SECRET_JWT;
     }
 }
-
-// Cache the JWT secret to avoid repeated Vault calls
 let cachedJwtSecret = null;
 async function getCachedJwtSecret() {
     if (!cachedJwtSecret) {
@@ -43,7 +39,6 @@ class UserController {
                 return next(ApiError.badRequest('Incorrect password or email!'));
             }
             
-            // Получаем модель User из промиса
             const { User } = await modelsPromise;
             
             const checkEmail = await User.findOne({ where: { email } });
@@ -65,7 +60,6 @@ class UserController {
         try {
             const { email, password } = req.body;
             
-            // Получаем модель User из промиса
             const { User } = await modelsPromise;
             
             const user = await User.findOne({ where: { email } });
@@ -120,7 +114,6 @@ class UserController {
         try {
             const id = req.params.id;
             
-            // Получаем модель User из промиса
             const { User } = await modelsPromise;
             
             const user = await User.findOne({ where: { id: id } });
@@ -141,7 +134,6 @@ class UserController {
                 return next(ApiError.badRequest("Name is empty!"));
             }
             
-            // Получаем модель User из промиса
             const { User } = await modelsPromise;
             
             const user = await User.findOne({where: {name: name}});

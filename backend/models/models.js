@@ -46,7 +46,8 @@ async function initModels() {
 
         ChatMessages = sequelize.define('chatMessages', {
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-            name: { type: DataTypes.STRING, unique: false, allowNull: false }
+            messageId: { type: DataTypes.INTEGER, allowNull: false },
+            chatId: { type: DataTypes.INTEGER, allowNull: false }
         });
 
         Message = sequelize.define('message', {
@@ -70,8 +71,16 @@ async function initModels() {
         Message.belongsToMany(File, { through: MessageFiles });
         File.belongsToMany(Message, { through: MessageFiles });
 
-        Chat.belongsToMany(Message, { through: ChatMessages });
-        Message.belongsToMany(Chat, { through: ChatMessages });
+        Chat.belongsToMany(Message, { 
+            through: ChatMessages,
+            foreignKey: 'chatId',
+            otherKey: 'messageId'
+        });
+        Message.belongsToMany(Chat, { 
+            through: ChatMessages,
+            foreignKey: 'messageId',
+            otherKey: 'chatId'
+        });
 
         ChatUsers.belongsTo(UserType, { foreignKey: UserType.id });
         UserType.hasMany(ChatUsers, { foreignKey: UserType.id });
@@ -89,5 +98,4 @@ async function initModels() {
     }
 }
 
-// Экспортируем промис, который разрешается в объект с моделями
 module.exports = initModels();

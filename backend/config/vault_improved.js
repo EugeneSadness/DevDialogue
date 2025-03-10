@@ -8,11 +8,7 @@ const vault = require('node-vault');
 const VAULT_CONFIG = {
   apiVersion: 'v1',
   endpoint: process.env.VAULT_ADDR || 'http://vault:8200',
-  token: process.env.VAULT_TOKEN || 'fullstack-root-token',
-  // Добавляем таймаут для запросов к Vault
-  timeout: 5000,
-  // Добавляем путь к секретам
-  mount: 'secret'
+  token: process.env.VAULT_TOKEN || 'fullstack-root-token'
 };
 
 /**
@@ -80,83 +76,67 @@ const initVault = async () => {
  * @returns {Promise<any>} - The secret value
  */
 const readSecret = async (path, key = null) => {
-  // Define all path variables at the top level to ensure they're always available
-  let secretPath = '';
-  let kvDataPath = '';
-  let originalPath = path;
-  
   try {
     // Ensure Vault client is initialized
     const client = await initVault();
     
+    // Adjust path if needed
+    let adjustedPath = path;
     console.log(`Чтение секрета из Vault по пути: ${path}`);
     
-    // First try with secret/ prefix which is the standard mount point
-    async function tryReadPath(pathToTry) {
-      console.log(`Попытка чтения секрета по пути: ${pathToTry}`);
-      const { data } = await client.read(pathToTry);
-      
-      // Handle KV v2 storage format which nests data under a 'data' field
-      if (key && data && data.data) {
-        return data.data[key];
-      } else if (data && data.data) {
-        return data.data;
-      }
-      
-      // Return the entire data object for KV v1 or other formats
-      return data;
+    // Check if path already has a proper prefix
+    if (!path.startsWith('secret/') && !path.startsWith('secret/data/')) {
+      // Try with proper prefix for KV v2
+      adjustedPath = `secret/data/${path}`;
+      console.log(`Попытка чтения секрета по пути: ${adjustedPath}`);
     }
     
-    // Check if path already has a mount point prefix
-    if (path.startsWith('secret/')) {
-      // Path already has the correct prefix
-      return await tryReadPath(path);
-    } else if (!path.includes('/')) {
-      // For simple paths without a slash, try with secret/ prefix
-      secretPath = `secret/${path}`;
-      return await tryReadPath(secretPath);
-    } else {
-      // For paths that might be partial paths like app/database
-      secretPath = `secret/${path}`;
-      kvDataPath = path.startsWith('kv/data/') ? path : `kv/data/${path}`;
+    try {
+      // Read secret from the adjusted path
+      const { data } = await client.read(adjustedPath);
       
-      // First try with secret/ prefix
-      try {
-        return await tryReadPath(secretPath);
-      } catch (secretPathError) {
-        console.log(`Не удалось прочитать секрет из ${secretPath}: ${secretPathError.message}`);
-        
-        // If secret/ fails, try with the KV path pattern
-        if (path.startsWith('kv/data/')) {
-          // Path already has kv/data/ prefix
-          try {
-            return await tryReadPath(path);
-          } catch (kvPrefixError) {
-            console.log(`Не удалось прочитать секрет из ${path}: ${kvPrefixError.message}`);
-            // Last resort, try original path
-            return await tryReadPath(originalPath);
-          }
-        } else {
-          // Try with kv/data/ prefix as fallback
-          try {
-            return await tryReadPath(kvDataPath);
-          } catch (kvDataPathError) {
-            console.log(`Не удалось прочитать секрет из ${kvDataPath}: ${kvDataPathError.message}`);
-            
-            // As a last resort, try the original path
-            return await tryReadPath(originalPath);
-          }
-        }
+      // If key is specified, return only that key's value
+      if (key && data && data.data) {
+        return data.data[key];
       }
+      
+      // Otherwise return all data
+      return data;
+    } catch (firstError) {
+      // If the adjusted path failed and we added a prefix, try without the prefix
+      if (adjustedPath !== path) {
+        console.log(`Не удалось прочитать секрет с префиксом, пробуем без него: ${path}`);
+        const { data } = await client.read(path);
+        
+        // If key is specified, return only that key's value
+        if (key && data && data.data) {
+          return data.data[key];
+        }
+        
+        // Otherwise return all data
+        return data;
+      }
+      
+      // If we're reading from a path starting with secret/ but not secret/data/, try with data/
+      if (path.startsWith('secret/') && !path.startsWith('secret/data/')) {
+        const dataPath = path.replace('secret/', 'secret/data/');
+        console.log(`Пробуем с путем для KV v2: ${dataPath}`);
+        const { data } = await client.read(dataPath);
+        
+        // If key is specified, return only that key's value
+        if (key && data && data.data) {
+          return data.data[key];
+        }
+        
+        // Otherwise return all data
+        return data;
+      }
+      
+      // If all attempts have failed, re-throw the original error
+      throw firstError;
     }
   } catch (error) {
     console.error(`Failed to read secret from ${path}: ${error.message}`);
-    
-    let triedPaths = [originalPath];
-    if (secretPath) triedPaths.push(secretPath);
-    if (kvDataPath) triedPaths.push(kvDataPath);
-    
-    console.log(`Не удалось получить секреты по пути '${path}'. Tried paths: ${triedPaths.join(', ')}`);
     
     // Проверяем, есть ли переменная окружения с таким же именем
     if (key && path.includes('/')) {
@@ -190,9 +170,16 @@ const writeSecret = async (path, data) => {
     // Ensure Vault client is initialized
     const client = await initVault();
     
+    // Adjust path if needed for KV v2
+    let adjustedPath = path;
+    if (!path.startsWith('secret/') && !path.startsWith('secret/data/')) {
+      adjustedPath = `secret/data/${path}`;
+      console.log(`Adjusting path for KV v2: ${adjustedPath}`);
+    }
+    
     // Write the secret
-    const result = await client.write(path, { data });
-    console.log(`Secret written to ${path}`);
+    const result = await client.write(adjustedPath, { data });
+    console.log(`Secret written to ${adjustedPath}`);
     
     return result;
   } catch (error) {
@@ -212,9 +199,16 @@ const deleteSecret = async (path) => {
     // Ensure Vault client is initialized
     const client = await initVault();
     
+    // Adjust path if needed for KV v2
+    let adjustedPath = path;
+    if (!path.startsWith('secret/') && !path.startsWith('secret/data/')) {
+      adjustedPath = `secret/data/${path}`;
+      console.log(`Adjusting path for KV v2: ${adjustedPath}`);
+    }
+    
     // Delete the secret
-    const result = await client.delete(path);
-    console.log(`Secret deleted from ${path}`);
+    const result = await client.delete(adjustedPath);
+    console.log(`Secret deleted from ${adjustedPath}`);
     
     return result;
   } catch (error) {
@@ -234,10 +228,31 @@ const listSecrets = async (path) => {
     // Ensure Vault client is initialized
     const client = await initVault();
     
-    // List secrets at path
-    const { data } = await client.list(path);
+    // Adjust path if needed
+    let adjustedPath = path;
+    if (!path.startsWith('secret/') && !path.startsWith('secret/data/')) {
+      adjustedPath = `secret/${path}`;
+      console.log(`Adjusting path for listing: ${adjustedPath}`);
+    }
     
-    return data?.keys || [];
+    // List requires the metadata path format for KV v2
+    if (adjustedPath.startsWith('secret/data/')) {
+      adjustedPath = adjustedPath.replace('secret/data/', 'secret/metadata/');
+    }
+    
+    try {
+      // List secrets at adjusted path
+      const { data } = await client.list(adjustedPath);
+      return data?.keys || [];
+    } catch (firstError) {
+      // If that fails, try with the original path
+      if (adjustedPath !== path) {
+        console.log(`Listing failed with adjusted path, trying original: ${path}`);
+        const { data } = await client.list(path);
+        return data?.keys || [];
+      }
+      throw firstError;
+    }
   } catch (error) {
     console.error(`Failed to list secrets at ${path}: ${error.message}`);
     // Для списка не используем fallback, просто возвращаем пустой массив

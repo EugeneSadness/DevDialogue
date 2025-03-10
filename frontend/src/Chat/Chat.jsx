@@ -40,15 +40,25 @@ function Chat() {
             
             if (!chatId) {
                 console.error('Отсутствует ID чата');
+                setMessages([]);
                 return;
             }
             
+            const chatIdNum = Number(chatId);
+            if (isNaN(chatIdNum)) {
+                console.error('ID чата не является числом:', chatId);
+                setMessages([]);
+                return;
+            }
+            
+            console.log('Отправка запроса на сервер с ID чата:', chatIdNum);
+            
             const response = await Axios.post(
                 `${process.env.REACT_APP_BACK_URL}/api/message/getAllMessagesFromChat`, 
-                { chatId: chatId }
+                { chatId: chatIdNum }
             );
             
-            console.log('Ответ от сервера:', response.status);
+            console.log('Ответ от сервера:', response.status, response.statusText);
             
             if (response.status === 200) {
                 const data = response.data;
@@ -62,11 +72,22 @@ function Chat() {
                     setMessages([]);
                 }
             } else {
-                console.error('Ошибка при загрузке сообщений:', response.status);
+                console.error('Ошибка при загрузке сообщений:', response.status, response.statusText);
                 setMessages([]);
             }
         } catch (error) {
             console.error('Ошибка при загрузке сообщений:', error);
+            
+            if (error.response) {
+                console.error('Данные ответа сервера:', error.response.data);
+                console.error('Статус ответа:', error.response.status);
+                console.error('Заголовки ответа:', error.response.headers);
+            } else if (error.request) {
+                console.error('Запрос был отправлен, но ответ не получен:', error.request);
+            } else {
+                console.error('Ошибка при настройке запроса:', error.message);
+            }
+            
             setMessages([]);
         }
     };
@@ -90,7 +111,6 @@ function Chat() {
         console.log('Отправка сообщения через сокет:', messageData);
         socket.emit('chatMessage', messageData);
         
-        // Добавляем сообщение локально для мгновенного отображения
         setMessages(prevMessages => [
             ...prevMessages,
             {
@@ -119,17 +139,6 @@ function Chat() {
         })
     };
 
-    const deleteAllMessagesFromChat = async () => {
-        try {
-            const response = await Axios.post(process.env.REACT_APP_BACK_URL + '/api/message/delAllMessagesFromChat',
-                { chatId });
-            setMessages([]);
-            setMessage('');
-        } catch (error) {
-            console.error('Error deleting all messages:', error);
-        }
-    };
-
     const findFriend = async (friendName) => {
         try {
             const response = await Axios.post(process.env.REACT_APP_BACK_URL + '/api/user/findUserByName',
@@ -154,31 +163,25 @@ function Chat() {
         fetchMessagesFromDatabase();
     }, []);
 
-    // Инициализация сокета и обработка сообщений
     useEffect(() => {
-        // Переподключаем сокет при монтировании компонента
         socket.connect();
         
         console.log('Сокет подключен, ожидание сообщений');
         
-        // Функция обработки входящих сообщений
         const handleChatMessage = (data) => {
             console.log('Получено сообщение через сокет:', data);
             
-            // Проверка валидности данных
             if (!data || !data.content || !data.chatId) {
                 console.error('Некорректные данные сообщения:', data);
                 return;
             }
             
-            // Проверка, относится ли сообщение к текущему чату
             if (data.chatId !== chatId) {
                 console.log('Сообщение не для этого чата:', data.chatId);
                 return;
             }
 
             setMessages((prevMessages) => {
-                // Проверка на дубликаты по содержимому и отправителю
                 const isMessageAlreadyPresent = prevMessages.some(msg => 
                     msg.content === data.content && 
                     msg.senderId === data.senderId && 
@@ -195,15 +198,13 @@ function Chat() {
             });
         };
 
-        // Подписка на событие сообщений
         socket.on('chatMessage', handleChatMessage);
         
-        // Отписка при размонтировании компонента
         return () => {
             console.log('Отключение от сокета');
             socket.off('chatMessage', handleChatMessage);
         };
-    }, [chatId]); // Зависимость от chatId для переподключения при смене чата
+    }, [chatId]);
 
     const openModalUsernameWindow = (userInfo) => {
         setSelectedUserInfo(userInfo);
@@ -312,13 +313,6 @@ function Chat() {
                     )}
                 </span>
             </Modal>
-            
-
-            {/* Delete All Messages Button
-            <div className="delete-all-button">
-                <button className="delete-button" onClick={deleteAllMessagesFromChat}>Delete All Messages</button>
-            </div>
-            */}
         </div>
     );
 

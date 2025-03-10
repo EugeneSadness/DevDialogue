@@ -9,7 +9,8 @@ module.exports = function(req, res, next){
         if(!token){
             res.status(401).json({message: "User is not authorized!"});
         }
-        const decoded = jwt.verify(token, process.env.SECRETJWT);
+        // Используем тот же секрет, что и в tokenService.js
+        const decoded = jwt.verify(token, process.env.SECRETJWT || "random_secret");
         req.user = decoded;
         next();
     } catch (e){
