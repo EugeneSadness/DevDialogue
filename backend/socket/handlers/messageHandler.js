@@ -58,13 +58,15 @@ async function handleMessage(io, msg) {
         
         console.log("Пытаемся создать новое сообщение:", newMessage);
         
+        let messageId;
         try {
             const message = await Message.create(newMessage);
-            console.log("Создано новое сообщение в базе данных:", message.id);
+            messageId = message.id;
+            console.log("Создано новое сообщение в базе данных:", messageId);
             
             try {
                 const chatMessage = await ChatMessages.create({
-                    messageId: message.id, 
+                    messageId: messageId, 
                     chatId: msg.chatId,
                     name: message.content
                 });
@@ -97,7 +99,7 @@ async function handleMessage(io, msg) {
         const messageToSend = {
             ...msg,
             ...userData,
-            id: message.id,
+            id: messageId,
             timestamp: new Date().toISOString()
         };
         
