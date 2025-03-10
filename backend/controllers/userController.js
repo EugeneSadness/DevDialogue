@@ -1,13 +1,37 @@
 const ApiError = require("../Error/ApiError");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
-const { User } = require('../models/models');
+const modelsPromise = require('../models/models');
 const { tokenService } = require('../middleware/tokenService');
+const vault = require('../config/vault');
 require("dotenv").config();
 
-const generateJWT = (id, name, email) => {
+// Function to get JWT secret from Vault with fallback to environment variables
+async function getJwtSecret() {
+    try {
+        // Try to get the secret from Vault
+        await vault.initVault();
+        const secret = await vault.readSecret('kv/data/app/jwt', 'secret');
+        return secret;
+    } catch (error) {
+        console.log('Failed to get JWT secret from Vault, using environment variable instead:', error.message);
+        return process.env.SECRET_JWT;
+    }
+}
+
+// Cache the JWT secret to avoid repeated Vault calls
+let cachedJwtSecret = null;
+async function getCachedJwtSecret() {
+    if (!cachedJwtSecret) {
+        cachedJwtSecret = await getJwtSecret();
+    }
+    return cachedJwtSecret;
+}
+
+const generateJWT = async (id, name, email) => {
+    const secret = await getCachedJwtSecret();
     return jwt.sign({ id, name, email },
-        process.env.SECRET_JWT,
+        secret,
         { expiresIn: '24h' });
 };
 
@@ -18,6 +42,10 @@ class UserController {
             if (!email || !password || !name) {
                 return next(ApiError.badRequest('Incorrect password or email!'));
             }
+            
+            // Получаем модель User из промиса
+            const { User } = await modelsPromise;
+            
             const checkEmail = await User.findOne({ where: { email } });
             const checkUserName = await User.findOne({ where: { name } });
             if(checkEmail || checkUserName){
@@ -25,7 +53,7 @@ class UserController {
             }
             const hashPassword = await bcrypt.hash(password, 5);
             const user = await User.create({ name, email, password: hashPassword });
-            const token = generateJWT(user.id, user.name, user.email);
+            const token = await generateJWT(user.id, user.name, user.email);
             return res.json({ unvailableEmail: !!checkEmail, unavailableUserName: !!checkUserName, token: token, id: user.id });
         } catch (error) {
             console.error("Error with registration", error);
@@ -36,6 +64,10 @@ class UserController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
+            
+            // Получаем модель User из промиса
+            const { User } = await modelsPromise;
+            
             const user = await User.findOne({ where: { email } });
             if (!user) {
                 return next(ApiError.badRequest('User was not found!'));
@@ -44,7 +76,7 @@ class UserController {
             if (!comparePassword) {
                 return next(ApiError.badRequest('Uncorrect password'));
             }
-            const token = generateJWT(user.id, user.name, user.email);
+            const token = await generateJWT(user.id, user.name, user.email);
             return res.json({ token: token, name: user.name, id: user.id, email: user.email});
         } catch (error) {
             console.error("Error with login", error);
@@ -58,7 +90,8 @@ class UserController {
             if (!token) {
                 return next(ApiError.badRequest('Token is empty'));
             }
-            const decoded = jwt.verify(token, process.env.SECRET_JWT);
+            const secret = await getCachedJwtSecret();
+            const decoded = jwt.verify(token, secret);
             const userId = decoded.id;
             return res.json({ userId });
         } catch (error) {
@@ -73,7 +106,8 @@ class UserController {
             if (!token) {
                 return next(ApiError.badRequest('Token is empty'));
             }
-            const decoded = jwt.verify(token, process.env.SECRET_JWT);
+            const secret = await getCachedJwtSecret();
+            const decoded = jwt.verify(token, secret);
             const name = decoded.name;
             return res.json({ name });
         } catch (error) {
@@ -85,8 +119,12 @@ class UserController {
     async getNameById(req, res, next) {
         try {
             const id = req.params.id;
-            const user = User.findOne({ where: { id: id } });
-            if (!User) {
+            
+            // Получаем модель User из промиса
+            const { User } = await modelsPromise;
+            
+            const user = await User.findOne({ where: { id: id } });
+            if (!user) {
                 return next(ApiError.badRequest("User was not found!"));
             }
             return res.json(user.name);
@@ -102,7 +140,14 @@ class UserController {
             if(!name){
                 return next(ApiError.badRequest("Name is empty!"));
             }
+            
+            // Получаем модель User из промиса
+            const { User } = await modelsPromise;
+            
             const user = await User.findOne({where: {name: name}});
+            if (!user) {
+                return next(ApiError.badRequest("User was not found!"));
+            }
             return res.json({ username: user.name, userid: user.id, email: user.email });
         } catch (error) {
             console.error("User was not found!", error);

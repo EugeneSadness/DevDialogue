@@ -1,71 +1,93 @@
-const sequelize = require('../db');
+const sequelizePromise = require('../db');
 const { DataTypes } = require('sequelize');
 
-const User = sequelize.define('user', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, allowNull: false, unique: true },
-    email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    password: { type: DataTypes.STRING, allowNull: false },
-    profileInfo: { type: DataTypes.STRING }
-});
+// Модели будут определены после инициализации Sequelize
+let User, ChatUsers, UserType, UserFriends, Chat, Friendship, 
+    ChatMessages, Message, MessageFiles, File;
 
-const ChatUsers = sequelize.define('chatUsers', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
-});
+// Асинхронная функция для инициализации моделей
+async function initModels() {
+    try {
+        // Ожидаем получения экземпляра Sequelize
+        const sequelize = await sequelizePromise;
+        
+        // Определяем модели
+        User = sequelize.define('user', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+            name: { type: DataTypes.STRING, allowNull: false, unique: true },
+            email: { type: DataTypes.STRING, allowNull: false, unique: true },
+            password: { type: DataTypes.STRING, allowNull: false },
+            profileInfo: { type: DataTypes.STRING }
+        });
 
-const UserType = sequelize.define('userType', {
-    id: { type: DataTypes.INTEGER, primaryKey: true }
-});
+        ChatUsers = sequelize.define('chatUsers', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+        });
 
-const UserFriends = sequelize.define('userFriends', {
-    id: { type: DataTypes.INTEGER, primaryKey: true }
-});
+        UserType = sequelize.define('userType', {
+            id: { type: DataTypes.INTEGER, primaryKey: true }
+        });
 
-const Chat = sequelize.define('chat', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    title: { type: DataTypes.STRING, allowNull: false }
-});
+        UserFriends = sequelize.define('userFriends', {
+            id: { type: DataTypes.INTEGER, primaryKey: true }
+        });
 
-const Friendship = sequelize.define('friendship', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    user1Id: { type: DataTypes.INTEGER, allowNull: false },
-    user2Id: { type: DataTypes.INTEGER,allowNull: false},
-    status: { type: DataTypes.ENUM('pending', 'accepted', 'rejected'), allowNull: false, defaultValue: 'pending'}
-});
+        Chat = sequelize.define('chat', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+            title: { type: DataTypes.STRING, allowNull: false }
+        });
 
-const ChatMessages = sequelize.define('chatMessages', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: false, allowNull: false }
-});
+        Friendship = sequelize.define('friendship', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+            user1Id: { type: DataTypes.INTEGER, allowNull: false },
+            user2Id: { type: DataTypes.INTEGER, allowNull: false },
+            status: { type: DataTypes.ENUM('pending', 'accepted', 'rejected'), allowNull: false, defaultValue: 'pending' }
+        });
 
-const Message = sequelize.define('message', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    senderId: { type: DataTypes.INTEGER, allowNull: false },
-    content: { type: DataTypes.STRING, unique: false }
-});
+        ChatMessages = sequelize.define('chatMessages', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+            name: { type: DataTypes.STRING, unique: false, allowNull: false }
+        });
 
-const MessageFiles = sequelize.define('messageFiles', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
-});
+        Message = sequelize.define('message', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+            senderId: { type: DataTypes.INTEGER, allowNull: false },
+            content: { type: DataTypes.STRING, unique: false }
+        });
 
-const File = sequelize.define('file', {
-    path: { type: DataTypes.STRING, unique: true }
-});
+        MessageFiles = sequelize.define('messageFiles', {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+        });
 
-User.belongsToMany(Chat, { through: ChatUsers });
-Chat.belongsToMany(User, { through: ChatUsers });
+        File = sequelize.define('file', {
+            path: { type: DataTypes.STRING, unique: true }
+        });
 
-Message.belongsToMany(File, { through: MessageFiles });
-File.belongsToMany(Message, { through: MessageFiles });
+        // Определяем связи между моделями
+        User.belongsToMany(Chat, { through: ChatUsers });
+        Chat.belongsToMany(User, { through: ChatUsers });
 
-Chat.belongsToMany(Message, { through: ChatMessages });
-Message.belongsToMany(Chat, { through: ChatMessages });
+        Message.belongsToMany(File, { through: MessageFiles });
+        File.belongsToMany(Message, { through: MessageFiles });
 
-ChatUsers.belongsTo(UserType, { foreignKey: UserType.id });
-UserType.hasMany(ChatUsers, { foreignKey: UserType.id });
+        Chat.belongsToMany(Message, { through: ChatMessages });
+        Message.belongsToMany(Chat, { through: ChatMessages });
 
-module.exports = {
-    User, UserType, UserFriends,
-    ChatUsers, Chat, Message, ChatMessages,
-    MessageFiles, File
-};
+        ChatUsers.belongsTo(UserType, { foreignKey: UserType.id });
+        UserType.hasMany(ChatUsers, { foreignKey: UserType.id });
+
+        console.log('Модели успешно инициализированы');
+        
+        return {
+            User, UserType, UserFriends,
+            ChatUsers, Chat, Message, ChatMessages,
+            MessageFiles, File, Friendship
+        };
+    } catch (error) {
+        console.error('Ошибка при инициализации моделей:', error);
+        throw error;
+    }
+}
+
+// Экспортируем промис, который разрешается в объект с моделями
+module.exports = initModels();

@@ -1,5 +1,5 @@
 const ApiError = require("../Error/ApiError");
-const { Chat, ChatUsers, UserType, User } = require('../models/models');
+const modelsPromise = require('../models/models');
 const { extractUserDataFromToken } = require("../middleware/tokenService");
 require("dotenv").config();
 
@@ -23,6 +23,10 @@ class chatController {
             if (title.length > process.env.CHAT_TITLE_LIMIT) {
                 return next(ApiError.badRequest('Title is too long!'));
             }
+            
+            // Получаем модели из промиса
+            const { Chat, ChatUsers, UserType } = await modelsPromise;
+            
             const chat = await Chat.create({ title: title });
             const checkType = await UserType.findOne({where:{id: process.env.USER_TYPE_CREATOR}});
             if(!checkType){
@@ -39,6 +43,10 @@ class chatController {
         try {
             const { chatId } = req.body;
             const id = await this.getUserByToken(req);
+            
+            // Получаем модели из промиса
+            const { Chat, ChatUsers } = await modelsPromise;
+            
             const isCreator = await ChatUsers.findOne({ where: { id: chatId, userId: id, userTypeId: process.env.USER_TYPE_CREATOR } })
             if (isCreator === 0) {
                 return next(ApiError.badRequest("User is not the creator!"));
@@ -59,6 +67,10 @@ class chatController {
         try {
             const id = await this.getUserByToken(req);
             const chatId = req.params.chatid;
+            
+            // Получаем модели из промиса
+            const { ChatUsers } = await modelsPromise;
+            
             const isExist = await ChatUsers.findOne({ where: { chatId: chatId } });
             if (isExist === 0) {
                 return next(ApiError.badRequest("Chat is not exist!"));
@@ -80,6 +92,9 @@ class chatController {
         try {
             const userIdPromise = this.getUserByToken(req);
             const userId = await userIdPromise;
+            
+            // Получаем модели из промиса
+            const { Chat, ChatUsers } = await modelsPromise;
 
             const userChats = await ChatUsers.findAll({
                 where: { userId: userId },
@@ -118,7 +133,11 @@ class chatController {
     async addUserToChat(req, res, next){
         try{
             const {chatId, recieverId, inviterId} = req.body;
-            const checkChat = await Chat.findOne({id:chatId });
+            
+            // Получаем модели из промиса
+            const { Chat, ChatUsers, UserType } = await modelsPromise;
+            
+            const checkChat = await Chat.findOne({where: {id:chatId }});
             if(!checkChat){
                 return next(ApiError.internal("Chat wasnt found"));
             }
@@ -138,7 +157,7 @@ class chatController {
             return res.json({status: 200});
         } catch (error) {
             console.error("Error adding member", error);
-            return res(ApiError.internal("Error adding member"));
+            return next(ApiError.internal("Error adding member"));
         }
     }
 }

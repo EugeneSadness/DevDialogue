@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-const sequelize = require("./db.js");
+const sequelizePromise = require("./db.js");
 const cors = require("cors");
 const router = require("./routes/index");
 const errorHandler = require("./middleware/ErrorHandlingMiddleware.js");
@@ -26,13 +26,19 @@ app.get("/", (req, res) => {
 
 const start = async () => {
   try {
+    // Await the Promise to get the Sequelize instance
+    const sequelize = await sequelizePromise;
+    
+    // Now we can use the sequelize instance
     await sequelize.authenticate();
     await sequelize.sync();
+    
     httpServer.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });
   } catch (error) {
-    console.error("Failed to connect to the DataBase:", error);
+    console.error("Failed to start server:", error);
+    process.exit(1); // Exit the process with an error code
   }
 };
 
