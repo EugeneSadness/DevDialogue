@@ -31,13 +31,10 @@ function Chat() {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
         navigate("/", { replace: true });
-        console.log("No token provided!");
     }
 
     const fetchMessagesFromDatabase = async () => {
         try {
-            console.log('Попытка загрузить сообщения для чата:', chatId);
-            
             if (!chatId) {
                 console.error('Отсутствует ID чата');
                 setMessages([]);
@@ -51,43 +48,26 @@ function Chat() {
                 return;
             }
             
-            console.log('Отправка запроса на сервер с ID чата:', chatIdNum);
-            
             const response = await Axios.post(
                 `${process.env.REACT_APP_BACK_URL}/api/message/getAllMessagesFromChat`, 
                 { chatId: chatIdNum }
             );
             
-            console.log('Ответ от сервера:', response.status, response.statusText);
-            
             if (response.status === 200) {
                 const data = response.data;
-                console.log('Полученные данные:', data);
                 
                 if (Array.isArray(data)) {
-                    console.log('Успешно загружены сообщения:', data.length);
                     setMessages(data);
                 } else {
-                    console.error('Получены некорректные данные сообщений:', data);
+                    console.error('Получены некорректные данные сообщений');
                     setMessages([]);
                 }
             } else {
-                console.error('Ошибка при загрузке сообщений:', response.status, response.statusText);
+                console.error('Ошибка при загрузке сообщений:', response.status);
                 setMessages([]);
             }
         } catch (error) {
-            console.error('Ошибка при загрузке сообщений:', error);
-            
-            if (error.response) {
-                console.error('Данные ответа сервера:', error.response.data);
-                console.error('Статус ответа:', error.response.status);
-                console.error('Заголовки ответа:', error.response.headers);
-            } else if (error.request) {
-                console.error('Запрос был отправлен, но ответ не получен:', error.request);
-            } else {
-                console.error('Ошибка при настройке запроса:', error.message);
-            }
-            
+            console.error('Ошибка при загрузке сообщений:', error.message || error);
             setMessages([]);
         }
     };
@@ -96,7 +76,6 @@ function Chat() {
 
     const sendMessageAndPicture = () => {
         if (!message.trim()) {
-            console.log('Пустое сообщение не отправляется');
             return;
         }
         
@@ -108,7 +87,6 @@ function Chat() {
             chatId: chatId 
         };
         
-        console.log('Отправка сообщения через сокет:', messageData);
         socket.emit('chatMessage', messageData);
         
         setMessages(prevMessages => [
@@ -166,18 +144,13 @@ function Chat() {
     useEffect(() => {
         socket.connect();
         
-        console.log('Сокет подключен, ожидание сообщений');
-        
         const handleChatMessage = (data) => {
-            console.log('Получено сообщение через сокет:', data);
-            
             if (!data || !data.content || !data.chatId) {
-                console.error('Некорректные данные сообщения:', data);
+                console.error('Некорректные данные сообщения');
                 return;
             }
             
             if (data.chatId !== chatId) {
-                console.log('Сообщение не для этого чата:', data.chatId);
                 return;
             }
 
@@ -189,11 +162,9 @@ function Chat() {
                 );
 
                 if (!isMessageAlreadyPresent) {
-                    console.log('Добавлено новое сообщение:', data);
                     return [...prevMessages, data];
                 }
                 
-                console.log('Сообщение уже существует, пропускаем');
                 return prevMessages;
             });
         };
@@ -201,7 +172,6 @@ function Chat() {
         socket.on('chatMessage', handleChatMessage);
         
         return () => {
-            console.log('Отключение от сокета');
             socket.off('chatMessage', handleChatMessage);
         };
     }, [chatId]);
@@ -232,15 +202,6 @@ function Chat() {
                     Add user to chat!
                 </button>
             </span>
-            <nav className='sidebar'>
-                <header>
-                    <div className='image-text'>
-                        <span className='image'>
-                            <img src="logo.png" alt="logo" />
-                        </span>
-                    </div>
-                </header>
-            </nav>
             <div className="chat-container">
                 <div style={{ color: theme === "light" ? "black" : "yellow" }} className="messages">
                     {messages && messages.length > 0 ? (

@@ -19,7 +19,6 @@ function ChatList() {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
         navigate("/", { replace: true });
-        console.log("No token provided!");
     };
 
     const openModal = () => {

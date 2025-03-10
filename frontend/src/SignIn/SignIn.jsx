@@ -21,7 +21,6 @@ function Login() {
         e.preventDefault();
         try {
             const response = await Axios.post(process.env.REACT_APP_BACK_URL+'/api/user/login', formData);
-            console.log('Ответ от сервера:', response.data);
 
             const token = response.data.token;
 
@@ -32,7 +31,7 @@ function Login() {
             navigate('/user', { state: {userid: response.data.id, username: response.data.name, email: response.data.email}, replace: true });
 
         } catch (error) {
-            console.error('Ошибка при отправке данных:', error);
+            console.error('Ошибка при отправке данных:', error.response?.data?.message || error.message || error);
         }
     };
 
