@@ -12,7 +12,6 @@ async function initializeModels() {
         Chat = models.Chat;
         ChatMessages = models.ChatMessages;
         User = models.User;
-        console.log('Модели успешно загружены в обработчике сообщений');
         return true;
     } catch (error) {
         console.error('Ошибка при инициализации моделей в обработчике сообщений:', error);
@@ -24,7 +23,6 @@ initializeModels();
 
 async function handleMessage(io, msg) {
     if (!Chat || !ChatMessages || !Message || !User) {
-        console.log('Модели не инициализированы, пытаемся инициализировать...');
         const initialized = await initializeModels();
         if (!initialized || !Chat || !ChatMessages || !Message || !User) {
             console.error('Не удалось инициализировать модели');
@@ -33,10 +31,8 @@ async function handleMessage(io, msg) {
         }
     }
     try {
-        console.log("Получены данные сообщения:", JSON.stringify(msg));
-        
         if (!msg.content || !msg.senderId || !msg.chatId) {
-            console.error("Отсутствуют обязательные поля в сообщении", msg);
+            console.error("Отсутствуют обязательные поля в сообщении");
             return;
         }
         
@@ -56,13 +52,10 @@ async function handleMessage(io, msg) {
             senderId: msg.senderId
         };
         
-        console.log("Пытаемся создать новое сообщение:", newMessage);
-        
         let messageId;
         try {
             const message = await Message.create(newMessage);
             messageId = message.id;
-            console.log("Создано новое сообщение в базе данных:", messageId);
             
             try {
                 const chatMessage = await ChatMessages.create({
@@ -70,7 +63,6 @@ async function handleMessage(io, msg) {
                     chatId: msg.chatId,
                     name: message.content
                 });
-                console.log("Создана связь сообщения с чатом:", chatMessage.id);
             } catch (chatMessageError) {
                 console.error("Ошибка при создании связи сообщения с чатом:", chatMessageError);
             }
@@ -103,7 +95,6 @@ async function handleMessage(io, msg) {
             timestamp: new Date().toISOString()
         };
         
-        console.log("Отправка сообщения всем клиентам:", messageToSend);
         io.emit("chatMessage", messageToSend);
     } catch (error) {
         console.error("Ошибка при обработке сообщения: ", error);
