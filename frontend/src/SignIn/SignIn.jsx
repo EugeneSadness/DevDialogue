@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import "./SignIn.css";
 
 function Login() {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
-
     });
     const navigate = useNavigate();
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -18,11 +17,9 @@ function Login() {
         });
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-
             const response = await Axios.post(process.env.REACT_APP_BACK_URL+'/api/user/login', formData);
             console.log('Ответ от сервера:', response.data);
 
@@ -40,33 +37,32 @@ function Login() {
     };
 
     return (
-        <div className="signIn">
-            <h2 className="title">Sign in</h2>
+        <div className="auth-container">
+            <h2 className="title">Вход в систему</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Email:</label>
                     <input
-                        className="input"
-                        type="text"
+                        type="email"
                         name="email"
                         value={formData.email}
-
                         onChange={handleInputChange}
+                        required
+                        autoFocus
+                        placeholder="Email"
                     />
                 </div>
                 <div className="form-group">
-                    <label>Password:</label>
                     <input
-                        className="input"
                         type="password"
                         name="password"
                         value={formData.password}
                         onChange={handleInputChange}
+                        required
+                        placeholder="Пароль"
                     />
                 </div>
-                <button className="submit" type="submit">Submit</button>
-                <div></div>
-                <Link to="/signup" className="button-reg">Sign up</Link>
+                <button className="btn btn-block" type="submit">Войти</button>
+                <Link to="/signup" className="btn-link">Регистрация</Link>
             </form>
         </div>
     );

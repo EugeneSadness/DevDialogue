@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ChatList.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaSignOutAlt } from 'react-icons/fa';
 import Axios from 'axios';
 
 function ChatList() {
@@ -10,12 +10,10 @@ function ChatList() {
     const location = useLocation();
     const [chats, setChats] = useState([]);
     const [chatName, setChatName] = useState('');
-    const [chatNameForDelete, setChatNameForDelete] = useState('');
     const [chatNameForFind, setChatNameForFind] = useState('');
     const token = localStorage.getItem('token');
-    const { username, userid , email} = location.state;
+    const { username, userid, email } = location.state;
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [modalData, setModalData] = useState(null);
 
     if (token) {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -34,6 +32,11 @@ function ChatList() {
 
     const addChat = async (e) => {
         e.preventDefault();
+        if (!chatName.trim()) {
+            alert("Введите название чата");
+            return;
+        }
+        
         try {
             const response = await Axios.post(process.env.REACT_APP_BACK_URL+'/api/chat/createChat', { title: chatName });
             const {id} = response.data;
@@ -45,21 +48,31 @@ function ChatList() {
             setChatName('');
             setModalIsOpen(false);
         } catch (error) {
-            console.error("Error occurred:", error);
+            console.error("Ошибка при создании чата:", error);
+            alert("Не удалось создать чат. Пожалуйста, попробуйте снова.");
         }
     };
 
     const findChat = () => {
+        // Фильтрация чатов по имени (можно реализовать в будущем)
+        if (!chatNameForFind.trim()) {
+            fetchChatsFromDatabase();
+            return;
+        }
+        
+        const filteredChats = chats.filter(chat => 
+            chat.text.toLowerCase().includes(chatNameForFind.toLowerCase())
+        );
+        setChats(filteredChats);
     };
 
-
     const fetchChatsFromDatabase = async () => {
-        try{
+        try {
             const response = await Axios.get(process.env.REACT_APP_BACK_URL+'/api/chat/getUserChats');
             const chats = response.data;
             setChats(chats);
-        } catch (error){
-            console.error("Error occured: ", error);
+        } catch (error) {
+            console.error("Ошибка при получении чатов: ", error);
         }
     };
 
@@ -71,49 +84,81 @@ function ChatList() {
         navigate(`/chat/${chatId}`, { state: { username, userid, chatId:chatId, chatName, email:email } });
     };
 
-    const handleLogOut = ()=>{
+    const handleLogOut = () => {
         localStorage.removeItem('token');
         navigate('/', {replace: true})
     }
 
-
     return (
         <div className='body-chatlist'>
+            <button className='button-log-out' onClick={handleLogOut}>
+                <FaSignOutAlt /> Выйти
+            </button>
+            
             <div className="chat-container">
-                
                 <div className="chat-header">
-                    <h1>Welcome, {username}!</h1>
+                    <h1>Привет, {username}!</h1>
                     <div className="button-container">
-                        <button className="add-button" onClick={openModal}><FaPlus /> Add Chat</button>
-                        <input value={chatNameForFind} onChange={e => setChatNameForFind(e.target.value)} placeholder='Search for chat' />
-                        <button className="button-find" onClick={findChat}>Find Chat</button>
+                        <button className="add-button" onClick={openModal}>
+                            <FaPlus /> Создать чат
+                        </button>
+                        <input 
+                            value={chatNameForFind} 
+                            onChange={e => setChatNameForFind(e.target.value)} 
+                            placeholder='Поиск чата...' 
+                        />
+                        <button className="button-find" onClick={findChat}>
+                            <FaSearch /> Найти
+                        </button>
                     </div>
                 </div>
 
                 <ul className='chat-list'>
-                    {chats.map((chat) => (
-                        <li key={chat.id} className="chat-list-item">
-                            <span>{chat.text}</span>
-                            <button onClick={() => goToChat(chat.id, chat.text)} className="chat-link">Go to Chat</button>
-                        </li>
-                    ))}
+                    {chats.length > 0 ? (
+                        chats.map((chat) => (
+                            <li key={chat.id} className="chat-list-item">
+                                <span>{chat.text}</span>
+                                <button 
+                                    onClick={() => goToChat(chat.id, chat.text)} 
+                                    className="chat-link"
+                                >
+                                    Открыть
+                                </button>
+                            </li>
+                        ))
+                    ) : (
+                        <div className="empty-chats-message">
+                            У вас пока нет чатов. Создайте новый чат, нажав кнопку "Создать чат".
+                        </div>
+                    )}
                 </ul>
 
-                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="add-chat-modal" ariaHideApp={false}>
-                    <h2>Add Chat</h2>
-                    <form className="modal-form">
-                        <input value={chatName} onChange={e => setChatName(e.target.value)} placeholder='Enter chat name' />
-                        <input type='text' placeholder='Enter participants' />
+                <Modal 
+                    isOpen={modalIsOpen} 
+                    onRequestClose={closeModal} 
+                    className="add-chat-modal" 
+                    ariaHideApp={false}
+                >
+                    <h2>Создание нового чата</h2>
+                    <form className="modal-form" onSubmit={addChat}>
+                        <input 
+                            value={chatName} 
+                            onChange={e => setChatName(e.target.value)} 
+                            placeholder='Введите название чата' 
+                            autoFocus
+                        />
+                        <input 
+                            type='text' 
+                            placeholder='Введите участников (опционально)' 
+                        />
                         <div className="modal-buttons">
-                            <button onClick={addChat}>Add Chat</button>
-                            <button onClick={closeModal}>Close</button>
+                            <button type="submit">Создать</button>
+                            <button type="button" onClick={closeModal}>Отмена</button>
                         </div>
                     </form>
                 </Modal>
             </div>
-            <button className='button-log-out' onClick={handleLogOut}>Log out</button>
         </div>
-        
     );
 };
 

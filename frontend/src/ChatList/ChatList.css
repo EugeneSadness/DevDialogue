@@ -1,198 +1,288 @@
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color:#eee;
-    margin: 0;
-    padding: 0;
-}
-
+/* Стили для списка чатов - минималистичный дизайн */
 .body-chatlist {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    padding-top: var(--spacing-xl);
 }
 
 .chat-container {
     max-width: 800px;
-    margin: 5% auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* transition: all 0.3s ease; */
-}
-
-.button-log-out{
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 24px 36px;
-    margin: 24px;
-    cursor: pointer;
-    border-radius: 18px;
-    transition: all 0.3s;
-    /* display: inline-block; */
-
-    /* position: absolute; */
-    /* top: 0; */
-    /* right: 0; */
-    margin: 10px;
-    height: 5%;
-    width: 11%;
-    min-width: 50px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .chat-container:hover {
-    transform: scale(1.01);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-hover);
+}
+
+.button-log-out {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    border-radius: var(--button-border-radius);
+    transition: var(--transition);
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    z-index: 10;
+}
+
+.button-log-out:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.button-log-out:active {
+    transform: translateY(0);
 }
 
 .chat-header {
-    padding: 20px 0;
+    padding: var(--spacing-lg) 0;
     text-align: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.chat-header h1 {
+    margin: 0 0 var(--spacing-lg) 0;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1.5rem;
 }
 
 .button-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
 }
 
-.button-find {
-    background-color: #007bff;
-    color: white;
-    border: none; 
-    padding: 10px 20px;
-    margin-right: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.button-find:hover {
-    background-color: #0056b3;
-}
-
+.button-find, 
 .add-button {
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 10px 15px;
-    margin-right: 10px;
+    padding: var(--spacing-md) var(--spacing-lg);
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-radius: var(--button-border-radius);
+    transition: var(--transition);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.95rem;
 }
 
+.button-find:hover, 
 .add-button:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
-input {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+.button-find:active, 
+.add-button:active {
+    transform: translateY(0);
 }
 
-input::placeholder {
-    color: #888;
+.button-container input {
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-border-radius);
+    transition: var(--transition);
+    flex-grow: 1;
+    max-width: 300px;
+    font-size: 0.95rem;
 }
 
-input:focus {
-    border-color: #007bff;
+.button-container input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 108, 250, 0.1);
 }
 
 .chat-list {
     list-style-type: none;
     padding: 0;
+    margin: var(--spacing-lg) 0 0 0;
 }
 
 .chat-list-item {
-    position: relative;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+    background-color: var(--form-background);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--input-border-radius);
+    transition: var(--transition);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-body.dark-theme {
-    background-color: #1e1e1e;
-    color: #fff;
-  }
-  
-  .chat-container.dark-theme {
-    background-color: #333;
-    color: #fff;
-  }
-
-
 .chat-list-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    border-color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+.chat-list-item span {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
 .chat-link {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--button-border-radius);
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: var(--transition);
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
 }
 
+.chat-link:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.chat-link:active {
+    transform: translateY(0);
+}
+
+/* Стили для модального окна */
 .add-chat-modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: var(--card-background);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-hover);
     z-index: 1000;
+    width: 360px;
+    max-width: 90%;
+    text-align: center;
 }
 
 .add-chat-modal h2 {
     text-align: center;
+    margin: 0 0 var(--spacing-lg) 0;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1.3rem;
 }
 
 .modal-form {
     width: 100%;
-    max-width: 300px;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-.modal-form input,
-.modal-form button {
-    margin-bottom: 10px;
+.modal-form input {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-border-radius);
+    transition: var(--transition);
+    font-size: 0.95rem;
+}
+
+.modal-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 108, 250, 0.1);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-md);
+    gap: var(--spacing-md);
 }
 
 .modal-buttons button {
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
-    border: none; 
-    padding: 10px 20px; 
-    margin-right: 10px;
-    cursor: pointer; 
-    border-radius: 5px; 
-    transition: background-color 0.3s ease; 
-}
-
-.modal-buttons button:last-child {
-    margin-right: 0;
+    border: none;
+    padding: var(--spacing-md);
+    cursor: pointer;
+    border-radius: var(--button-border-radius);
+    transition: var(--transition);
+    font-weight: 500;
+    flex-basis: 48%;
+    font-size: 0.95rem;
 }
 
 .modal-buttons button:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.modal-buttons button:active {
+    transform: translateY(0);
+}
+
+/* Стиль для сообщения об отсутствии чатов */
+.empty-chats-message {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+    background-color: var(--form-background);
+    border-radius: var(--border-radius);
+    margin-top: var(--spacing-lg);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .button-container input,
+    .button-find,
+    .add-button {
+        margin: 5px 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .chat-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .chat-link {
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+    
+    .button-log-out {
+        position: static;
+        margin: 20px auto;
+        display: block;
+    }
 }

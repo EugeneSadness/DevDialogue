@@ -1,38 +1,181 @@
-.App {
-  text-align: center;
+/* Общие стили для всего приложения - минималистичный дизайн */
+:root {
+  /* Основная цветовая палитра */
+  --primary-color: #4a6cfa; /* Более современный синий */
+  --primary-hover: #3a5bd9;
+  --background-color: #f8f9fa; /* Светло-серый фон */
+  --card-background: #ffffff;
+  --text-color: #2c3e50; /* Темно-синий текст */
+  --text-secondary: #6c757d; /* Серый для второстепенного текста */
+  --border-color: #e9ecef; /* Светло-серая граница */
+  
+  /* Тени и эффекты */
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Более тонкая тень */
+  --shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Скругления */
+  --border-radius: 8px; /* Более мягкие углы */
+  --input-border-radius: 6px;
+  --button-border-radius: 6px;
+  
+  /* Анимации */
+  --transition: all 0.25s ease;
+  
+  /* Фоны элементов */
+  --form-background: #f8f9fa;
+  
+  /* Отступы */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Базовые стили */
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Стили для форм аутентификации */
+.auth-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--card-background);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  width: 360px; /* Фиксированная ширина для единообразия */
+  max-width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.auth-container form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-container:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500; /* Немного легче для минимализма */
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  width: 100%;
+}
+
+.form-group input {
+  width: 100%;
+  max-width: 280px;
+  padding: var(--spacing-md) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--input-border-radius);
+  transition: var(--transition);
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: var(--card-background);
+  text-align: center;
+}
+
+.form-group input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 108, 250, 0.1); /* Тонкое свечение при фокусе */
+}
+
+.form-group input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+/* Стили для кнопок */
+.btn {
+  background-color: var(--primary-color);
   color: white;
+  border: none;
+  padding: var(--spacing-md) var(--spacing-lg);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  transition: var(--transition);
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  font-size: 1rem;
+  letter-spacing: 0.3px; /* Улучшает читаемость */
 }
 
-.App-link {
-  color: #61dafb;
+.btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px); /* Легкий эффект подъема */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn:active {
+  transform: translateY(0); /* Возврат при клике */
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.btn-link {
+  display: block;
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 240px;
+}
+
+.btn-link:hover {
+  color: var(--primary-hover);
+  text-decoration: none; /* Убираем подчеркивание для минимализма */
+}
+
+/* Заголовки */
+.title {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.5rem;
+  width: 100%;
 }

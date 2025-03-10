@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import {useNavigate} from "react-router-dom";
-import "./SignUp.css"
-
+import { useNavigate, Link } from "react-router-dom";
 
 function RegistrationForm() {
     const [formData, setFormData] = useState({
@@ -34,11 +32,11 @@ function RegistrationForm() {
             console.log('Ответ от сервера:', response.data);
 
             if (response.data.unvailableEmail) {
-                alert("Email is already registered");
+                alert("Email уже зарегистрирован");
                 return;
             }
             if (response.data.unavailableUserName) {
-                alert("Username is unavailable");
+                alert("Имя пользователя уже занято");
                 return;
             }
 
@@ -55,31 +53,31 @@ function RegistrationForm() {
     };
 
     return (
-        <div className="signUp">
-            <h2>Sign up</h2>
+        <div className="auth-container">
+            <h2 className="title">Регистрация</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
+                <div className="form-group">
                     <input
                         type="text"
                         required
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
+                        autoFocus
+                        placeholder="Имя пользователя"
                     />
                 </div>
-                <div>
-                    <label>Email:</label>
+                <div className="form-group">
                     <input
-                        type="text"
+                        type="email"
                         required
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
+                        placeholder="Email"
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div className="form-group">
                     <input
                         type="password"
                         name="password"
@@ -87,11 +85,12 @@ function RegistrationForm() {
                         maxLength="8"
                         value={formData.password}
                         required
-
                         onChange={handleInputChange}
+                        placeholder="Пароль (3-8 символов)"
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button className="btn btn-block" type="submit">Зарегистрироваться</button>
+                <Link to="/signin" className="btn-link">Уже есть аккаунт? Войти</Link>
             </form>
         </div>
     );
