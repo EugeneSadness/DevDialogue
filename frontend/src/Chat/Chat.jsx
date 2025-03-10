@@ -36,27 +36,73 @@ function Chat() {
 
     const fetchMessagesFromDatabase = async () => {
         try {
-            const response = await Axios.post(process.env.REACT_APP_BACK_URL
-                + '/api/message/getAllMessagesFromChat', { chatId });
-            const data = response.data;
-            setMessages(data);
+            console.log('Попытка загрузить сообщения для чата:', chatId);
+            
+            if (!chatId) {
+                console.error('Отсутствует ID чата');
+                return;
+            }
+            
+            const response = await Axios.post(
+                `${process.env.REACT_APP_BACK_URL}/api/message/getAllMessagesFromChat`, 
+                { chatId: chatId }
+            );
+            
+            console.log('Ответ от сервера:', response.status);
+            
+            if (response.status === 200) {
+                const data = response.data;
+                console.log('Полученные данные:', data);
+                
+                if (Array.isArray(data)) {
+                    console.log('Успешно загружены сообщения:', data.length);
+                    setMessages(data);
+                } else {
+                    console.error('Получены некорректные данные сообщений:', data);
+                    setMessages([]);
+                }
+            } else {
+                console.error('Ошибка при загрузке сообщений:', response.status);
+                setMessages([]);
+            }
         } catch (error) {
-            console.error('Error fetching messages:', error);
+            console.error('Ошибка при загрузке сообщений:', error);
+            setMessages([]);
         }
     };
 
 
 
     const sendMessageAndPicture = () => {
-        const messageData = { content: message, senderId: userid, username: username, chatId: chatId };
+        if (!message.trim()) {
+            console.log('Пустое сообщение не отправляется');
+            return;
+        }
+        
+        const messageData = { 
+            content: message, 
+            senderId: userid, 
+            username: username, 
+            email: email, 
+            chatId: chatId 
+        };
+        
+        console.log('Отправка сообщения через сокет:', messageData);
         socket.emit('chatMessage', messageData);
-        setMessages(prevMessages => [...prevMessages,
-        {
-            content: message,
-            senderId: userid,
-            username: username,
-            chatId: chatId
-        }]);
+        
+        // Добавляем сообщение локально для мгновенного отображения
+        setMessages(prevMessages => [
+            ...prevMessages,
+            {
+                content: message,
+                senderId: userid,
+                username: username,
+                email: email,
+                chatId: chatId,
+                timestamp: new Date().toISOString()
+            }
+        ]);
+        
         setMessage('');
     };
 
@@ -108,18 +154,56 @@ function Chat() {
         fetchMessagesFromDatabase();
     }, []);
 
+    // Инициализация сокета и обработка сообщений
     useEffect(() => {
-        socket.on("chatMessage", async (data) => {
-            const isMessageAlreadyPresent = messages.some(
-                (msg) => msg.content === data.content && msg.senderId === data.senderId && msg.username === data.username
-            );
-
-            if (!isMessageAlreadyPresent) {
-                setMessages((prevMessages) => [...prevMessages, data]);
+        // Переподключаем сокет при монтировании компонента
+        socket.connect();
+        
+        console.log('Сокет подключен, ожидание сообщений');
+        
+        // Функция обработки входящих сообщений
+        const handleChatMessage = (data) => {
+            console.log('Получено сообщение через сокет:', data);
+            
+            // Проверка валидности данных
+            if (!data || !data.content || !data.chatId) {
+                console.error('Некорректные данные сообщения:', data);
+                return;
             }
-        });
-        return () => socket.off('chatMessage');
-    }, [messages, socket]);
+            
+            // Проверка, относится ли сообщение к текущему чату
+            if (data.chatId !== chatId) {
+                console.log('Сообщение не для этого чата:', data.chatId);
+                return;
+            }
+
+            setMessages((prevMessages) => {
+                // Проверка на дубликаты по содержимому и отправителю
+                const isMessageAlreadyPresent = prevMessages.some(msg => 
+                    msg.content === data.content && 
+                    msg.senderId === data.senderId && 
+                    (msg.id === data.id || (!msg.id && !data.id))
+                );
+
+                if (!isMessageAlreadyPresent) {
+                    console.log('Добавлено новое сообщение:', data);
+                    return [...prevMessages, data];
+                }
+                
+                console.log('Сообщение уже существует, пропускаем');
+                return prevMessages;
+            });
+        };
+
+        // Подписка на событие сообщений
+        socket.on('chatMessage', handleChatMessage);
+        
+        // Отписка при размонтировании компонента
+        return () => {
+            console.log('Отключение от сокета');
+            socket.off('chatMessage', handleChatMessage);
+        };
+    }, [chatId]); // Зависимость от chatId для переподключения при смене чата
 
     const openModalUsernameWindow = (userInfo) => {
         setSelectedUserInfo(userInfo);
@@ -158,19 +242,31 @@ function Chat() {
             </nav>
             <div className="chat-container">
                 <div style={{ color: theme === "light" ? "black" : "yellow" }} className="messages">
-                    <ul>
-                        {messages.map((msg, index) => (
-                            <li
-                                key={index}
-                                className={`${msg.senderId === userid ? "sent" : "received"}`}
-                            >
-                                <button className='username-button' onClick={() => openModalUsernameWindow({ username: msg.username, email: msg.email })}>
-                                    {msg.username}
-                                </button>:
-                                {msg.content}
-                            </li>
-                        ))}
-                    </ul>
+                    {messages && messages.length > 0 ? (
+                        <ul>
+                            {messages.map((msg, index) => (
+                                <li
+                                    key={`msg-${index}-${msg.senderId}-${Date.now()}`}
+                                    className={`${msg.senderId === userid ? "sent" : "received"}`}
+                                >
+                                    <button 
+                                        className='username-button' 
+                                        onClick={() => openModalUsernameWindow({ 
+                                            username: msg.username || 'Unknown', 
+                                            email: msg.email || ''
+                                        })}
+                                    >
+                                        {msg.username || 'Unknown'}
+                                    </button>:
+                                    {msg.content}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <div className="no-messages">
+                            <p>История сообщений пуста. Начните общение!</p>
+                        </div>
+                    )}
                 </div>
             </div>
 
