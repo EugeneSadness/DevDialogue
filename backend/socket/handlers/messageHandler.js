@@ -2,6 +2,7 @@ const modelsPromise = require('../../models/models');
 const ApiError = require("../../Error/ApiError");
 const { json } = require('express');
 require("dotenv").config();
+const redisClient = require('../../redisClient');
 
 let Message, Chat, ChatMessages, User;
 
@@ -12,6 +13,7 @@ async function initializeModels() {
         Chat = models.Chat;
         ChatMessages = models.ChatMessages;
         User = models.User;
+        console.log('Модели успешно загружены в обработчике сообщений');
         return true;
     } catch (error) {
         console.error('Ошибка при инициализации моделей в обработчике сообщений:', error);
@@ -23,6 +25,7 @@ initializeModels();
 
 async function handleMessage(io, msg) {
     if (!Chat || !ChatMessages || !Message || !User) {
+        console.log('Модели не инициализированы, пытаемся инициализировать...');
         const initialized = await initializeModels();
         if (!initialized || !Chat || !ChatMessages || !Message || !User) {
             console.error('Не удалось инициализировать модели');
@@ -31,8 +34,10 @@ async function handleMessage(io, msg) {
         }
     }
     try {
+        console.log("Получены данные сообщения:", JSON.stringify(msg));
+        
         if (!msg.content || !msg.senderId || !msg.chatId) {
-            console.error("Отсутствуют обязательные поля в сообщении");
+            console.error("Отсутствуют обязательные поля в сообщении", msg);
             return;
         }
         
@@ -52,19 +57,35 @@ async function handleMessage(io, msg) {
             senderId: msg.senderId
         };
         
-        let messageId;
+        console.log("Пытаемся создать новое сообщение:", newMessage);
+        
+        let message;
         try {
-            const message = await Message.create(newMessage);
-            messageId = message.id;
+            message = await Message.create(newMessage);
+            console.log("Создано новое сообщение в базе данных:", message.id);
             
             try {
-                const chatMessage = await ChatMessages.create({
-                    messageId: messageId, 
+                await ChatMessages.create({
+                    messageId: message.id,
                     chatId: msg.chatId,
-                    name: message.content
+                    name: `message-${message.id}`
                 });
+                console.log("Создана связь сообщения с чатом");
             } catch (chatMessageError) {
                 console.error("Ошибка при создании связи сообщения с чатом:", chatMessageError);
+            }
+            
+            // Кэшируем последнее сообщение в Redis только после успешного создания связи
+            try {
+                await redisClient.set(`chat:${msg.chatId}:lastMessage`, JSON.stringify({
+                    id: message.id,
+                    content: msg.content,
+                    senderId: msg.senderId,
+                    timestamp: new Date().toISOString()
+                }));
+                console.log("Последнее сообщение сохранено в Redis");
+            } catch (redisError) {
+                console.error("Ошибка при сохранении сообщения в Redis:", redisError);
             }
         } catch (messageError) {
             console.error("Ошибка при создании сообщения:", messageError);
@@ -91,10 +112,11 @@ async function handleMessage(io, msg) {
         const messageToSend = {
             ...msg,
             ...userData,
-            id: messageId,
+            id: message.id,
             timestamp: new Date().toISOString()
         };
         
+        console.log("Отправка сообщения всем клиентам:", messageToSend);
         io.emit("chatMessage", messageToSend);
     } catch (error) {
         console.error("Ошибка при обработке сообщения: ", error);

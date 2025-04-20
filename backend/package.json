@@ -20,6 +20,7 @@
     "nodemon": "^3.1.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
+    "redis": "^4.7.0",
     "sequelize": "^6.37.1",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",

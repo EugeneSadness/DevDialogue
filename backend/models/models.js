@@ -46,9 +46,9 @@ async function initModels() {
 
         ChatMessages = sequelize.define('chatMessages', {
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+            name: { type: DataTypes.STRING, allowNull: true },
             messageId: { type: DataTypes.INTEGER, allowNull: false },
-            chatId: { type: DataTypes.INTEGER, allowNull: false },
-            name: { type: DataTypes.STRING, allowNull: false }
+            chatId: { type: DataTypes.INTEGER, allowNull: false }
         });
 
         Message = sequelize.define('message', {
