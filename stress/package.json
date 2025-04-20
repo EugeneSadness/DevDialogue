@@ -1,0 +1,13 @@
+{
+  "name": "socket-stress-test",
+  "version": "1.0.0",
+  "description": "Stress test tool for WebSocket server",
+  "main": "stress-test.js",
+  "scripts": {
+    "test": "node stress-test.js"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.2",
+    "cluster": "^0.7.7"
+  }
+} 

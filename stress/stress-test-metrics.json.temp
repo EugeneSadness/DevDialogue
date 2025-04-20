@@ -1,0 +1,4094 @@
+{
+  "metadata": {
+    "startTime": "2025-04-20T10:41:35.659Z",
+    "endTime": "2025-04-20T10:44:15.659Z",
+    "samplingInterval": 2000,
+    "monitoredContainers": [
+      "backend",
+      "postgres",
+      "redis"
+    ]
+  },
+  "metrics": [
+    {
+      "timestamp": "2025-04-20T10:41:34.657Z",
+      "system": {
+        "cpu": {
+          "usage": 4.6391126984529585,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 8096444416,
+          "used": 8370544640,
+          "usedPercentage": 50.83227183508732
+        },
+        "uptime": 107375.54
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "115.39%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "8.73%",
+          "MemUsage": "178.8MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "21.9MB / 70.9MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 20.3MB",
+          "CPUPerc": "18.76%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.88%",
+          "MemUsage": "39.77MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "2.74MB / 2.71MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "1.55%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "568kB / 101kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:36.667Z",
+      "system": {
+        "cpu": {
+          "usage": 4.64164608890753,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 8064450560,
+          "used": 8402538496,
+          "usedPercentage": 51.026562703267274
+        },
+        "uptime": 107377.55
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "93.25%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "9.52%",
+          "MemUsage": "194.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "28.6MB / 95.7MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 23.8MB",
+          "CPUPerc": "11.76%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.89%",
+          "MemUsage": "39.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "3.35MB / 3.34MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "1.05%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "692kB / 126kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:38.675Z",
+      "system": {
+        "cpu": {
+          "usage": 4.644121771394517,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7953022976,
+          "used": 8513966080,
+          "usedPercentage": 51.70323518796416
+        },
+        "uptime": 107379.56
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "108.80%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "10.65%",
+          "MemUsage": "218.1MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "35.2MB / 122MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 27.8MB",
+          "CPUPerc": "15.44%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.89%",
+          "MemUsage": "39.81MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "3.94MB / 3.92MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "1.18%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "827kB / 149kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:40.683Z",
+      "system": {
+        "cpu": {
+          "usage": 4.646533426901903,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7851245568,
+          "used": 8615743488,
+          "usedPercentage": 52.321304512318974
+        },
+        "uptime": 107381.57
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "94.17%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "11.85%",
+          "MemUsage": "242.8MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "41.8MB / 146MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 31.3MB",
+          "CPUPerc": "14.40%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.89%",
+          "MemUsage": "39.8MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "4.52MB / 4.51MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "1.26%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "947kB / 172kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:42.691Z",
+      "system": {
+        "cpu": {
+          "usage": 4.648703901469798,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7773790208,
+          "used": 8693198848,
+          "usedPercentage": 52.79167198348564
+        },
+        "uptime": 107383.58
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "91.25%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "12.98%",
+          "MemUsage": "265.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "47.7MB / 166MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 36.2MB",
+          "CPUPerc": "12.10%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.89%",
+          "MemUsage": "39.83MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "5.24MB / 5.22MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "1.07%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.07MB / 197kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:44.699Z",
+      "system": {
+        "cpu": {
+          "usage": 4.650973251507208,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7855190016,
+          "used": 8611799040,
+          "usedPercentage": 52.29735084363926
+        },
+        "uptime": 107385.58
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "92.09%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "14.25%",
+          "MemUsage": "291.8MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "53.8MB / 187MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 40.6MB",
+          "CPUPerc": "14.46%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.89%",
+          "MemUsage": "39.87MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "5.94MB / 5.92MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "0.87%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.13MB / 212kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:46.707Z",
+      "system": {
+        "cpu": {
+          "usage": 4.653218573005832,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7919427584,
+          "used": 8547561472,
+          "usedPercentage": 51.907251792856236
+        },
+        "uptime": 107387.59
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "124.17%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "16.02%",
+          "MemUsage": "328.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "59.9MB / 208MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "3.28MB / 44.1MB",
+          "CPUPerc": "13.52%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.89%",
+          "MemUsage": "39.87MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "6.54MB / 6.54MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "0.87%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.23MB / 230kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:48.715Z",
+      "system": {
+        "cpu": {
+          "usage": 4.655345983274996,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7873495040,
+          "used": 8593494016,
+          "usedPercentage": 52.18618890664064
+        },
+        "uptime": 107389.6
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "92.35%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "16.13%",
+          "MemUsage": "330.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "67MB / 235MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 46.7MB",
+          "CPUPerc": "10.88%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.96%",
+          "MemUsage": "40.57MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "6.96MB / 6.99MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 0B",
+          "CPUPerc": "0.85%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.23%",
+          "MemUsage": "8.277MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.28MB / 242kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:50.723Z",
+      "system": {
+        "cpu": {
+          "usage": 4.657676703320533,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7780081664,
+          "used": 8686907392,
+          "usedPercentage": 52.7534655088314
+        },
+        "uptime": 107391.61
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "100.87%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "18.44%",
+          "MemUsage": "377.7MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "72.7MB / 255MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 51.3MB",
+          "CPUPerc": "16.70%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.96%",
+          "MemUsage": "40.59MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "7.66MB / 7.69MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "1.51%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.44%",
+          "MemUsage": "8.809MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.41MB / 267kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:52.731Z",
+      "system": {
+        "cpu": {
+          "usage": 4.659671579612051,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7725461504,
+          "used": 8741527552,
+          "usedPercentage": 53.085160391327825
+        },
+        "uptime": 107393.62
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "147.11%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "20.09%",
+          "MemUsage": "411.5MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "78.5MB / 274MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 54.6MB",
+          "CPUPerc": "14.16%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.96%",
+          "MemUsage": "40.59MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "8.25MB / 8.3MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.95%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.49MB / 285kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:54.739Z",
+      "system": {
+        "cpu": {
+          "usage": 4.661844663241847,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7639265280,
+          "used": 8827723776,
+          "usedPercentage": 53.608608993296706
+        },
+        "uptime": 107395.62
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "98.51%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "20.15%",
+          "MemUsage": "412.6MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "85.2MB / 298MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 57.8MB",
+          "CPUPerc": "12.56%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.96%",
+          "MemUsage": "40.59MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "8.73MB / 8.77MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "1.01%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.56MB / 299kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:56.747Z",
+      "system": {
+        "cpu": {
+          "usage": 4.664019839211389,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7627808768,
+          "used": 8839180288,
+          "usedPercentage": 53.678181590697726
+        },
+        "uptime": 107397.63
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "96.36%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "22.48%",
+          "MemUsage": "460.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "91.3MB / 317MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 61.4MB",
+          "CPUPerc": "11.12%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.63MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "9.32MB / 9.38MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "1.06%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.69MB / 323kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:41:58.755Z",
+      "system": {
+        "cpu": {
+          "usage": 4.666061088790178,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7544811520,
+          "used": 8922177536,
+          "usedPercentage": 54.1822035932493
+        },
+        "uptime": 107399.64
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "93.01%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "24.16%",
+          "MemUsage": "494.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "98MB / 348MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 62.3MB",
+          "CPUPerc": "4.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.62MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "9.47MB / 9.52MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.70%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.824MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.73MB / 330kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:00.763Z",
+      "system": {
+        "cpu": {
+          "usage": 4.668579059665136,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7349813248,
+          "used": 9117175808,
+          "usedPercentage": 55.36638044146884
+        },
+        "uptime": 107401.65
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "149.91%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "25.41%",
+          "MemUsage": "520.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "104MB / 374MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 64.6MB",
+          "CPUPerc": "10.94%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.64MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "9.8MB / 9.87MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.97%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.8MB / 342kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:02.769Z",
+      "system": {
+        "cpu": {
+          "usage": 4.6710564730502515,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7202324480,
+          "used": 9264664576,
+          "usedPercentage": 56.26204368323351
+        },
+        "uptime": 107403.65
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "98.81%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "25.45%",
+          "MemUsage": "521.1MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "110MB / 391MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 68.5MB",
+          "CPUPerc": "12.47%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.66MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "10.4MB / 10.5MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.81%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.87MB / 358kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:04.777Z",
+      "system": {
+        "cpu": {
+          "usage": 4.672816648124547,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7114715136,
+          "used": 9352273920,
+          "usedPercentage": 56.794073817595425
+        },
+        "uptime": 107405.66
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "95.02%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "27.53%",
+          "MemUsage": "563.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "117MB / 417MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 70.6MB",
+          "CPUPerc": "8.82%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.66MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "10.8MB / 10.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.88%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "1.94MB / 371kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:06.786Z",
+      "system": {
+        "cpu": {
+          "usage": 4.6749732421414505,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7040483328,
+          "used": 9426505728,
+          "usedPercentage": 57.24486544530318
+        },
+        "uptime": 107407.67
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "98.87%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "29.89%",
+          "MemUsage": "612.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "123MB / 437MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 74.9MB",
+          "CPUPerc": "14.80%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.68MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "11.4MB / 11.5MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "1.19%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.11MB / 397kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:08.794Z",
+      "system": {
+        "cpu": {
+          "usage": 4.676837230918294,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6997753856,
+          "used": 9469235200,
+          "usedPercentage": 57.504351085663345
+        },
+        "uptime": 107409.68
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "97.82%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "32.54%",
+          "MemUsage": "666.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "129MB / 456MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 78.8MB",
+          "CPUPerc": "9.37%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.97%",
+          "MemUsage": "40.7MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "12MB / 12.1MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.72%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.21MB / 415kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:10.802Z",
+      "system": {
+        "cpu": {
+          "usage": 4.678607352983272,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6927761408,
+          "used": 9539227648,
+          "usedPercentage": 57.929398116191955
+        },
+        "uptime": 107411.69
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "99.95%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "33.61%",
+          "MemUsage": "688.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "134MB / 473MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 82MB",
+          "CPUPerc": "12.18%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.72MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "12.5MB / 12.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.90%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.29MB / 430kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:12.810Z",
+      "system": {
+        "cpu": {
+          "usage": 4.680571237565538,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6865059840,
+          "used": 9601929216,
+          "usedPercentage": 58.31016941437384
+        },
+        "uptime": 107413.69
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "98.49%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "33.64%",
+          "MemUsage": "689MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "139MB / 489MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 86.8MB",
+          "CPUPerc": "13.59%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.73MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "13.2MB / 13.3MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.90%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.39MB / 449kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:14.811Z",
+      "system": {
+        "cpu": {
+          "usage": 4.682029792637412,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6854524928,
+          "used": 9612464128,
+          "usedPercentage": 58.37414536021417
+        },
+        "uptime": 107415.7
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "103.24%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "35.90%",
+          "MemUsage": "735.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "144MB / 503MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 91.3MB",
+          "CPUPerc": "19.91%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.74MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "13.9MB / 14.1MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "1.03%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.824MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.47MB / 466kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:16.819Z",
+      "system": {
+        "cpu": {
+          "usage": 4.683620681109748,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6793445376,
+          "used": 9673543680,
+          "usedPercentage": 58.74506655164926
+        },
+        "uptime": 107417.7
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "96.72%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "38.22%",
+          "MemUsage": "782.7MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "151MB / 527MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 92.8MB",
+          "CPUPerc": "4.45%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.75MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.2MB / 14.4MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.61%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.5MB / 473kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:18.827Z",
+      "system": {
+        "cpu": {
+          "usage": 4.685641037255852,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6729113600,
+          "used": 9737875456,
+          "usedPercentage": 59.13573770459182
+        },
+        "uptime": 107419.71
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "100.26%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "42.30%",
+          "MemUsage": "866.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "157MB / 550MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 94MB",
+          "CPUPerc": "4.18%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.74MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.53%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.824MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.53MB / 479kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:20.835Z",
+      "system": {
+        "cpu": {
+          "usage": 4.687561414730297,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6617858048,
+          "used": 9849131008,
+          "usedPercentage": 59.81136548099738
+        },
+        "uptime": 107421.72
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "102.95%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "46.46%",
+          "MemUsage": "951.5MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "160MB / 559MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 94MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.74MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.36%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.828MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.54MB / 479kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:22.843Z",
+      "system": {
+        "cpu": {
+          "usage": 4.688753927701439,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6505328640,
+          "used": 9961660416,
+          "usedPercentage": 60.49472907356015
+        },
+        "uptime": 107423.73
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "189.77%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "42.05%",
+          "MemUsage": "861.1MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "163MB / 566MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 94MB",
+          "CPUPerc": "0.03%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.74MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.832MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.54MB / 479kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:24.852Z",
+      "system": {
+        "cpu": {
+          "usage": 4.689786709165053,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6511665152,
+          "used": 9955323904,
+          "usedPercentage": 60.4562489848296
+        },
+        "uptime": 107425.74
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "105.99%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "47.03%",
+          "MemUsage": "963.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "165MB / 572MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 94.1MB",
+          "CPUPerc": "0.11%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.74MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:26.860Z",
+      "system": {
+        "cpu": {
+          "usage": 4.690986608450491,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6405468160,
+          "used": 10061520896,
+          "usedPercentage": 61.101157362668744
+        },
+        "uptime": 107427.75
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "98.78%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "48.01%",
+          "MemUsage": "983.3MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "169MB / 585MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.3MB / 94.1MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.74MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.44%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:28.868Z",
+      "system": {
+        "cpu": {
+          "usage": 4.692564827460535,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6344626176,
+          "used": 10122362880,
+          "usedPercentage": 61.47063586170152
+        },
+        "uptime": 107429.75
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "100.87%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "45.96%",
+          "MemUsage": "941.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "175MB / 605MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "9.41%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.43%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:30.877Z",
+      "system": {
+        "cpu": {
+          "usage": 4.694413811901806,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6346559488,
+          "used": 10120429568,
+          "usedPercentage": 61.45889533042755
+        },
+        "uptime": 107431.76
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "169.65%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.08%",
+          "MemUsage": "1.002GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "177MB / 609MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:32.885Z",
+      "system": {
+        "cpu": {
+          "usage": 4.695572468333587,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6479171584,
+          "used": 9987817472,
+          "usedPercentage": 60.65357448185578
+        },
+        "uptime": 107433.77
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "190.27%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "42.89%",
+          "MemUsage": "878.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "179MB / 614MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:34.893Z",
+      "system": {
+        "cpu": {
+          "usage": 4.696650087917854,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6485864448,
+          "used": 9981124608,
+          "usedPercentage": 60.61293035452175
+        },
+        "uptime": 107435.78
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "107.77%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "46.26%",
+          "MemUsage": "947.5MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "181MB / 620MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.04%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.41%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:36.901Z",
+      "system": {
+        "cpu": {
+          "usage": 4.697804466902271,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6320828416,
+          "used": 10146160640,
+          "usedPercentage": 61.6151538420018
+        },
+        "uptime": 107437.79
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "96.16%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "46.34%",
+          "MemUsage": "949.1MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "185MB / 634MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:38.909Z",
+      "system": {
+        "cpu": {
+          "usage": 4.699218942051841,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6244237312,
+          "used": 10222751744,
+          "usedPercentage": 62.0802728977049
+        },
+        "uptime": 107439.79
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "126.81%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "49.38%",
+          "MemUsage": "1011MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "188MB / 640MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:40.917Z",
+      "system": {
+        "cpu": {
+          "usage": 4.700574982635146,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6254329856,
+          "used": 10212659200,
+          "usedPercentage": 62.01898334461369
+        },
+        "uptime": 107441.8
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "199.79%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "39.50%",
+          "MemUsage": "808.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "190MB / 647MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:42.926Z",
+      "system": {
+        "cpu": {
+          "usage": 4.702098361834574,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6338437120,
+          "used": 10128551936,
+          "usedPercentage": 61.50822048618237
+        },
+        "uptime": 107443.81
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "187.86%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "42.97%",
+          "MemUsage": "880.1MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "192MB / 651MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.6MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:44.934Z",
+      "system": {
+        "cpu": {
+          "usage": 4.703370951841486,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6424072192,
+          "used": 10042916864,
+          "usedPercentage": 60.98817962316376
+        },
+        "uptime": 107445.82
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "184.18%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "39.69%",
+          "MemUsage": "812.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "196MB / 664MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "1.66%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.42%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:46.942Z",
+      "system": {
+        "cpu": {
+          "usage": 4.7047313716203485,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6453039104,
+          "used": 10013949952,
+          "usedPercentage": 60.81227064610979
+        },
+        "uptime": 107447.83
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "99.71%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "48.38%",
+          "MemUsage": "990.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "198MB / 671MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.41%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:48.946Z",
+      "system": {
+        "cpu": {
+          "usage": 4.705865574746791,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6466011136,
+          "used": 10000977920,
+          "usedPercentage": 60.73349466614233
+        },
+        "uptime": 107449.83
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "98.02%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "44.46%",
+          "MemUsage": "910.6MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "201MB / 680MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.40%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:50.954Z",
+      "system": {
+        "cpu": {
+          "usage": 4.707304781830726,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6632472576,
+          "used": 9834516480,
+          "usedPercentage": 59.72261502424843
+        },
+        "uptime": 107451.84
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "184.73%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "40.10%",
+          "MemUsage": "821.2MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "205MB / 691MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.42%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:52.961Z",
+      "system": {
+        "cpu": {
+          "usage": 4.708767830399499,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6503497728,
+          "used": 9963491328,
+          "usedPercentage": 60.5058477546607
+        },
+        "uptime": 107453.85
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "101.35%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "48.46%",
+          "MemUsage": "992.5MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "207MB / 699MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:54.969Z",
+      "system": {
+        "cpu": {
+          "usage": 4.709897741586669,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6297391104,
+          "used": 10169597952,
+          "usedPercentage": 61.75748290969169
+        },
+        "uptime": 107455.85
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "107.78%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "42.99%",
+          "MemUsage": "880.4MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "209MB / 704MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.79MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:56.977Z",
+      "system": {
+        "cpu": {
+          "usage": 4.711335261605499,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6639108096,
+          "used": 9827880960,
+          "usedPercentage": 59.68231913301152
+        },
+        "uptime": 107457.86
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "124.41%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "47.31%",
+          "MemUsage": "968.8MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "210MB / 704MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.55MB / 480kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:42:58.985Z",
+      "system": {
+        "cpu": {
+          "usage": 4.712628063550081,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6540709888,
+          "used": 9926279168,
+          "usedPercentage": 60.27986740164381
+        },
+        "uptime": 107459.87
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "259.52%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.16%",
+          "MemUsage": "1.043GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "211MB / 705MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.43%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:00.994Z",
+      "system": {
+        "cpu": {
+          "usage": 4.714292758876115,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6499500032,
+          "used": 9967489024,
+          "usedPercentage": 60.53012478543061
+        },
+        "uptime": 107461.88
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "258.55%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.56%",
+          "MemUsage": "1.051GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "212MB / 706MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.02%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.46%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:03.002Z",
+      "system": {
+        "cpu": {
+          "usage": 4.716122962992142,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6444957696,
+          "used": 10022031360,
+          "usedPercentage": 60.86134706179524
+        },
+        "uptime": 107463.89
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "313.12%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.20%",
+          "MemUsage": "1.004GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "212MB / 707MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.48%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:05.010Z",
+      "system": {
+        "cpu": {
+          "usage": 4.7179926385472495,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6338420736,
+          "used": 10128568320,
+          "usedPercentage": 61.50630518764826
+        },
+        "uptime": 107465.89
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "285.78%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.70%",
+          "MemUsage": "1.054GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "213MB / 709MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.42%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:07.018Z",
+      "system": {
+        "cpu": {
+          "usage": 4.719691290061006,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6417117184,
+          "used": 10049871872,
+          "usedPercentage": 61.03041568694172
+        },
+        "uptime": 107467.9
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "275.92%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "51.68%",
+          "MemUsage": "1.034GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "214MB / 711MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.47%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:09.026Z",
+      "system": {
+        "cpu": {
+          "usage": 4.721346062072673,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6380576768,
+          "used": 10086412288,
+          "usedPercentage": 61.252316702821034
+        },
+        "uptime": 107469.91
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "268.35%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.92%",
+          "MemUsage": "1.058GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "215MB / 714MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.41%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.42%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:11.034Z",
+      "system": {
+        "cpu": {
+          "usage": 4.723275629901261,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6336233472,
+          "used": 10130755584,
+          "usedPercentage": 61.521602701914134
+        },
+        "uptime": 107471.92
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "299.13%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "51.46%",
+          "MemUsage": "1.029GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "216MB / 716MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:13.042Z",
+      "system": {
+        "cpu": {
+          "usage": 4.724871657495407,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6329569280,
+          "used": 10137419776,
+          "usedPercentage": 61.5620727111996
+        },
+        "uptime": 107473.93
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "309.82%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.25%",
+          "MemUsage": "1.005GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "217MB / 717MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.4MB / 14.7MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.43%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:15.051Z",
+      "system": {
+        "cpu": {
+          "usage": 4.726429636577661,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6329536512,
+          "used": 10137452544,
+          "usedPercentage": 61.56227170325509
+        },
+        "uptime": 107475.94
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "283.77%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.30%",
+          "MemUsage": "1.046GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "217MB / 718MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "1.78%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.47%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:17.059Z",
+      "system": {
+        "cpu": {
+          "usage": 4.728355437707687,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6329974784,
+          "used": 10137014272,
+          "usedPercentage": 61.559610184512906
+        },
+        "uptime": 107477.94
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "311.07%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.13%",
+          "MemUsage": "1.003GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "217MB / 719MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.43%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:19.067Z",
+      "system": {
+        "cpu": {
+          "usage": 4.729959889890931,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6264340480,
+          "used": 10202648576,
+          "usedPercentage": 61.95819127166122
+        },
+        "uptime": 107479.95
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "281.81%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.82%",
+          "MemUsage": "1.056GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "218MB / 720MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:21.075Z",
+      "system": {
+        "cpu": {
+          "usage": 4.731568995916705,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6325493760,
+          "used": 10141495296,
+          "usedPercentage": 61.58682234810128
+        },
+        "uptime": 107481.96
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "283.47%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.61%",
+          "MemUsage": "1.052GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "218MB / 720MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 481kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:23.083Z",
+      "system": {
+        "cpu": {
+          "usage": 4.733099762656767,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6303100928,
+          "used": 10163888128,
+          "usedPercentage": 61.72280854402239
+        },
+        "uptime": 107483.97
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "317.75%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.03%",
+          "MemUsage": "1.001GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "219MB / 722MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.45%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:25.092Z",
+      "system": {
+        "cpu": {
+          "usage": 4.734823333565097,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6203228160,
+          "used": 10263760896,
+          "usedPercentage": 62.329311455151796
+        },
+        "uptime": 107485.98
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "277.43%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.30%",
+          "MemUsage": "1.046GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "219MB / 722MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.43%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:27.100Z",
+      "system": {
+        "cpu": {
+          "usage": 4.73657383003218,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6207397888,
+          "used": 10259591168,
+          "usedPercentage": 62.30398971609057
+        },
+        "uptime": 107487.98
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "281.28%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "51.35%",
+          "MemUsage": "1.027GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "220MB / 724MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.43%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:29.101Z",
+      "system": {
+        "cpu": {
+          "usage": 4.737924537647359,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6190129152,
+          "used": 10276859904,
+          "usedPercentage": 62.40885852933429
+        },
+        "uptime": 107489.99
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "284.91%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "51.72%",
+          "MemUsage": "1.034GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "220MB / 724MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.41%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:31.109Z",
+      "system": {
+        "cpu": {
+          "usage": 4.739150112271487,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6273220608,
+          "used": 10193768448,
+          "usedPercentage": 61.90426442462318
+        },
+        "uptime": 107491.99
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "290.42%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.72%",
+          "MemUsage": "1.054GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "220MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.55%",
+          "MemUsage": "9.09MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:33.111Z",
+      "system": {
+        "cpu": {
+          "usage": 4.740394177105404,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6990594048,
+          "used": 9476395008,
+          "usedPercentage": 57.54783084978812
+        },
+        "uptime": 107494
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "253.91%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.37%",
+          "MemUsage": "1.047GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "220MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:35.118Z",
+      "system": {
+        "cpu": {
+          "usage": 4.741602154912624,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 6910808064,
+          "used": 9556180992,
+          "usedPercentage": 58.032351630901566
+        },
+        "uptime": 107496
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "281.77%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "51.97%",
+          "MemUsage": "1.039GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "220MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:37.122Z",
+      "system": {
+        "cpu": {
+          "usage": 4.742906473562052,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7891640320,
+          "used": 8575348736,
+          "usedPercentage": 52.07599705591254
+        },
+        "uptime": 107498.01
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "285.37%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.35%",
+          "MemUsage": "1.047GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:39.130Z",
+      "system": {
+        "cpu": {
+          "usage": 4.744120114696596,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7802724352,
+          "used": 8664264704,
+          "usedPercentage": 52.61596199848717
+        },
+        "uptime": 107500.01
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "294.62%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "49.82%",
+          "MemUsage": "1020MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.34%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:41.137Z",
+      "system": {
+        "cpu": {
+          "usage": 4.74522809749819,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7763972096,
+          "used": 8703016960,
+          "usedPercentage": 52.851294978112115
+        },
+        "uptime": 107502.02
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "274.79%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "48.86%",
+          "MemUsage": "1001MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.55%",
+          "MemUsage": "9.09MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:43.140Z",
+      "system": {
+        "cpu": {
+          "usage": 4.746640338513844,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7809200128,
+          "used": 8657788928,
+          "usedPercentage": 52.57663619352078
+        },
+        "uptime": 107504.02
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "285.45%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.53%",
+          "MemUsage": "1.051GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.8MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:45.148Z",
+      "system": {
+        "cpu": {
+          "usage": 4.7480438916417365,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7709769728,
+          "used": 8757219328,
+          "usedPercentage": 53.18045271190104
+        },
+        "uptime": 107506.03
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "276.53%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.29%",
+          "MemUsage": "1.046GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "1.87%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:47.157Z",
+      "system": {
+        "cpu": {
+          "usage": 4.749464527193864,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7838986240,
+          "used": 8628002816,
+          "usedPercentage": 52.39575241507952
+        },
+        "uptime": 107508.04
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "300.68%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.55%",
+          "MemUsage": "1.051GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.38%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:49.165Z",
+      "system": {
+        "cpu": {
+          "usage": 4.750672299158047,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7756730368,
+          "used": 8710258688,
+          "usedPercentage": 52.89527222237561
+        },
+        "uptime": 107510.05
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "280.15%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "49.48%",
+          "MemUsage": "1013MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.40%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.41%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:51.172Z",
+      "system": {
+        "cpu": {
+          "usage": 4.75190294076639,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7777497088,
+          "used": 8689491968,
+          "usedPercentage": 52.76916100720823
+        },
+        "uptime": 107512.06
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "290.26%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.56%",
+          "MemUsage": "1.051GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:53.180Z",
+      "system": {
+        "cpu": {
+          "usage": 4.753443699274976,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7809687552,
+          "used": 8657301504,
+          "usedPercentage": 52.57367618669534
+        },
+        "uptime": 107514.06
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "298.70%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.59%",
+          "MemUsage": "1.052GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.35%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:55.188Z",
+      "system": {
+        "cpu": {
+          "usage": 4.754724971123182,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7777644544,
+          "used": 8689344512,
+          "usedPercentage": 52.768265542958524
+        },
+        "uptime": 107516.07
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "291.30%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.55%",
+          "MemUsage": "1.051GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.36%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:57.197Z",
+      "system": {
+        "cpu": {
+          "usage": 4.756009743517355,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7753965568,
+          "used": 8713023488,
+          "usedPercentage": 52.91206217705766
+        },
+        "uptime": 107518.08
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "290.69%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.85%",
+          "MemUsage": "1.017GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:43:59.206Z",
+      "system": {
+        "cpu": {
+          "usage": 4.757172883867495,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7673217024,
+          "used": 8793772032,
+          "usedPercentage": 53.40242834980117
+        },
+        "uptime": 107520.09
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "312.70%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.72%",
+          "MemUsage": "1.054GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.37%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:01.213Z",
+      "system": {
+        "cpu": {
+          "usage": 4.7583361644626745,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7718825984,
+          "used": 8748163072,
+          "usedPercentage": 53.125456282564734
+        },
+        "uptime": 107522.1
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "294.09%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "45.85%",
+          "MemUsage": "938.9MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.31%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.55%",
+          "MemUsage": "9.09MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:03.221Z",
+      "system": {
+        "cpu": {
+          "usage": 4.759459317128961,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7608799232,
+          "used": 8858189824,
+          "usedPercentage": 53.79362185688939
+        },
+        "uptime": 107524.11
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "283.56%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "49.43%",
+          "MemUsage": "1012MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.39%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:05.225Z",
+      "system": {
+        "cpu": {
+          "usage": 4.76059372969203,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7755436032,
+          "used": 8711553024,
+          "usedPercentage": 52.9031324085675
+        },
+        "uptime": 107526.11
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "296.80%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "51.17%",
+          "MemUsage": "1.023GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.36%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:07.233Z",
+      "system": {
+        "cpu": {
+          "usage": 4.761801871518858,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7827808256,
+          "used": 8639180800,
+          "usedPercentage": 52.46363358000886
+        },
+        "uptime": 107528.12
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "196.77%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "50.57%",
+          "MemUsage": "1.011GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.40%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:09.240Z",
+      "system": {
+        "cpu": {
+          "usage": 4.762679302140067,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7918927872,
+          "used": 8548061184,
+          "usedPercentage": 51.91028642170248
+        },
+        "uptime": 107530.13
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "244.21%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "48.09%",
+          "MemUsage": "984.8MiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.33%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.32%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:11.248Z",
+      "system": {
+        "cpu": {
+          "usage": 4.7636099840793795,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7783309312,
+          "used": 8683679744,
+          "usedPercentage": 52.733864791365534
+        },
+        "uptime": 107532.13
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "247.89%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.42%",
+          "MemUsage": "1.048GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.01%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.34%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-04-20T10:44:13.257Z",
+      "system": {
+        "cpu": {
+          "usage": 4.764505083623725,
+          "cores": 16
+        },
+        "memory": {
+          "total": 16466989056,
+          "free": 7804915712,
+          "used": 8662073344,
+          "usedPercentage": 52.6026544047762
+        },
+        "uptime": 107534.14
+      },
+      "docker": [
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "225.36%",
+          "Container": "backend",
+          "ID": "1ae38a51e049",
+          "MemPerc": "52.01%",
+          "MemUsage": "1.04GiB / 2GiB",
+          "Name": "backend",
+          "NetIO": "221MB / 725MB",
+          "PIDs": "34"
+        },
+        {
+          "BlockIO": "4.31MB / 94.2MB",
+          "CPUPerc": "0.00%",
+          "Container": "postgres",
+          "ID": "d12cdadd38ea",
+          "MemPerc": "3.98%",
+          "MemUsage": "40.78MiB / 1GiB",
+          "Name": "postgres",
+          "NetIO": "14.5MB / 14.9MB",
+          "PIDs": "12"
+        },
+        {
+          "BlockIO": "16.4kB / 4.1kB",
+          "CPUPerc": "0.38%",
+          "Container": "redis",
+          "ID": "f091af310edd",
+          "MemPerc": "3.45%",
+          "MemUsage": "8.84MiB / 256MiB",
+          "Name": "redis",
+          "NetIO": "2.57MB / 482kB",
+          "PIDs": "6"
+        }
+      ]
+    }
+  ]
+}
