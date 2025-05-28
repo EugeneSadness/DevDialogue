@@ -11,3 +11,8 @@ frontend/.env
 backend/database/
 
 docker-compose.yml
+
+# Ignoring results of benchmarks
+/results/
+*.json
+*.html

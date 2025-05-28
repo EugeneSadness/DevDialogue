@@ -1,4 +1,3 @@
-
 services:
   prometheus:
     image: prom/prometheus:latest
@@ -88,7 +87,7 @@ services:
       - /home/eugene/testFullStack/db:/var/lib/postgresql/data
 
   backend:
-    image: back
+    build: ./backend
     container_name: backend
     ports:
       - "4000:4000"
@@ -101,6 +100,8 @@ services:
       VAULT_TOKEN: fullstack-root-token
       # Увеличиваем таймаут для подключения к Vault
       VAULT_CLIENT_TIMEOUT: "10000"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     networks:
       - mynetwork
     depends_on:
@@ -110,7 +111,7 @@ services:
         condition: service_started
 
   frontend:
-    image: front
+    build: ./frontend
     container_name: frontend
     ports:
       - "3000:3000"
@@ -139,6 +140,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
 
 networks:
   monitoring:

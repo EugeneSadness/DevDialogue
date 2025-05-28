@@ -1,0 +1,10 @@
+cluster.name: "messenger-elk-cluster"
+network.host: 0.0.0.0
+
+# Настройки для разработки (не для продакшн!)
+xpack.security.enabled: false
+xpack.monitoring.collection.enabled: true
+
+# Настройки индексов
+action.auto_create_index: true
+action.destructive_requires_name: false

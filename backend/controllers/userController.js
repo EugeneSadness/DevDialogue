@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const modelsPromise = require('../models/models');
 const { tokenService } = require('../middleware/tokenService');
 const vault = require('../config/vault');
+const { isUserOnline, getOnlineUsers, getUserLastActive } = require('../redisClient');
 require("dotenv").config();
 
 async function getJwtSecret() {
@@ -147,7 +148,63 @@ class UserController {
         }
     }
 
+    async checkUserOnline(req, res, next) {
+        try {
+            const { userId } = req.params;
+            
+            if (!userId) {
+                return next(ApiError.badRequest("User ID is required"));
+            }
+            
+            const isOnline = await isUserOnline(userId);
+            const lastActive = await getUserLastActive(userId);
+            
+            return res.json({
+                userId,
+                isOnline,
+                lastActive
+            });
+        } catch (error) {
+            console.error("Error checking user online status:", error);
+            return next(ApiError.internal("Error checking user online status"));
+        }
+    }
     
+    async getAllOnlineUsers(req, res, next) {
+        try {
+            const onlineUserIds = await getOnlineUsers();
+            
+            if (!onlineUserIds || onlineUserIds.length === 0) {
+                return res.json([]);
+            }
+            
+            // Преобразуем строковые ID в числовые для поиска в базе данных
+            const numericIds = onlineUserIds.map(id => parseInt(id)).filter(id => !isNaN(id));
+            
+            if (numericIds.length === 0) {
+                return res.json([]);
+            }
+            
+            const users = await User.findAll({
+                where: { id: numericIds },
+                attributes: ['id', 'name', 'email']
+            });
+            
+            // Добавляем информацию о последней активности
+            const usersWithActivity = await Promise.all(users.map(async (user) => {
+                const lastActive = await getUserLastActive(user.id);
+                return {
+                    ...user.dataValues,
+                    lastActive
+                };
+            }));
+            
+            return res.json(usersWithActivity);
+        } catch (error) {
+            console.error("Error getting online users:", error);
+            return next(ApiError.internal("Error getting online users"));
+        }
+    }
 }
 
 module.exports = new UserController();

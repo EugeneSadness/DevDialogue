@@ -9,5 +9,8 @@ router.get('/getName',userController.getName);
 router.get('/getNameById:id', userController.getNameById);
 router.post('/findUserByName', userController.findByName);
 
+// API для работы с онлайн-статусами пользователей
+router.get('/online/:userId', userController.checkUserOnline);
+router.get('/online', userController.getAllOnlineUsers);
 
 module.exports = router;

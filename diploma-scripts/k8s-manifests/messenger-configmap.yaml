@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: messenger-config
+  labels:
+    app: messenger-api
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  API_VERSION: "v1.0.0"
+  MAX_CONNECTIONS: "1000"
+  CORS_ORIGIN: "*"

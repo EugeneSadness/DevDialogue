@@ -1,0 +1,359 @@
+Начало мониторинга ресурсов с интервалом 2000ms
+Мониторинг продлится 180 секунд
+Контейнеры для мониторинга: backend, postgres, redis
+Метрики будут сохранены в: /home/eugene/fullStack/stress/stress-test-metrics.json
+CSV-отчет будет сохранен в: /home/eugene/fullStack/stress/stress-test-metrics.csv
+[2025-04-20T10:41:34.657Z] CPU: 4.64%, Memory: 50.83%
+- backend: CPU: 115.39%, Memory: 8.73%
+- postgres: CPU: 18.76%, Memory: 3.88%
+- redis: CPU: 1.55%, Memory: 3.23%
+[2025-04-20T10:41:36.667Z] CPU: 4.64%, Memory: 51.03%
+- backend: CPU: 93.25%, Memory: 9.52%
+- postgres: CPU: 11.76%, Memory: 3.89%
+- redis: CPU: 1.05%, Memory: 3.23%
+[2025-04-20T10:41:38.675Z] CPU: 4.64%, Memory: 51.70%
+- backend: CPU: 108.80%, Memory: 10.65%
+- postgres: CPU: 15.44%, Memory: 3.89%
+- redis: CPU: 1.18%, Memory: 3.23%
+[2025-04-20T10:41:40.683Z] CPU: 4.65%, Memory: 52.32%
+- backend: CPU: 94.17%, Memory: 11.85%
+- postgres: CPU: 14.40%, Memory: 3.89%
+- redis: CPU: 1.26%, Memory: 3.23%
+[2025-04-20T10:41:42.691Z] CPU: 4.65%, Memory: 52.79%
+- backend: CPU: 91.25%, Memory: 12.98%
+- postgres: CPU: 12.10%, Memory: 3.89%
+- redis: CPU: 1.07%, Memory: 3.23%
+[2025-04-20T10:41:44.699Z] CPU: 4.65%, Memory: 52.30%
+- backend: CPU: 92.09%, Memory: 14.25%
+- postgres: CPU: 14.46%, Memory: 3.89%
+- redis: CPU: 0.87%, Memory: 3.23%
+[2025-04-20T10:41:46.707Z] CPU: 4.65%, Memory: 51.91%
+- backend: CPU: 124.17%, Memory: 16.02%
+- postgres: CPU: 13.52%, Memory: 3.89%
+- redis: CPU: 0.87%, Memory: 3.23%
+[2025-04-20T10:41:48.715Z] CPU: 4.66%, Memory: 52.19%
+- backend: CPU: 92.35%, Memory: 16.13%
+- postgres: CPU: 10.88%, Memory: 3.96%
+- redis: CPU: 0.85%, Memory: 3.23%
+[2025-04-20T10:41:50.723Z] CPU: 4.66%, Memory: 52.75%
+- backend: CPU: 100.87%, Memory: 18.44%
+- postgres: CPU: 16.70%, Memory: 3.96%
+- redis: CPU: 1.51%, Memory: 3.44%
+[2025-04-20T10:41:52.731Z] CPU: 4.66%, Memory: 53.09%
+- backend: CPU: 147.11%, Memory: 20.09%
+- postgres: CPU: 14.16%, Memory: 3.96%
+- redis: CPU: 0.95%, Memory: 3.45%
+[2025-04-20T10:41:54.739Z] CPU: 4.66%, Memory: 53.61%
+- backend: CPU: 98.51%, Memory: 20.15%
+- postgres: CPU: 12.56%, Memory: 3.96%
+- redis: CPU: 1.01%, Memory: 3.45%
+[2025-04-20T10:41:56.747Z] CPU: 4.66%, Memory: 53.68%
+- backend: CPU: 96.36%, Memory: 22.48%
+- postgres: CPU: 11.12%, Memory: 3.97%
+- redis: CPU: 1.06%, Memory: 3.45%
+[2025-04-20T10:41:58.755Z] CPU: 4.67%, Memory: 54.18%
+- backend: CPU: 93.01%, Memory: 24.16%
+- postgres: CPU: 4.01%, Memory: 3.97%
+- redis: CPU: 0.70%, Memory: 3.45%
+[2025-04-20T10:42:00.763Z] CPU: 4.67%, Memory: 55.37%
+- backend: CPU: 149.91%, Memory: 25.41%
+- postgres: CPU: 10.94%, Memory: 3.97%
+- redis: CPU: 0.97%, Memory: 3.45%
+[2025-04-20T10:42:02.769Z] CPU: 4.67%, Memory: 56.26%
+- backend: CPU: 98.81%, Memory: 25.45%
+- postgres: CPU: 12.47%, Memory: 3.97%
+- redis: CPU: 0.81%, Memory: 3.45%
+[2025-04-20T10:42:04.777Z] CPU: 4.67%, Memory: 56.79%
+- backend: CPU: 95.02%, Memory: 27.53%
+- postgres: CPU: 8.82%, Memory: 3.97%
+- redis: CPU: 0.88%, Memory: 3.45%
+[2025-04-20T10:42:06.786Z] CPU: 4.67%, Memory: 57.24%
+- backend: CPU: 98.87%, Memory: 29.89%
+- postgres: CPU: 14.80%, Memory: 3.97%
+- redis: CPU: 1.19%, Memory: 3.45%
+[2025-04-20T10:42:08.794Z] CPU: 4.68%, Memory: 57.50%
+- backend: CPU: 97.82%, Memory: 32.54%
+- postgres: CPU: 9.37%, Memory: 3.97%
+- redis: CPU: 0.72%, Memory: 3.45%
+[2025-04-20T10:42:10.802Z] CPU: 4.68%, Memory: 57.93%
+- backend: CPU: 99.95%, Memory: 33.61%
+- postgres: CPU: 12.18%, Memory: 3.98%
+- redis: CPU: 0.90%, Memory: 3.45%
+[2025-04-20T10:42:12.810Z] CPU: 4.68%, Memory: 58.31%
+- backend: CPU: 98.49%, Memory: 33.64%
+- postgres: CPU: 13.59%, Memory: 3.98%
+- redis: CPU: 0.90%, Memory: 3.45%
+[2025-04-20T10:42:14.811Z] CPU: 4.68%, Memory: 58.37%
+- backend: CPU: 103.24%, Memory: 35.90%
+- postgres: CPU: 19.91%, Memory: 3.98%
+- redis: CPU: 1.03%, Memory: 3.45%
+[2025-04-20T10:42:16.819Z] CPU: 4.68%, Memory: 58.75%
+- backend: CPU: 96.72%, Memory: 38.22%
+- postgres: CPU: 4.45%, Memory: 3.98%
+- redis: CPU: 0.61%, Memory: 3.45%
+[2025-04-20T10:42:18.827Z] CPU: 4.69%, Memory: 59.14%
+- backend: CPU: 100.26%, Memory: 42.30%
+- postgres: CPU: 4.18%, Memory: 3.98%
+- redis: CPU: 0.53%, Memory: 3.45%
+[2025-04-20T10:42:20.835Z] CPU: 4.69%, Memory: 59.81%
+- backend: CPU: 102.95%, Memory: 46.46%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.36%, Memory: 3.45%
+[2025-04-20T10:42:22.843Z] CPU: 4.69%, Memory: 60.49%
+- backend: CPU: 189.77%, Memory: 42.05%
+- postgres: CPU: 0.03%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:42:24.852Z] CPU: 4.69%, Memory: 60.46%
+- backend: CPU: 105.99%, Memory: 47.03%
+- postgres: CPU: 0.11%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:42:26.860Z] CPU: 4.69%, Memory: 61.10%
+- backend: CPU: 98.78%, Memory: 48.01%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.44%, Memory: 3.45%
+[2025-04-20T10:42:28.868Z] CPU: 4.69%, Memory: 61.47%
+- backend: CPU: 100.87%, Memory: 45.96%
+- postgres: CPU: 9.41%, Memory: 3.98%
+- redis: CPU: 0.43%, Memory: 3.45%
+[2025-04-20T10:42:30.877Z] CPU: 4.69%, Memory: 61.46%
+- backend: CPU: 169.65%, Memory: 50.08%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:42:32.885Z] CPU: 4.70%, Memory: 60.65%
+- backend: CPU: 190.27%, Memory: 42.89%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:42:34.893Z] CPU: 4.70%, Memory: 60.61%
+- backend: CPU: 107.77%, Memory: 46.26%
+- postgres: CPU: 0.04%, Memory: 3.98%
+- redis: CPU: 0.41%, Memory: 3.45%
+[2025-04-20T10:42:36.901Z] CPU: 4.70%, Memory: 61.62%
+- backend: CPU: 96.16%, Memory: 46.34%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:42:38.909Z] CPU: 4.70%, Memory: 62.08%
+- backend: CPU: 126.81%, Memory: 49.38%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:42:40.917Z] CPU: 4.70%, Memory: 62.02%
+- backend: CPU: 199.79%, Memory: 39.50%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:42:42.926Z] CPU: 4.70%, Memory: 61.51%
+- backend: CPU: 187.86%, Memory: 42.97%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:42:44.934Z] CPU: 4.70%, Memory: 60.99%
+- backend: CPU: 184.18%, Memory: 39.69%
+- postgres: CPU: 1.66%, Memory: 3.98%
+- redis: CPU: 0.42%, Memory: 3.45%
+[2025-04-20T10:42:46.942Z] CPU: 4.70%, Memory: 60.81%
+- backend: CPU: 99.71%, Memory: 48.38%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.41%, Memory: 3.45%
+[2025-04-20T10:42:48.946Z] CPU: 4.71%, Memory: 60.73%
+- backend: CPU: 98.02%, Memory: 44.46%
+- postgres: CPU: 0.40%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:42:50.954Z] CPU: 4.71%, Memory: 59.72%
+- backend: CPU: 184.73%, Memory: 40.10%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.42%, Memory: 3.45%
+[2025-04-20T10:42:52.961Z] CPU: 4.71%, Memory: 60.51%
+- backend: CPU: 101.35%, Memory: 48.46%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:42:54.969Z] CPU: 4.71%, Memory: 61.76%
+- backend: CPU: 107.78%, Memory: 42.99%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:42:56.977Z] CPU: 4.71%, Memory: 59.68%
+- backend: CPU: 124.41%, Memory: 47.31%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:42:58.985Z] CPU: 4.71%, Memory: 60.28%
+- backend: CPU: 259.52%, Memory: 52.16%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.43%, Memory: 3.45%
+[2025-04-20T10:43:00.994Z] CPU: 4.71%, Memory: 60.53%
+- backend: CPU: 258.55%, Memory: 52.56%
+- postgres: CPU: 0.02%, Memory: 3.98%
+- redis: CPU: 0.46%, Memory: 3.45%
+[2025-04-20T10:43:03.002Z] CPU: 4.72%, Memory: 60.86%
+- backend: CPU: 313.12%, Memory: 50.20%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.48%, Memory: 3.45%
+[2025-04-20T10:43:05.010Z] CPU: 4.72%, Memory: 61.51%
+- backend: CPU: 285.78%, Memory: 52.70%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.42%, Memory: 3.45%
+[2025-04-20T10:43:07.018Z] CPU: 4.72%, Memory: 61.03%
+- backend: CPU: 275.92%, Memory: 51.68%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.47%, Memory: 3.45%
+[2025-04-20T10:43:09.026Z] CPU: 4.72%, Memory: 61.25%
+- backend: CPU: 268.35%, Memory: 52.92%
+- postgres: CPU: 0.41%, Memory: 3.98%
+- redis: CPU: 0.42%, Memory: 3.45%
+[2025-04-20T10:43:11.034Z] CPU: 4.72%, Memory: 61.52%
+- backend: CPU: 299.13%, Memory: 51.46%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:43:13.042Z] CPU: 4.72%, Memory: 61.56%
+- backend: CPU: 309.82%, Memory: 50.25%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.43%, Memory: 3.45%
+[2025-04-20T10:43:15.051Z] CPU: 4.73%, Memory: 61.56%
+- backend: CPU: 283.77%, Memory: 52.30%
+- postgres: CPU: 1.78%, Memory: 3.98%
+- redis: CPU: 0.47%, Memory: 3.45%
+[2025-04-20T10:43:17.059Z] CPU: 4.73%, Memory: 61.56%
+- backend: CPU: 311.07%, Memory: 50.13%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.43%, Memory: 3.45%
+[2025-04-20T10:43:19.067Z] CPU: 4.73%, Memory: 61.96%
+- backend: CPU: 281.81%, Memory: 52.82%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:43:21.075Z] CPU: 4.73%, Memory: 61.59%
+- backend: CPU: 283.47%, Memory: 52.61%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:43:23.083Z] CPU: 4.73%, Memory: 61.72%
+- backend: CPU: 317.75%, Memory: 50.03%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.45%, Memory: 3.45%
+[2025-04-20T10:43:25.092Z] CPU: 4.73%, Memory: 62.33%
+- backend: CPU: 277.43%, Memory: 52.30%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.43%, Memory: 3.45%
+[2025-04-20T10:43:27.100Z] CPU: 4.74%, Memory: 62.30%
+- backend: CPU: 281.28%, Memory: 51.35%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.43%, Memory: 3.45%
+[2025-04-20T10:43:29.101Z] CPU: 4.74%, Memory: 62.41%
+- backend: CPU: 284.91%, Memory: 51.72%
+- postgres: CPU: 0.41%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:43:31.109Z] CPU: 4.74%, Memory: 61.90%
+- backend: CPU: 290.42%, Memory: 52.72%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.55%
+[2025-04-20T10:43:33.111Z] CPU: 4.74%, Memory: 57.55%
+- backend: CPU: 253.91%, Memory: 52.37%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:43:35.118Z] CPU: 4.74%, Memory: 58.03%
+- backend: CPU: 281.77%, Memory: 51.97%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:43:37.122Z] CPU: 4.74%, Memory: 52.08%
+- backend: CPU: 285.37%, Memory: 52.35%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:43:39.130Z] CPU: 4.74%, Memory: 52.62%
+- backend: CPU: 294.62%, Memory: 49.82%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.34%, Memory: 3.45%
+[2025-04-20T10:43:41.137Z] CPU: 4.75%, Memory: 52.85%
+- backend: CPU: 274.79%, Memory: 48.86%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.55%
+[2025-04-20T10:43:43.140Z] CPU: 4.75%, Memory: 52.58%
+- backend: CPU: 285.45%, Memory: 52.53%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:43:45.148Z] CPU: 4.75%, Memory: 53.18%
+- backend: CPU: 276.53%, Memory: 52.29%
+- postgres: CPU: 1.87%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:43:47.157Z] CPU: 4.75%, Memory: 52.40%
+- backend: CPU: 300.68%, Memory: 52.55%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.38%, Memory: 3.45%
+[2025-04-20T10:43:49.165Z] CPU: 4.75%, Memory: 52.90%
+- backend: CPU: 280.15%, Memory: 49.48%
+- postgres: CPU: 0.40%, Memory: 3.98%
+- redis: CPU: 0.41%, Memory: 3.45%
+[2025-04-20T10:43:51.172Z] CPU: 4.75%, Memory: 52.77%
+- backend: CPU: 290.26%, Memory: 52.56%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:43:53.180Z] CPU: 4.75%, Memory: 52.57%
+- backend: CPU: 298.70%, Memory: 52.59%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.35%, Memory: 3.45%
+[2025-04-20T10:43:55.188Z] CPU: 4.75%, Memory: 52.77%
+- backend: CPU: 291.30%, Memory: 52.55%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.36%, Memory: 3.45%
+[2025-04-20T10:43:57.197Z] CPU: 4.76%, Memory: 52.91%
+- backend: CPU: 290.69%, Memory: 50.85%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:43:59.206Z] CPU: 4.76%, Memory: 53.40%
+- backend: CPU: 312.70%, Memory: 52.72%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.45%
+[2025-04-20T10:44:01.213Z] CPU: 4.76%, Memory: 53.13%
+- backend: CPU: 294.09%, Memory: 45.85%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.31%, Memory: 3.55%
+[2025-04-20T10:44:03.221Z] CPU: 4.76%, Memory: 53.79%
+- backend: CPU: 283.56%, Memory: 49.43%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:44:05.225Z] CPU: 4.76%, Memory: 52.90%
+- backend: CPU: 296.80%, Memory: 51.17%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.36%, Memory: 3.45%
+[2025-04-20T10:44:07.233Z] CPU: 4.76%, Memory: 52.46%
+- backend: CPU: 196.77%, Memory: 50.57%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+[2025-04-20T10:44:09.240Z] CPU: 4.76%, Memory: 51.91%
+- backend: CPU: 244.21%, Memory: 48.09%
+- postgres: CPU: 0.33%, Memory: 3.98%
+- redis: CPU: 0.32%, Memory: 3.45%
+[2025-04-20T10:44:11.248Z] CPU: 4.76%, Memory: 52.73%
+- backend: CPU: 247.89%, Memory: 52.42%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.34%, Memory: 3.45%
+[2025-04-20T10:44:13.257Z] CPU: 4.76%, Memory: 52.60%
+- backend: CPU: 225.36%, Memory: 52.01%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.38%, Memory: 3.45%
+[2025-04-20T10:44:15.265Z] CPU: 4.77%, Memory: 52.81%
+- backend: CPU: 201.97%, Memory: 49.78%
+- postgres: CPU: 1.46%, Memory: 3.98%
+- redis: CPU: 0.37%, Memory: 3.55%
+[2025-04-20T10:44:17.269Z] CPU: 4.77%, Memory: 52.41%
+- backend: CPU: 214.55%, Memory: 49.48%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:44:19.277Z] CPU: 4.77%, Memory: 53.07%
+- backend: CPU: 258.18%, Memory: 46.07%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.39%, Memory: 3.45%
+[2025-04-20T10:44:21.285Z] CPU: 4.77%, Memory: 52.44%
+- backend: CPU: 219.01%, Memory: 50.21%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.38%, Memory: 3.55%
+[2025-04-20T10:44:23.294Z] CPU: 4.77%, Memory: 52.24%
+- backend: CPU: 197.33%, Memory: 49.48%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.36%, Memory: 3.45%
+[2025-04-20T10:44:25.301Z] CPU: 4.77%, Memory: 52.87%
+- backend: CPU: 230.36%, Memory: 50.93%
+- postgres: CPU: 0.01%, Memory: 3.98%
+- redis: CPU: 0.36%, Memory: 3.45%
+[2025-04-20T10:44:27.309Z] CPU: 4.77%, Memory: 52.67%
+- backend: CPU: 234.92%, Memory: 46.74%
+- postgres: CPU: 0.00%, Memory: 3.98%
+- redis: CPU: 0.35%, Memory: 3.45%
+[2025-04-20T10:44:29.317Z] CPU: 4.77%, Memory: 52.90%
+- backend: CPU: 208.12%, Memory: 48.94%
+- postgres: CPU: 0.38%, Memory: 3.98%
+- redis: CPU: 0.40%, Memory: 3.45%
+Мониторинг завершен. Метрики сохранены в файл /home/eugene/fullStack/stress/stress-test-metrics.json
+CSV отчет сохранен в файл /home/eugene/fullStack/stress/stress-test-metrics.csv

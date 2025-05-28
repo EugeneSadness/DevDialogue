@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -22,6 +22,15 @@ function Chat() {
     const { username, userid, chatId, chatName, email } = location.state;
     const [selectedUserInfo, setSelectedUserInfo] = useState(null);
     const [theme, setTheme] = useState("light");
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 30,
+        total: 0,
+        hasMore: false
+    });
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null);
 
     const switchTheme = () => {
         setTheme((cur) => (cur === "light" ? "dark" : "light"))
@@ -34,13 +43,15 @@ function Chat() {
         console.log("No token provided!");
     }
 
-    const fetchMessagesFromDatabase = async () => {
+    const fetchMessagesFromDatabase = async (page = 0, loadMore = false) => {
         try {
-            console.log('Попытка загрузить сообщения для чата:', chatId);
+            setIsLoading(true);
+            console.log(`Попытка загрузить сообщения для чата ${chatId}, страница ${page}`);
             
             if (!chatId) {
                 console.error('Отсутствует ID чата');
                 setMessages([]);
+                setIsLoading(false);
                 return;
             }
             
@@ -48,14 +59,19 @@ function Chat() {
             if (isNaN(chatIdNum)) {
                 console.error('ID чата не является числом:', chatId);
                 setMessages([]);
+                setIsLoading(false);
                 return;
             }
             
-            console.log('Отправка запроса на сервер с ID чата:', chatIdNum);
+            console.log('Отправка запроса на сервер с ID чата:', chatIdNum, 'страница:', page);
             
             const response = await Axios.post(
                 `${process.env.REACT_APP_BACK_URL}/api/message/getAllMessagesFromChat`, 
-                { chatId: chatIdNum }
+                { 
+                    chatId: chatIdNum,
+                    page,
+                    limit: pagination.limit
+                }
             );
             
             console.log('Ответ от сервера:', response.status, response.statusText);
@@ -64,16 +80,35 @@ function Chat() {
                 const data = response.data;
                 console.log('Полученные данные:', data);
                 
-                if (Array.isArray(data)) {
-                    console.log('Успешно загружены сообщения:', data.length);
-                    setMessages(data);
+                if (data && data.messages) {
+                    console.log('Успешно загружены сообщения:', data.messages.length);
+                    
+                    if (loadMore) {
+                        // Добавляем новые сообщения в конец списка
+                        setMessages(prevMessages => [...prevMessages, ...data.messages]);
+                    } else {
+                        // Заменяем весь список сообщений
+                        setMessages(data.messages);
+                    }
+                    
+                    // Обновляем информацию о пагинации
+                    setPagination({
+                        page,
+                        limit: pagination.limit,
+                        total: data.pagination?.total || 0,
+                        hasMore: data.pagination?.hasMore || false
+                    });
                 } else {
                     console.error('Получены некорректные данные сообщений:', data);
-                    setMessages([]);
+                    if (!loadMore) {
+                        setMessages([]);
+                    }
                 }
             } else {
                 console.error('Ошибка при загрузке сообщений:', response.status, response.statusText);
-                setMessages([]);
+                if (!loadMore) {
+                    setMessages([]);
+                }
             }
         } catch (error) {
             console.error('Ошибка при загрузке сообщений:', error);
@@ -88,11 +123,30 @@ function Chat() {
                 console.error('Ошибка при настройке запроса:', error.message);
             }
             
-            setMessages([]);
+            if (!loadMore) {
+                setMessages([]);
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
+    const loadMoreMessages = () => {
+        if (pagination.hasMore && !isLoading) {
+            const nextPage = pagination.page + 1;
+            fetchMessagesFromDatabase(nextPage, true);
+        }
+    };
 
+    const handleScroll = () => {
+        const container = messagesContainerRef.current;
+        if (container) {
+            // Если пользователь прокрутил к верху и есть еще сообщения
+            if (container.scrollTop === 0 && pagination.hasMore && !isLoading) {
+                loadMoreMessages();
+            }
+        }
+    };
 
     const sendMessageAndPicture = () => {
         if (!message.trim()) {
@@ -110,18 +164,6 @@ function Chat() {
         
         console.log('Отправка сообщения через сокет:', messageData);
         socket.emit('chatMessage', messageData);
-        
-        setMessages(prevMessages => [
-            ...prevMessages,
-            {
-                content: message,
-                senderId: userid,
-                username: username,
-                email: email,
-                chatId: chatId,
-                timestamp: new Date().toISOString()
-            }
-        ]);
         
         setMessage('');
     };
@@ -160,8 +202,15 @@ function Chat() {
     };
 
     useEffect(() => {
-        fetchMessagesFromDatabase();
+        fetchMessagesFromDatabase(0);
     }, []);
+
+    useEffect(() => {
+        // Прокручиваем до конца списка сообщений при их загрузке
+        if (messagesEndRef.current && messages.length > 0) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
 
     useEffect(() => {
         socket.connect();
@@ -184,12 +233,18 @@ function Chat() {
             setMessages((prevMessages) => {
                 const isMessageAlreadyPresent = prevMessages.some(msg => 
                     msg.content === data.content && 
-                    msg.senderId === data.senderId && 
-                    (msg.id === data.id || (!msg.id && !data.id))
+                    msg.senderId === data.senderId &&
+                    ((msg.id && data.id && msg.id === data.id) || 
+                     (msg.timestamp && data.timestamp && Math.abs(new Date(msg.timestamp) - new Date(data.timestamp)) < 1000))
                 );
 
                 if (!isMessageAlreadyPresent) {
                     console.log('Добавлено новое сообщение:', data);
+                    // Обновляем общее количество сообщений
+                    setPagination(prev => ({
+                        ...prev,
+                        total: prev.total + 1
+                    }));
                     return [...prevMessages, data];
                 }
                 
@@ -242,12 +297,29 @@ function Chat() {
                 </header>
             </nav>
             <div className="chat-container">
-                <div style={{ color: theme === "light" ? "black" : "yellow" }} className="messages">
+                <div 
+                    style={{ color: theme === "light" ? "black" : "yellow" }} 
+                    className="messages" 
+                    ref={messagesContainerRef}
+                    onScroll={handleScroll}
+                >
+                    {pagination.hasMore && (
+                        <div className="load-more-container">
+                            <button 
+                                className="load-more-button" 
+                                onClick={loadMoreMessages} 
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Загрузка...' : 'Загрузить еще сообщения'}
+                            </button>
+                        </div>
+                    )}
+                    
                     {messages && messages.length > 0 ? (
                         <ul>
                             {messages.map((msg, index) => (
                                 <li
-                                    key={`msg-${index}-${msg.senderId}-${Date.now()}`}
+                                    key={`msg-${msg.id}-${index}`}
                                     className={`${msg.senderId === userid ? "sent" : "received"}`}
                                 >
                                     <button 
@@ -262,6 +334,7 @@ function Chat() {
                                     {msg.content}
                                 </li>
                             ))}
+                            <div ref={messagesEndRef} />
                         </ul>
                     ) : (
                         <div className="no-messages">
