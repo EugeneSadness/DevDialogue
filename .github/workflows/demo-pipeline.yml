@@ -2,50 +2,50 @@ name: "🚀 CI/CD Pipeline Demo"
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, master, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   build:
     name: "🏗️ Build & Test"
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: "📥 Checkout Code"
       uses: actions/checkout@v4
-      
+
     - name: "⚙️ Setup Environment"
       run: |
         echo "⚙️ Setting up Node.js environment..."
         sleep 5
         echo "✅ Node.js 18 configured successfully"
-        
+
     - name: "📦 Install Dependencies"
       run: |
         echo "📦 Installing project dependencies..."
         sleep 8
         echo "✅ Dependencies installed (127 packages)"
-        
+
     - name: "🔍 Code Linting"
       run: |
         echo "🔍 Running ESLint analysis..."
         sleep 6
         echo "✅ Linting passed - no issues found"
-        
+
     - name: "🧪 Unit Tests"
       run: |
         echo "🧪 Running unit test suite..."
         sleep 12
         echo "✅ Unit tests passed (23/23) - Coverage: 94%"
-        
+
     - name: "🔗 Integration Tests"
       run: |
         echo "🔗 Running integration tests..."
         sleep 15
         echo "✅ Integration tests passed (12/12)"
-        
+
     - name: "🏗️ Build Application"
       run: |
         echo "🏗️ Building production bundle..."
@@ -56,17 +56,17 @@ jobs:
     name: "🔒 Security Scan"
     runs-on: ubuntu-latest
     needs: build
-    
+
     steps:
     - name: "📥 Checkout Code"
       uses: actions/checkout@v4
-      
+
     - name: "🛡️ Vulnerability Scan"
       run: |
         echo "🛡️ Scanning for vulnerabilities..."
         sleep 8
         echo "✅ No critical vulnerabilities (0 high, 2 medium)"
-        
+
     - name: "📋 Dependency Check"
       run: |
         echo "📋 Checking dependency security..."
@@ -77,7 +77,7 @@ jobs:
     name: "🎭 Deploy to Staging"
     runs-on: ubuntu-latest
     needs: [build, security]
-    
+
     steps:
     - name: "🚀 Deploy to Staging"
       run: |
@@ -85,7 +85,7 @@ jobs:
         echo "📍 Target: staging.demo.com"
         sleep 12
         echo "✅ Staging deployment completed"
-        
+
     - name: "💨 Smoke Tests"
       run: |
         echo "💨 Running smoke tests..."
@@ -96,8 +96,8 @@ jobs:
     name: "🌟 Deploy to Production"
     runs-on: ubuntu-latest
     needs: deploy-staging
-    if: github.ref == 'refs/heads/main'
-    
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
     steps:
     - name: "🔄 Blue-Green Setup"
       run: |
@@ -106,19 +106,19 @@ jobs:
         echo "🟩 Green: production-green.demo.com"
         sleep 8
         echo "✅ Blue-Green setup completed"
-        
+
     - name: "🟩 Deploy to Green"
       run: |
         echo "🟩 Deploying to Green environment..."
         sleep 15
         echo "✅ Green deployment completed"
-        
+
     - name: "❤️ Health Check"
       run: |
         echo "❤️ Running health checks..."
         sleep 6
         echo "✅ All health checks passed"
-        
+
     - name: "🔀 Switch Traffic"
       run: |
         echo "🔀 Switching traffic to Green..."
@@ -131,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [deploy-production]
     if: always()
-    
+
     steps:
     - name: "🎉 Success Notification"
       if: needs.deploy-production.result == 'success' || needs.deploy-staging.result == 'success'
@@ -139,7 +139,7 @@ jobs:
         echo "🎉 CI/CD Pipeline completed successfully!"
         sleep 3
         echo "📧 Team notification sent"
-        
+
     - name: "❌ Failure Notification"
       if: failure()
       run: |
