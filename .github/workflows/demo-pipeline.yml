@@ -112,14 +112,14 @@ jobs:
         sleep 8
         echo "✅ Staging deployment completed"
 
-    - name: "💨 Smoke Tests"
+    - name: "🔍 Базовые проверки"
       run: |
-        echo "💨 Running smoke tests on staging..."
-        echo "🔍 Testing API endpoints..."
+        echo "🔍 Выполнение базовых проверок на staging..."
+        echo "🔍 Тестирование API endpoints..."
         sleep 5
-        echo "🔍 Testing frontend functionality..."
+        echo "🔍 Проверка функциональности frontend..."
         sleep 3
-        echo "✅ All smoke tests passed (8/8)"
+        echo "✅ Все базовые проверки пройдены (8/8)"
 
   deploy-production:
     name: "🌟 Blue-Green Production Deploy"
