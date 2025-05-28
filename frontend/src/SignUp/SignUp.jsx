@@ -29,7 +29,6 @@ function RegistrationForm() {
 
         try {
             const response = await Axios.post(process.env.REACT_APP_BACK_URL+'/api/user/registration', formData);
-            console.log('Ответ от сервера:', response.data);
 
             if (response.data.unvailableEmail) {
                 alert("Email уже зарегистрирован");
@@ -48,7 +47,7 @@ function RegistrationForm() {
             navigate('/user', { state: {userid: response.data.id, username: formData.name , email: formData.email}, replace: true });
 
         } catch (error) {
-            console.error('Ошибка при отправке данных:', error);
+            console.error('Ошибка при отправке данных:', error.response?.data?.message || error.message || error);
         }
     };
 
