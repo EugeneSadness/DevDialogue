@@ -1,7 +1,33 @@
 const { Sequelize } = require('sequelize');
 const { initUserModel } = require('../models/User');
+const fs = require('fs');
+const path = require('path');
 
 let sequelize;
+
+const runMigrations = async (sequelize) => {
+  try {
+    const migrationsDir = path.join(__dirname, '../migrations');
+    const migrationFiles = fs.readdirSync(migrationsDir)
+      .filter(file => file.endsWith('.sql'))
+      .sort();
+
+    console.log('🔄 Running database migrations...');
+
+    for (const file of migrationFiles) {
+      const migrationPath = path.join(migrationsDir, file);
+      const migrationSQL = fs.readFileSync(migrationPath, 'utf8');
+
+      console.log(`📄 Executing migration: ${file}`);
+      await sequelize.query(migrationSQL);
+    }
+
+    console.log('✅ All migrations completed successfully');
+  } catch (error) {
+    console.error('❌ Migration failed:', error);
+    throw error;
+  }
+};
 
 const connectDB = async () => {
   try {
@@ -34,11 +60,9 @@ const connectDB = async () => {
     initUserModel(sequelize);
     console.log('✅ User model initialized');
 
-    // Sync models (in production, use migrations instead)
-    if (process.env.NODE_ENV !== 'production') {
-      await sequelize.sync({ alter: true });
-      console.log('✅ Database models synchronized');
-    }
+    // Sync models to create tables
+    await sequelize.sync({ force: true }); // force: true пересоздаст таблицы
+    console.log('✅ Database tables created successfully');
 
     return sequelize;
   } catch (error) {

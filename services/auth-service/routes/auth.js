@@ -38,7 +38,7 @@ const generateTokens = (userId) => {
 // Register endpoint
 router.post('/register', authLimiter, validateRegistration, async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { username, email, password, first_name, last_name } = req.body;
     const User = getUserModel();
 
     // Check if user already exists
@@ -51,9 +51,11 @@ router.post('/register', authLimiter, validateRegistration, async (req, res) => 
 
     // Create new user
     const user = await User.create({
-      username: name,
+      username,
       email: email.toLowerCase(),
-      password_hash: password
+      password_hash: password,
+      first_name,
+      last_name
     });
 
     // Generate tokens

@@ -29,20 +29,22 @@ class MessageService {
     async createChat(chatData) {
         try {
             console.log('MessageService: Создание чата', chatData);
-            
+
             const response = await apiClient.post('/api/chats', {
-                title: chatData.title,
-                participants: chatData.participants || []
+                name: chatData.title,
+                description: chatData.description || '',
+                type: chatData.type || 'group',
+                participantIds: chatData.participants || []
             });
-            
+
             return {
                 success: true,
-                chat: response.data
+                chat: response.data.chat
             };
 
         } catch (error) {
             console.error('MessageService: Ошибка создания чата', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message
@@ -54,15 +56,15 @@ class MessageService {
     async getMessages(chatId, page = 0, limit = 30) {
         try {
             console.log('MessageService: Получение сообщений', { chatId, page, limit });
-            
-            const response = await apiClient.get('/api/messages', {
+
+            const offset = page * limit;
+            const response = await apiClient.get(`/api/messages/chat/${chatId}`, {
                 params: {
-                    chatId,
-                    page,
-                    limit
+                    limit,
+                    offset
                 }
             });
-            
+
             return {
                 success: true,
                 messages: response.data.messages || [],
@@ -76,7 +78,7 @@ class MessageService {
 
         } catch (error) {
             console.error('MessageService: Ошибка получения сообщений', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message,
@@ -95,21 +97,22 @@ class MessageService {
     async sendMessage(messageData) {
         try {
             console.log('MessageService: Отправка сообщения', messageData);
-            
+
             const response = await apiClient.post('/api/messages', {
                 chatId: messageData.chatId,
                 content: messageData.content,
-                senderId: messageData.senderId
+                messageType: messageData.messageType || 'text',
+                replyToId: messageData.replyToId || null
             });
-            
+
             return {
                 success: true,
-                message: response.data
+                message: response.data.data
             };
 
         } catch (error) {
             console.error('MessageService: Ошибка отправки сообщения', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message
@@ -117,49 +120,27 @@ class MessageService {
         }
     }
 
-    // Найти пользователя по имени
-    async findUserByName(name) {
-        try {
-            console.log('MessageService: Поиск пользователя', name);
-            
-            const response = await apiClient.get('/api/users/search', {
-                params: { name }
-            });
-            
-            return {
-                success: true,
-                user: response.data
-            };
-
-        } catch (error) {
-            console.error('MessageService: Ошибка поиска пользователя', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message
-            };
-        }
-    }
+    // Поиск пользователей (функция удалена - нет такого endpoint в message-service)
+    // Используйте auth-service для поиска пользователей
 
     // Добавить пользователя в чат
-    async addUserToChat(chatId, userId, inviterId) {
+    async addUserToChat(chatId, userId, role = 'member') {
         try {
-            console.log('MessageService: Добавление пользователя в чат', { chatId, userId, inviterId });
-            
-            const response = await apiClient.post('/api/chats/participants', {
-                chatId,
+            console.log('MessageService: Добавление пользователя в чат', { chatId, userId, role });
+
+            const response = await apiClient.post(`/api/chats/${chatId}/members`, {
                 userId,
-                inviterId
+                role
             });
-            
+
             return {
                 success: true,
-                data: response.data
+                data: response.data.member
             };
 
         } catch (error) {
             console.error('MessageService: Ошибка добавления пользователя в чат', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message

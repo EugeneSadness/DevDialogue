@@ -8,22 +8,22 @@ class AuthService {
             console.log('AuthService: Регистрация пользователя', userData);
             
             const response = await apiClient.post('/api/auth/register', {
-                name: userData.name,
+                username: userData.name,
                 email: userData.email,
                 password: userData.password
             });
 
-            const { token, user } = response.data;
-            
-            if (token) {
-                setAuthToken(token);
+            const { tokens, user } = response.data;
+
+            if (tokens?.accessToken) {
+                setAuthToken(tokens.accessToken);
                 console.log('AuthService: Регистрация успешна, токен сохранен');
                 return {
                     success: true,
-                    token,
+                    token: tokens.accessToken,
                     user: {
                         id: user.id,
-                        name: user.name,
+                        name: user.username,
                         email: user.email
                     }
                 };
@@ -71,17 +71,17 @@ class AuthService {
                 password: credentials.password
             });
 
-            const { token, user } = response.data;
-            
-            if (token) {
-                setAuthToken(token);
+            const { tokens, user } = response.data;
+
+            if (tokens?.accessToken) {
+                setAuthToken(tokens.accessToken);
                 console.log('AuthService: Авторизация успешна, токен сохранен');
                 return {
                     success: true,
-                    token,
+                    token: tokens.accessToken,
                     user: {
                         id: user.id,
-                        name: user.name,
+                        name: user.username,
                         email: user.email
                     }
                 };
@@ -108,17 +108,17 @@ class AuthService {
     async getProfile() {
         try {
             console.log('AuthService: Получение профиля пользователя');
-            
-            const response = await apiClient.get('/api/auth/profile');
-            
+
+            const response = await apiClient.get('/api/auth/me');
+
             return {
                 success: true,
-                user: response.data
+                user: response.data.user
             };
 
         } catch (error) {
             console.error('AuthService: Ошибка получения профиля', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message
@@ -136,12 +136,15 @@ class AuthService {
     }
 
     // Проверка валидности токена
-    async validateToken() {
+    async validateToken(token) {
         try {
-            const response = await apiClient.get('/api/auth/validate');
+            const response = await apiClient.post('/api/auth/verify', {
+                token: token
+            });
             return {
                 success: true,
-                valid: response.data.valid
+                valid: response.data.valid,
+                user: response.data.user
             };
         } catch (error) {
             console.error('AuthService: Ошибка валидации токена', error);

@@ -48,88 +48,42 @@ class MonitoringService {
         }
     }
 
-    // Получить статистику использования
+    // Получить статистику использования (endpoint не реализован)
     async getUsageStats() {
-        try {
-            console.log('MonitoringService: Получение статистики использования');
-            
-            const response = await apiClient.get('/api/metrics/usage');
-            
-            return {
-                success: true,
-                stats: response.data
-            };
-
-        } catch (error) {
-            console.error('MonitoringService: Ошибка получения статистики', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message,
-                stats: {}
-            };
-        }
+        console.log('MonitoringService: Статистика использования не реализована');
+        return {
+            success: false,
+            error: 'Usage stats not implemented',
+            stats: {}
+        };
     }
 
-    // Получить логи системы
+    // Получить логи системы (endpoint не реализован)
     async getLogs(filters = {}) {
-        try {
-            console.log('MonitoringService: Получение логов', filters);
-            
-            const response = await apiClient.get('/api/logs', {
-                params: filters
-            });
-            
-            return {
-                success: true,
-                logs: response.data
-            };
-
-        } catch (error) {
-            console.error('MonitoringService: Ошибка получения логов', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message,
-                logs: []
-            };
-        }
+        console.log('MonitoringService: Логи не реализованы');
+        return {
+            success: false,
+            error: 'Logs not implemented',
+            logs: []
+        };
     }
 
-    // Отправить событие для мониторинга
+    // Отправить событие для мониторинга (endpoint не реализован)
     async sendEvent(eventData) {
-        try {
-            console.log('MonitoringService: Отправка события', eventData);
-            
-            const response = await apiClient.post('/api/events', {
-                type: eventData.type,
-                message: eventData.message,
-                level: eventData.level || 'info',
-                metadata: eventData.metadata || {}
-            });
-            
-            return {
-                success: true,
-                event: response.data
-            };
-
-        } catch (error) {
-            console.error('MonitoringService: Ошибка отправки события', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message
-            };
-        }
+        console.log('MonitoringService: События не реализованы');
+        return {
+            success: false,
+            error: 'Events not implemented'
+        };
     }
 
     // Проверить доступность конкретного сервиса
     async checkServiceHealth(serviceName) {
         try {
             console.log('MonitoringService: Проверка сервиса', serviceName);
-            
-            const response = await apiClient.get(`/api/health/${serviceName}`);
-            
+
+            const response = await apiClient.get(`/api/health/service/${serviceName}`);
+
             return {
                 success: true,
                 status: response.data
@@ -137,7 +91,7 @@ class MonitoringService {
 
         } catch (error) {
             console.error('MonitoringService: Ошибка проверки сервиса', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message,

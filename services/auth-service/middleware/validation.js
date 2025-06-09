@@ -14,12 +14,12 @@ const validateName = (name) => {
 };
 
 const validateRegistration = (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
   const errors = [];
 
-  // Validate name
-  if (!validateName(name)) {
-    errors.push('Name must be between 2 and 100 characters');
+  // Validate username
+  if (!validateName(username)) {
+    errors.push('Username must be between 2 and 100 characters');
   }
 
   // Validate email

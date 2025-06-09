@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: messenger
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: frontend
@@ -21,35 +21,39 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: messenger/frontend:latest
+        image: messenger/frontend:v2.0
         imagePullPolicy: Never
         ports:
         - containerPort: 3000
           name: http
         env:
         - name: REACT_APP_API_URL
-          value: "http://api.messenger.local"
+          value: "http://192.168.0.16"
         - name: REACT_APP_WS_URL
-          value: "ws://api.messenger.local"
+          value: "http://192.168.0.16"
+        - name: REACT_APP_BACK_URL
+          value: "http://192.168.0.16"
         resources:
           requests:
             memory: "256Mi"
             cpu: "100m"
           limits:
             memory: "512Mi"
-            cpu: "500m"
+            cpu: "200m"
         livenessProbe:
           httpGet:
             path: /
             port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: /
             port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
       restartPolicy: Always
 ---
 apiVersion: v1

@@ -13,6 +13,7 @@ const initUserModel = (sequelize) => {
   username: {
     type: DataTypes.STRING(50),
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true,
       len: [2, 50]

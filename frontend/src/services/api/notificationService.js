@@ -25,48 +25,36 @@ class NotificationService {
         }
     }
 
-    // Создать подписку на push уведомления
+    // Создать подписку на push уведомления (endpoint не реализован)
     async createSubscription(subscriptionData) {
-        try {
-            console.log('NotificationService: Создание подписки на уведомления');
-            
-            const response = await apiClient.post('/api/subscriptions', subscriptionData);
-            
-            return {
-                success: true,
-                subscription: response.data
-            };
-
-        } catch (error) {
-            console.error('NotificationService: Ошибка создания подписки', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message
-            };
-        }
+        console.log('NotificationService: Подписки не реализованы в текущей версии');
+        return {
+            success: false,
+            error: 'Subscriptions not implemented'
+        };
     }
 
     // Отправить уведомление
     async sendNotification(notificationData) {
         try {
             console.log('NotificationService: Отправка уведомления', notificationData);
-            
-            const response = await apiClient.post('/api/notifications', {
+
+            const response = await apiClient.post('/api/notifications/send', {
                 userId: notificationData.userId,
                 title: notificationData.title,
-                message: notificationData.message,
-                type: notificationData.type || 'info'
+                body: notificationData.message,
+                type: notificationData.type || 'info',
+                data: notificationData.data || {}
             });
-            
+
             return {
                 success: true,
-                notification: response.data
+                notification: response.data.result
             };
 
         } catch (error) {
             console.error('NotificationService: Ошибка отправки уведомления', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message
@@ -78,19 +66,17 @@ class NotificationService {
     async markAsRead(notificationId) {
         try {
             console.log('NotificationService: Отметка уведомления как прочитанного', notificationId);
-            
-            const response = await apiClient.patch(`/api/notifications/${notificationId}`, {
-                read: true
-            });
-            
+
+            const response = await apiClient.put(`/api/notifications/${notificationId}/read`);
+
             return {
                 success: true,
-                notification: response.data
+                notification: response.data.notification
             };
 
         } catch (error) {
             console.error('NotificationService: Ошибка отметки уведомления', error);
-            
+
             return {
                 success: false,
                 error: error.response?.data?.message || error.message
@@ -119,49 +105,23 @@ class NotificationService {
         }
     }
 
-    // Получить настройки уведомлений пользователя
+    // Получить настройки уведомлений пользователя (endpoint не реализован)
     async getSettings() {
-        try {
-            console.log('NotificationService: Получение настроек уведомлений');
-            
-            const response = await apiClient.get('/api/notifications/settings');
-            
-            return {
-                success: true,
-                settings: response.data
-            };
-
-        } catch (error) {
-            console.error('NotificationService: Ошибка получения настроек', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message,
-                settings: {}
-            };
-        }
+        console.log('NotificationService: Настройки не реализованы в текущей версии');
+        return {
+            success: false,
+            error: 'Settings not implemented',
+            settings: {}
+        };
     }
 
-    // Обновить настройки уведомлений
+    // Обновить настройки уведомлений (endpoint не реализован)
     async updateSettings(settings) {
-        try {
-            console.log('NotificationService: Обновление настроек уведомлений', settings);
-            
-            const response = await apiClient.put('/api/notifications/settings', settings);
-            
-            return {
-                success: true,
-                settings: response.data
-            };
-
-        } catch (error) {
-            console.error('NotificationService: Ошибка обновления настроек', error);
-            
-            return {
-                success: false,
-                error: error.response?.data?.message || error.message
-            };
-        }
+        console.log('NotificationService: Настройки не реализованы в текущей версии');
+        return {
+            success: false,
+            error: 'Settings not implemented'
+        };
     }
 }
 

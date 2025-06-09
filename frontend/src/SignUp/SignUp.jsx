@@ -127,12 +127,12 @@ function RegistrationForm() {
                     <input
                         type="password"
                         name="password"
-                        minLength="3"
-                        maxLength="8"
+                        minLength="6"
+                        maxLength="50"
                         value={formData.password}
                         required
                         onChange={handleInputChange}
-                        placeholder="Пароль (3-8 символов)"
+                        placeholder="Пароль (минимум 6 символов, буквы и цифры)"
                         disabled={isLoading}
                     />
                 </div>
