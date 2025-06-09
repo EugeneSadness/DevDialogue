@@ -51,16 +51,13 @@ router.post('/register', authLimiter, validateRegistration, async (req, res) => 
 
     // Create new user
     const user = await User.create({
-      name,
+      username: name,
       email: email.toLowerCase(),
-      password
+      password_hash: password
     });
 
     // Generate tokens
     const { accessToken, refreshToken } = generateTokens(user.id);
-
-    // Save refresh token
-    await user.update({ refreshToken });
 
     res.status(201).json({
       message: 'User registered successfully',
@@ -86,7 +83,7 @@ router.post('/login', authLimiter, validateLogin, async (req, res) => {
 
     // Find user
     const user = await User.findByEmail(email);
-    if (!user || !user.isActive) {
+    if (!user || !user.is_active) {
       return res.status(401).json({
         error: 'Invalid credentials'
       });
@@ -105,8 +102,7 @@ router.post('/login', authLimiter, validateLogin, async (req, res) => {
 
     // Update user
     await user.update({
-      refreshToken,
-      lastLogin: new Date()
+      last_login: new Date()
     });
 
     res.json({
@@ -142,7 +138,7 @@ router.post('/refresh', async (req, res) => {
 
     // Find user
     const user = await User.findActiveById(decoded.userId);
-    if (!user || user.refreshToken !== refreshToken) {
+    if (!user) {
       return res.status(401).json({
         error: 'Invalid refresh token'
       });
@@ -150,9 +146,6 @@ router.post('/refresh', async (req, res) => {
 
     // Generate new tokens
     const tokens = generateTokens(user.id);
-
-    // Update refresh token
-    await user.update({ refreshToken: tokens.refreshToken });
 
     res.json({
       message: 'Tokens refreshed successfully',
@@ -169,12 +162,6 @@ router.post('/refresh', async (req, res) => {
 // Logout endpoint
 router.post('/logout', authMiddleware, async (req, res) => {
   try {
-    const User = getUserModel();
-    const user = await User.findActiveById(req.userId);
-    if (user) {
-      await user.update({ refreshToken: null });
-    }
-
     res.json({
       message: 'Logout successful'
     });

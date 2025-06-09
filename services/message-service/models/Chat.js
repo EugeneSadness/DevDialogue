@@ -9,9 +9,10 @@ const initChatModel = (sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
-    title: {
+    name: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      field: 'name',
       validate: {
         notEmpty: true,
         len: [1, 100]
@@ -19,15 +20,18 @@ const initChatModel = (sequelize) => {
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: true,
+      field: 'description'
     },
     type: {
       type: DataTypes.ENUM('private', 'group', 'channel'),
-      defaultValue: 'private'
+      defaultValue: 'private',
+      field: 'chat_type'
     },
     creatorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'created_by',
       validate: {
         isInt: true,
         min: 1
@@ -35,28 +39,21 @@ const initChatModel = (sequelize) => {
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
+      defaultValue: true,
+      field: 'is_active'
     },
-    lastMessageAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    settings: {
-      type: DataTypes.JSONB,
-      allowNull: true,
-      defaultValue: {
-        allowInvites: true,
-        muteNotifications: false,
-        messageRetention: 0 // 0 = unlimited
-      }
-    },
+
+
     avatar: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      field: 'avatar_url'
     }
   }, {
     tableName: 'chats',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         fields: ['creatorId']
@@ -66,9 +63,6 @@ const initChatModel = (sequelize) => {
       },
       {
         fields: ['isActive']
-      },
-      {
-        fields: ['lastMessageAt']
       }
     ]
   });
@@ -80,7 +74,8 @@ const initChatModel = (sequelize) => {
   };
 
   Chat.prototype.updateLastMessage = async function() {
-    this.lastMessageAt = new Date();
+    // This functionality would need a separate last_message_at column
+    // For now, just update the updated_at timestamp
     return await this.save();
   };
 
@@ -99,7 +94,7 @@ const initChatModel = (sequelize) => {
       where: { isActive: true },
       limit,
       offset,
-      order: [['lastMessageAt', 'DESC']]
+      order: [['updated_at', 'DESC']]
     });
   };
 
@@ -118,31 +113,29 @@ const initChatModel = (sequelize) => {
     });
   };
 
-  Chat.createPrivateChat = async function(creatorId, participantId, title) {
+  Chat.createPrivateChat = async function(creatorId, participantId, name) {
     return await this.create({
-      title: title || 'Private Chat',
+      name: name || 'Private Chat',
       type: 'private',
-      creatorId,
-      lastMessageAt: new Date()
+      creatorId
     });
   };
 
-  Chat.createGroupChat = async function(creatorId, title, description = null) {
+  Chat.createGroupChat = async function(creatorId, name, description = null) {
     return await this.create({
-      title,
+      name,
       description,
       type: 'group',
-      creatorId,
-      lastMessageAt: new Date()
+      creatorId
     });
   };
 
   Chat.searchByTitle = async function(searchTerm, userId, options = {}) {
     const { limit = 10, offset = 0 } = options;
-    
+
     return await this.findAll({
       where: {
-        title: {
+        name: {
           [sequelize.Op.iLike]: `%${searchTerm}%`
         },
         isActive: true
@@ -156,7 +149,7 @@ const initChatModel = (sequelize) => {
       ],
       limit,
       offset,
-      order: [['lastMessageAt', 'DESC']]
+      order: [['updated_at', 'DESC']]
     });
   };
 

@@ -76,7 +76,7 @@ router.get('/:chatId', authMiddleware, async (req, res) => {
 // Create a new chat
 router.post('/', authMiddleware, validateChat, async (req, res) => {
   try {
-    const { title, description, type = 'group', participantIds = [] } = req.body;
+    const { name, description, type = 'group', participantIds = [] } = req.body;
     const creatorId = req.userId;
 
     const Chat = getChatModel();
@@ -84,11 +84,10 @@ router.post('/', authMiddleware, validateChat, async (req, res) => {
 
     // Create chat
     const chat = await Chat.create({
-      title,
+      name,
       description,
       type,
-      creatorId,
-      lastMessageAt: new Date()
+      creatorId
     });
 
     // Add creator as owner
@@ -119,7 +118,7 @@ router.post('/', authMiddleware, validateChat, async (req, res) => {
 router.put('/:chatId', authMiddleware, validateChat, async (req, res) => {
   try {
     const { chatId } = req.params;
-    const { title, description, settings } = req.body;
+    const { name, description } = req.body;
     const userId = req.userId;
 
     const Chat = getChatModel();
@@ -142,9 +141,8 @@ router.put('/:chatId', authMiddleware, validateChat, async (req, res) => {
     }
 
     const updateData = {};
-    if (title !== undefined) updateData.title = title;
+    if (name !== undefined) updateData.name = name;
     if (description !== undefined) updateData.description = description;
-    if (settings !== undefined) updateData.settings = { ...chat.settings, ...settings };
 
     await chat.update(updateData);
 
@@ -210,7 +208,7 @@ router.post('/:chatId/members', authMiddleware, async (req, res) => {
 
     // Check if user has permission to add members
     const membership = await ChatMember.findByUserAndChat(userId, chatId);
-    if (!membership || !membership.permissions.canInviteUsers) {
+    if (!membership || !['admin', 'owner'].includes(membership.role)) {
       return res.status(403).json({
         error: 'Access denied: You do not have permission to add members'
       });
@@ -257,7 +255,7 @@ router.delete('/:chatId/members/:memberId', authMiddleware, async (req, res) => 
 
     // Check if user has permission to remove members
     const membership = await ChatMember.findByUserAndChat(userId, chatId);
-    if (!membership || !membership.permissions.canKickUsers) {
+    if (!membership || !['admin', 'owner'].includes(membership.role)) {
       return res.status(403).json({
         error: 'Access denied: You do not have permission to remove members'
       });

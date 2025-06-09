@@ -13,11 +13,11 @@ data:
   DB_SLAVE_HOST: "postgres-slave-service"
   DB_SLAVE_PORT: "5432"
   
-  # Service URLs
-  AUTH_SERVICE_URL: "http://auth-service:3001"
-  MESSAGE_SERVICE_URL: "http://message-service:3002"
-  NOTIFICATION_SERVICE_URL: "http://notification-service:3003"
-  MONITORING_SERVICE_URL: "http://monitoring-service:3004"
+  # Service URLs (use Nginx gateway for inter-service communication)
+  AUTH_SERVICE_URL: "http://nginx-gateway-service.messenger.svc.cluster.local"
+  MESSAGE_SERVICE_URL: "http://nginx-gateway-service.messenger.svc.cluster.local"
+  NOTIFICATION_SERVICE_URL: "http://nginx-gateway-service.messenger.svc.cluster.local"
+  MONITORING_SERVICE_URL: "http://nginx-gateway-service.messenger.svc.cluster.local"
   
   # Application configuration
   NODE_ENV: "production"
@@ -183,19 +183,23 @@ data:
         
         # Upstream servers
         upstream auth_backend {
-            server auth-service:3001 max_fails=3 fail_timeout=30s;
+            server auth-service.messenger.svc.cluster.local:3001 max_fails=3 fail_timeout=30s;
         }
-        
+
         upstream message_backend {
-            server message-service:3002 max_fails=3 fail_timeout=30s;
+            server message-service.messenger.svc.cluster.local:3002 max_fails=3 fail_timeout=30s;
         }
-        
+
         upstream notification_backend {
-            server notification-service:3003 max_fails=3 fail_timeout=30s;
+            server notification-service.messenger.svc.cluster.local:3003 max_fails=3 fail_timeout=30s;
         }
-        
+
         upstream monitoring_backend {
-            server monitoring-service:3004 max_fails=3 fail_timeout=30s;
+            server monitoring-service.messenger.svc.cluster.local:3004 max_fails=3 fail_timeout=30s;
+        }
+
+        upstream frontend_backend {
+            server frontend-service.messenger.svc.cluster.local:3000 max_fails=3 fail_timeout=30s;
         }
         
         # Main server block
@@ -215,6 +219,8 @@ data:
                 return 200 "healthy\n";
                 add_header Content-Type text/plain;
             }
+
+
             
             # Auth service
             location /api/auth/ {
@@ -226,10 +232,20 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
             
-            # Message service
+            # Message service - Messages
             location /api/messages/ {
                 limit_req zone=api burst=20 nodelay;
-                proxy_pass http://message_backend/;
+                proxy_pass http://message_backend;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            # Message service - Chats
+            location /api/chats/ {
+                limit_req zone=api burst=20 nodelay;
+                proxy_pass http://message_backend;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -251,17 +267,37 @@ data:
             # Notification service
             location /api/notifications/ {
                 limit_req zone=api burst=15 nodelay;
-                proxy_pass http://notification_backend/;
+                proxy_pass http://notification_backend;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            # Notification service - Subscriptions
+            location /api/subscriptions/ {
+                limit_req zone=api burst=15 nodelay;
+                proxy_pass http://notification_backend;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
             
-            # Monitoring service
-            location /api/monitoring/ {
+            # Monitoring service - Health
+            location /api/health/ {
                 limit_req zone=api burst=10 nodelay;
-                proxy_pass http://monitoring_backend/;
+                proxy_pass http://monitoring_backend;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            # Monitoring service - Metrics
+            location /api/metrics/ {
+                limit_req zone=api burst=10 nodelay;
+                proxy_pass http://monitoring_backend;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -276,12 +312,16 @@ data:
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
-            
-            # Frontend static files
+
+            # Frontend application (catch-all for React Router) - MUST BE LAST
             location / {
-                root /usr/share/nginx/html;
-                index index.html index.htm;
-                try_files $uri $uri/ /index.html;
+                proxy_pass http://frontend_backend;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
             }
+            
+
         }
     }

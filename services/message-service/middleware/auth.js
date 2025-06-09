@@ -16,7 +16,7 @@ const authMiddleware = async (req, res, next) => {
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
     // Verify token with auth service
-    const response = await axios.post(`${AUTH_SERVICE_URL}/api/auth/verify`, {
+    const response = await axios.post(`${AUTH_SERVICE_URL}/verify`, {
       token
     }, {
       timeout: 5000,
@@ -70,7 +70,7 @@ const optionalAuthMiddleware = async (req, res, next) => {
     const token = authHeader.substring(7);
 
     // Verify token with auth service
-    const response = await axios.post(`${AUTH_SERVICE_URL}/api/auth/verify`, {
+    const response = await axios.post(`${AUTH_SERVICE_URL}/verify`, {
       token
     }, {
       timeout: 5000,

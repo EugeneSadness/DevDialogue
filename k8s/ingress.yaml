@@ -24,14 +24,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
     nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
     
-    # Security headers
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header X-Frame-Options DENY;
-      add_header X-Content-Type-Options nosniff;
-      add_header X-XSS-Protection "1; mode=block";
-      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-      add_header Referrer-Policy "strict-origin-when-cross-origin";
-    
+
     # WebSocket support
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
@@ -39,6 +32,7 @@ metadata:
     # Certificate management (if using cert-manager)
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - messenger.local
@@ -89,7 +83,7 @@ spec:
       
       # WebSocket endpoint for real-time messaging
       - path: /socket.io
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: message-service
@@ -142,6 +136,7 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
 spec:
+  ingressClassName: nginx
   rules:
   - host: messenger-dev.local
     http:

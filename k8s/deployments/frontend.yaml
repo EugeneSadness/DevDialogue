@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: messenger
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/part-of: messenger
+    spec:
+      containers:
+      - name: frontend
+        image: messenger/frontend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+          name: http
+        env:
+        - name: REACT_APP_API_URL
+          value: "http://api.messenger.local"
+        - name: REACT_APP_WS_URL
+          value: "ws://api.messenger.local"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: messenger
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: frontend

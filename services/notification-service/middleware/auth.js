@@ -4,18 +4,23 @@ const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001'
 
 const authMiddleware = async (req, res, next) => {
   try {
+    console.log('🔐 Auth middleware called for:', req.method, req.path);
+
     // Get token from header
     const authHeader = req.headers.authorization;
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log('❌ No valid authorization header');
       return res.status(401).json({
         error: 'Access token required'
       });
     }
 
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    console.log('🔑 Token extracted, length:', token.length);
 
     // Verify token with auth service
+    console.log('📞 Calling auth service at:', `${AUTH_SERVICE_URL}/api/auth/verify`);
     const response = await axios.post(`${AUTH_SERVICE_URL}/api/auth/verify`, {
       token
     }, {
@@ -25,7 +30,10 @@ const authMiddleware = async (req, res, next) => {
       }
     });
 
+    console.log('✅ Auth service response:', response.status, response.data);
+
     if (!response.data.valid) {
+      console.log('❌ Token validation failed');
       return res.status(401).json({
         error: 'Invalid token'
       });
@@ -34,23 +42,26 @@ const authMiddleware = async (req, res, next) => {
     // Add user info to request
     req.userId = response.data.userId;
     req.user = response.data.user;
-    
+
+    console.log('✅ Auth successful for user:', req.userId);
     next();
   } catch (error) {
+    console.error('❌ Auth middleware error:', error.message);
     if (error.response) {
       // Auth service responded with error
+      console.error('❌ Auth service error response:', error.response.status, error.response.data);
       return res.status(error.response.status).json({
         error: error.response.data.error || 'Authentication failed'
       });
     } else if (error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
       // Auth service is unavailable
-      console.error('Auth service unavailable:', error.message);
+      console.error('❌ Auth service unavailable:', error.message);
       return res.status(503).json({
         error: 'Authentication service unavailable'
       });
     } else {
       // Other errors
-      console.error('Auth middleware error:', error);
+      console.error('❌ Auth middleware error:', error);
       return res.status(500).json({
         error: 'Internal server error'
       });

@@ -12,6 +12,7 @@ const initSubscriptionModel = (sequelize) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'user_id',
       validate: {
         isInt: true,
         min: 1
@@ -20,63 +21,48 @@ const initSubscriptionModel = (sequelize) => {
     endpoint: {
       type: DataTypes.TEXT,
       allowNull: false,
+      field: 'endpoint',
       validate: {
         notEmpty: true,
         isUrl: true
       }
     },
-    p256dh: {
+    p256dhKey: {
       type: DataTypes.TEXT,
       allowNull: false,
+      field: 'p256dh_key',
       validate: {
         notEmpty: true
       }
     },
-    auth: {
+    authKey: {
       type: DataTypes.TEXT,
       allowNull: false,
+      field: 'auth_key',
       validate: {
         notEmpty: true
       }
-    },
-    userAgent: {
-      type: DataTypes.TEXT,
-      allowNull: true
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
-    },
-    lastUsed: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    preferences: {
-      type: DataTypes.JSONB,
-      allowNull: true,
-      defaultValue: {
-        messages: true,
-        chatInvites: true,
-        system: true,
-        reminders: true
-      }
+      defaultValue: true,
+      field: 'is_active'
     }
   }, {
-    tableName: 'subscriptions',
+    tableName: 'push_subscriptions',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
-        fields: ['userId']
+        fields: ['user_id']
       },
       {
-        fields: ['endpoint'],
+        fields: ['user_id', 'endpoint'],
         unique: true
       },
       {
-        fields: ['isActive']
-      },
-      {
-        fields: ['lastUsed']
+        fields: ['is_active']
       }
     ]
   });
@@ -87,18 +73,8 @@ const initSubscriptionModel = (sequelize) => {
     return values;
   };
 
-  Subscription.prototype.updateLastUsed = async function() {
-    this.lastUsed = new Date();
-    return await this.save();
-  };
-
   Subscription.prototype.deactivate = async function() {
     this.isActive = false;
-    return await this.save();
-  };
-
-  Subscription.prototype.updatePreferences = async function(newPreferences) {
-    this.preferences = { ...this.preferences, ...newPreferences };
     return await this.save();
   };
 
@@ -106,8 +82,8 @@ const initSubscriptionModel = (sequelize) => {
     return {
       endpoint: this.endpoint,
       keys: {
-        p256dh: this.p256dh,
-        auth: this.auth
+        p256dh: this.p256dhKey,
+        auth: this.authKey
       }
     };
   };
@@ -115,15 +91,15 @@ const initSubscriptionModel = (sequelize) => {
   // Class methods
   Subscription.findByUserId = async function(userId, options = {}) {
     const { includeInactive = false } = options;
-    
+
     const whereClause = { userId };
     if (!includeInactive) {
       whereClause.isActive = true;
     }
-    
+
     return await this.findAll({
       where: whereClause,
-      order: [['lastUsed', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
   };
 
@@ -135,30 +111,28 @@ const initSubscriptionModel = (sequelize) => {
 
   Subscription.findActiveByUserId = async function(userId) {
     return await this.findAll({
-      where: { 
+      where: {
         userId,
-        isActive: true 
+        isActive: true
       },
-      order: [['lastUsed', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
   };
 
-  Subscription.createOrUpdate = async function(userId, subscriptionData, userAgent = null) {
+  Subscription.createOrUpdate = async function(userId, subscriptionData) {
     const { endpoint, keys } = subscriptionData;
     const { p256dh, auth } = keys;
 
     // Check if subscription already exists
     const existingSubscription = await this.findByEndpoint(endpoint);
-    
+
     if (existingSubscription) {
       // Update existing subscription
       await existingSubscription.update({
         userId,
-        p256dh,
-        auth,
-        userAgent,
-        isActive: true,
-        lastUsed: new Date()
+        p256dhKey: p256dh,
+        authKey: auth,
+        isActive: true
       });
       return existingSubscription;
     } else {
@@ -166,11 +140,9 @@ const initSubscriptionModel = (sequelize) => {
       return await this.create({
         userId,
         endpoint,
-        p256dh,
-        auth,
-        userAgent,
-        isActive: true,
-        lastUsed: new Date()
+        p256dhKey: p256dh,
+        authKey: auth,
+        isActive: true
       });
     }
   };
@@ -186,25 +158,11 @@ const initSubscriptionModel = (sequelize) => {
   Subscription.cleanupInactive = async function(daysInactive = 90) {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysInactive);
-    
+
     return await this.destroy({
       where: {
-        [sequelize.Op.or]: [
-          { isActive: false },
-          { lastUsed: { [sequelize.Op.lt]: cutoffDate } }
-        ]
+        isActive: false
       }
-    });
-  };
-
-  Subscription.getUsersWithNotificationPreference = async function(notificationType) {
-    return await this.findAll({
-      where: {
-        isActive: true,
-        [`preferences.${notificationType}`]: true
-      },
-      attributes: ['userId'],
-      group: ['userId']
     });
   };
 

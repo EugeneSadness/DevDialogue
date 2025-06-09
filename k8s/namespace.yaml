@@ -47,6 +47,12 @@ spec:
       cpu: 100m
       memory: 128Mi
     type: Container
-  - default:
+  - max:
+      storage: 10Gi
+    min:
+      storage: 100Mi
+    default:
+      storage: 1Gi
+    defaultRequest:
       storage: 1Gi
     type: PersistentVolumeClaim

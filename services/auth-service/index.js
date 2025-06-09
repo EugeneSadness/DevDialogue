@@ -19,7 +19,17 @@ app.use(cors({
   credentials: true
 }));
 
-// Rate limiting
+// Health check endpoint (before rate limiting)
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    service: 'auth-service',
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
+});
+
+// Rate limiting (after health check)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
@@ -32,18 +42,10 @@ app.use(compression());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    service: 'auth-service',
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.0.0'
-  });
-});
+
 
 // API routes
-app.use('/api/auth', authRoutes);
+app.use('/', authRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

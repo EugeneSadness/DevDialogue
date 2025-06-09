@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
+import { authService, ApiUtils } from '../services/api';
 
 function RegistrationForm() {
     const [formData, setFormData] = useState({
@@ -8,6 +8,9 @@ function RegistrationForm() {
         email: '',
         password: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -15,45 +18,87 @@ function RegistrationForm() {
             ...formData,
             [name]: value
         });
+        // Очищаем ошибку при изменении полей
+        if (error) setError('');
     };
 
-    const navigate = useNavigate();
+    const validateForm = () => {
+        if (!formData.email.includes('@')) {
+            setError("Введите корректный адрес почты");
+            return false;
+        }
+
+        if (formData.password.length < 3 || formData.password.length > 8) {
+            setError("Пароль должен содержать от 3 до 8 символов");
+            return false;
+        }
+
+        if (!formData.name.trim()) {
+            setError("Введите имя пользователя");
+            return false;
+        }
+
+        return true;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
 
-        if(!formData.email.includes('@')){
-            alert("Введите корректный адрес почты");
+        if (!validateForm()) {
             return;
         }
 
+        setIsLoading(true);
+
         try {
-            const response = await Axios.post(process.env.REACT_APP_BACK_URL+'/api/user/registration', formData);
+            console.log('SignUp: Попытка регистрации пользователя');
 
-            if (response.data.unvailableEmail) {
-                alert("Email уже зарегистрирован");
-                return;
+            const result = await authService.register(formData);
+
+            if (result.success) {
+                console.log('SignUp: Регистрация успешна');
+
+                // Перенаправляем пользователя
+                navigate('/user', {
+                    state: {
+                        userid: result.user.id,
+                        username: result.user.name,
+                        email: result.user.email
+                    },
+                    replace: true
+                });
+            } else {
+                console.error('SignUp: Ошибка регистрации', result.error);
+                setError(result.error || 'Ошибка регистрации');
             }
-            if (response.data.unavailableUserName) {
-                alert("Имя пользователя уже занято");
-                return;
-            }
-
-            const token = response.data.token;
-            localStorage.setItem("token", token);
-
-            Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-            navigate('/user', { state: {userid: response.data.id, username: formData.name , email: formData.email}, replace: true });
 
         } catch (error) {
-            console.error('Ошибка при отправке данных:', error.response?.data?.message || error.message || error);
+            console.error('SignUp: Неожиданная ошибка', error);
+            const errorMessage = ApiUtils.handleApiError(error);
+            setError(errorMessage);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="auth-container">
             <h2 className="title">Регистрация</h2>
+
+            {error && (
+                <div className="error-message" style={{
+                    color: 'red',
+                    marginBottom: '15px',
+                    padding: '10px',
+                    border: '1px solid red',
+                    borderRadius: '4px',
+                    backgroundColor: '#ffebee'
+                }}>
+                    {error}
+                </div>
+            )}
+
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input
@@ -64,6 +109,7 @@ function RegistrationForm() {
                         onChange={handleInputChange}
                         autoFocus
                         placeholder="Имя пользователя"
+                        disabled={isLoading}
                     />
                 </div>
                 <div className="form-group">
@@ -74,6 +120,7 @@ function RegistrationForm() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Email"
+                        disabled={isLoading}
                     />
                 </div>
                 <div className="form-group">
@@ -86,9 +133,20 @@ function RegistrationForm() {
                         required
                         onChange={handleInputChange}
                         placeholder="Пароль (3-8 символов)"
+                        disabled={isLoading}
                     />
                 </div>
-                <button className="btn btn-block" type="submit">Зарегистрироваться</button>
+                <button
+                    className="btn btn-block"
+                    type="submit"
+                    disabled={isLoading}
+                    style={{
+                        opacity: isLoading ? 0.6 : 1,
+                        cursor: isLoading ? 'not-allowed' : 'pointer'
+                    }}
+                >
+                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                </button>
                 <Link to="/signin" className="btn-link">Уже есть аккаунт? Войти</Link>
             </form>
         </div>

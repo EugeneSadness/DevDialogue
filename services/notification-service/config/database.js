@@ -35,9 +35,7 @@ const connectDB = async () => {
     const Notification = initNotificationModel(sequelize);
     const Subscription = initSubscriptionModel(sequelize);
     
-    // Define associations
-    Subscription.hasMany(Notification, { foreignKey: 'subscriptionId', as: 'notifications' });
-    Notification.belongsTo(Subscription, { foreignKey: 'subscriptionId', as: 'subscription' });
+    // Define associations (removed subscriptionId as it doesn't exist in current DB schema)
     
     console.log('✅ Notification Service models initialized');
 

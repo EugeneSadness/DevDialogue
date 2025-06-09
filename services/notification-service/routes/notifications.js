@@ -6,18 +6,26 @@ const { sendNotificationToUser, sendBulkNotifications } = require('../services/w
 
 const router = express.Router();
 
+// Test route without auth
+router.get('/test', (req, res) => {
+  console.log('📥 GET /api/notifications/test - Test route accessed');
+  res.json({ message: 'Notification service is working!', timestamp: new Date().toISOString() });
+});
+
 // Get user's notifications
 router.get('/', authMiddleware, async (req, res) => {
   try {
+    console.log('📥 GET /api/notifications/ - userId:', req.userId);
     const { limit = 20, offset = 0, status, type } = req.query;
     const userId = req.userId;
 
     const Notification = getNotificationModel();
+    console.log('✅ Notification model retrieved successfully');
 
     const notifications = await Notification.findByUserId(userId, {
       limit: parseInt(limit),
       offset: parseInt(offset),
-      status,
+      isRead: status === 'read' ? true : status === 'unread' ? false : undefined,
       type
     });
 
@@ -59,15 +67,13 @@ router.get('/unread-count', authMiddleware, async (req, res) => {
 // Send notification to user (internal API)
 router.post('/send', validateNotification, async (req, res) => {
   try {
-    const { userId, title, body, type, priority, data, scheduledAt } = req.body;
+    const { userId, title, body, type, data } = req.body;
 
     const result = await sendNotificationToUser(userId, {
       title,
       body,
       type,
-      priority,
-      data,
-      scheduledAt
+      data
     });
 
     res.status(201).json({
@@ -85,7 +91,7 @@ router.post('/send', validateNotification, async (req, res) => {
 // Send bulk notifications (internal API)
 router.post('/send-bulk', validateNotification, async (req, res) => {
   try {
-    const { userIds, title, body, type, priority, data } = req.body;
+    const { userIds, title, body, type, data } = req.body;
 
     if (!Array.isArray(userIds) || userIds.length === 0) {
       return res.status(400).json({
@@ -97,7 +103,6 @@ router.post('/send-bulk', validateNotification, async (req, res) => {
       title,
       body,
       type,
-      priority,
       data
     });
 

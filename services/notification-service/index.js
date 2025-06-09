@@ -46,7 +46,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API routes
+// API routes (Nginx already routes /api/notifications to this service)
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 
@@ -74,9 +74,13 @@ async function startServer() {
     await connectDB();
     console.log('✅ Database connected successfully');
 
-    // Initialize Web Push
-    initWebPush();
-    console.log('✅ Web Push service initialized');
+    // Initialize Web Push (optional)
+    try {
+      initWebPush();
+      console.log('✅ Web Push service initialized');
+    } catch (error) {
+      console.warn('⚠️ Web Push service initialization failed (continuing without it):', error.message);
+    }
 
     // Start HTTP server
     app.listen(PORT, () => {

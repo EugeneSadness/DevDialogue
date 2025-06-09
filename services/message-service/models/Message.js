@@ -20,6 +20,7 @@ const initMessageModel = (sequelize) => {
     senderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'sender_id',
       validate: {
         isInt: true,
         min: 1
@@ -28,6 +29,7 @@ const initMessageModel = (sequelize) => {
     chatId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'chat_id',
       validate: {
         isInt: true,
         min: 1
@@ -35,41 +37,48 @@ const initMessageModel = (sequelize) => {
     },
     messageType: {
       type: DataTypes.ENUM('text', 'image', 'file', 'system'),
-      defaultValue: 'text'
+      defaultValue: 'text',
+      field: 'message_type'
     },
     isEdited: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
+      field: 'is_edited'
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      field: 'is_deleted'
     },
     editedAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'edited_at'
     },
     replyToId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      field: 'reply_to',
       references: {
         model: 'messages',
         key: 'id'
       }
     },
-    metadata: {
-      type: DataTypes.JSONB,
-      allowNull: true,
-      defaultValue: {}
-    }
+
   }, {
     tableName: 'messages',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
-        fields: ['chatId', 'createdAt']
+        fields: ['chat_id', 'created_at']
       },
       {
-        fields: ['senderId']
+        fields: ['sender_id']
       },
       {
-        fields: ['replyToId']
+        fields: ['reply_to']
       }
     ]
   });
@@ -82,8 +91,8 @@ const initMessageModel = (sequelize) => {
 
   // Class methods
   Message.findByChatId = async function(chatId, options = {}) {
-    const { limit = 50, offset = 0, order = [['createdAt', 'DESC']] } = options;
-    
+    const { limit = 50, offset = 0, order = [['created_at', 'DESC']] } = options;
+
     return await this.findAll({
       where: { chatId },
       limit,
@@ -99,7 +108,7 @@ const initMessageModel = (sequelize) => {
       include: [
         {
           association: 'chat',
-          attributes: ['id', 'title', 'type']
+          attributes: ['id', 'name', 'type']
         }
       ]
     });
@@ -117,7 +126,7 @@ const initMessageModel = (sequelize) => {
       },
       limit,
       offset,
-      order: [['createdAt', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
   };
 

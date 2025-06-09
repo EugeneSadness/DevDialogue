@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 let User;
 
@@ -10,16 +10,16 @@ const initUserModel = (sequelize) => {
     primaryKey: true,
     autoIncrement: true
   },
-  name: {
-    type: DataTypes.STRING(100),
+  username: {
+    type: DataTypes.STRING(50),
     allowNull: false,
     validate: {
       notEmpty: true,
-      len: [2, 100]
+      len: [2, 50]
     }
   },
   email: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.STRING(100),
     allowNull: false,
     unique: true,
     validate: {
@@ -27,7 +27,7 @@ const initUserModel = (sequelize) => {
       notEmpty: true
     }
   },
-  password: {
+  password_hash: {
     type: DataTypes.STRING(255),
     allowNull: false,
     validate: {
@@ -35,32 +35,43 @@ const initUserModel = (sequelize) => {
       len: [6, 255]
     }
   },
-  isActive: {
+  first_name: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  last_name: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  avatar_url: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   },
-  lastLogin: {
+  last_login: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  refreshToken: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  }
+
 }, {
   tableName: 'users',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   hooks: {
     beforeCreate: async (user) => {
-      if (user.password) {
+      if (user.password_hash) {
         const saltRounds = 12;
-        user.password = await bcrypt.hash(user.password, saltRounds);
+        user.password_hash = await bcrypt.hash(user.password_hash, saltRounds);
       }
     },
     beforeUpdate: async (user) => {
-      if (user.changed('password')) {
+      if (user.changed('password_hash')) {
         const saltRounds = 12;
-        user.password = await bcrypt.hash(user.password, saltRounds);
+        user.password_hash = await bcrypt.hash(user.password_hash, saltRounds);
       }
     }
   }
@@ -68,13 +79,12 @@ const initUserModel = (sequelize) => {
 
 // Instance methods
 User.prototype.validatePassword = async function(password) {
-  return await bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password_hash);
 };
 
 User.prototype.toJSON = function() {
   const values = { ...this.get() };
-  delete values.password;
-  delete values.refreshToken;
+  delete values.password_hash;
   return values;
 };
 
@@ -87,11 +97,12 @@ User.findByEmail = async function(email) {
 
 User.findActiveById = async function(id) {
   return await this.findOne({
-    where: { 
+    where: {
       id,
-      isActive: true 
+      is_active: true
     }
   });
+};
 
   return User;
 };

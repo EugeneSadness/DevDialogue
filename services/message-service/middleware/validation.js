@@ -31,14 +31,14 @@ const validateMessage = (req, res, next) => {
 };
 
 const validateChat = (req, res, next) => {
-  const { title, type = 'group' } = req.body;
+  const { name, type = 'group' } = req.body;
   const errors = [];
 
-  // Validate title
-  if (!title || title.trim().length === 0) {
-    errors.push('Chat title is required');
-  } else if (title.length > 100) {
-    errors.push('Chat title cannot exceed 100 characters');
+  // Validate name
+  if (!name || name.trim().length === 0) {
+    errors.push('Chat name is required');
+  } else if (name.length > 100) {
+    errors.push('Chat name cannot exceed 100 characters');
   }
 
   // Validate type

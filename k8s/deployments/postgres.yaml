@@ -55,20 +55,8 @@ spec:
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
-        - name: postgres-config-volume
-          mountPath: /etc/postgresql/postgresql.conf
-          subPath: postgresql.conf
-        - name: postgres-config-volume
-          mountPath: /etc/postgresql/pg_hba.conf
-          subPath: pg_hba.conf
         - name: postgres-init
           mountPath: /docker-entrypoint-initdb.d
-        command:
-        - postgres
-        - -c
-        - config_file=/etc/postgresql/postgresql.conf
-        - -c
-        - hba_file=/etc/postgresql/pg_hba.conf
         resources:
           requests:
             memory: "512Mi"
@@ -96,9 +84,6 @@ spec:
       - name: postgres-data
         persistentVolumeClaim:
           claimName: postgres-master-pvc
-      - name: postgres-config-volume
-        configMap:
-          name: postgres-config
       - name: postgres-init
         configMap:
           name: postgres-init-scripts
@@ -155,21 +140,6 @@ spec:
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
-        - name: postgres-config-volume
-          mountPath: /etc/postgresql/postgresql.conf
-          subPath: postgresql.conf
-        - name: postgres-config-volume
-          mountPath: /etc/postgresql/pg_hba.conf
-          subPath: pg_hba.conf
-        command:
-        - /bin/bash
-        - -c
-        - |
-          if [ ! -f /var/lib/postgresql/data/PG_VERSION ]; then
-            echo 'Initializing slave from master...'
-            pg_basebackup -h postgres-master-service -D /var/lib/postgresql/data -U replica -W -v -P -R
-          fi
-          postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
         resources:
           requests:
             memory: "512Mi"
@@ -197,9 +167,6 @@ spec:
       - name: postgres-data
         persistentVolumeClaim:
           claimName: postgres-slave-pvc
-      - name: postgres-config-volume
-        configMap:
-          name: postgres-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

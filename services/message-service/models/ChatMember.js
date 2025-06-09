@@ -12,6 +12,7 @@ const initChatMemberModel = (sequelize) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'user_id',
       validate: {
         isInt: true,
         min: 1
@@ -20,6 +21,7 @@ const initChatMemberModel = (sequelize) => {
     chatId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'chat_id',
       validate: {
         isInt: true,
         min: 1
@@ -27,49 +29,28 @@ const initChatMemberModel = (sequelize) => {
     },
     role: {
       type: DataTypes.ENUM('member', 'admin', 'owner'),
-      defaultValue: 'member'
+      defaultValue: 'member',
+      field: 'role'
     },
     joinedAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+      defaultValue: DataTypes.NOW,
+      field: 'joined_at'
     },
     leftAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'left_at'
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
+      defaultValue: true,
+      field: 'is_active'
     },
-    lastReadMessageId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    unreadCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-      validate: {
-        min: 0
-      }
-    },
-    isMuted: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
-    permissions: {
-      type: DataTypes.JSONB,
-      allowNull: true,
-      defaultValue: {
-        canSendMessages: true,
-        canEditMessages: false,
-        canDeleteMessages: false,
-        canInviteUsers: false,
-        canKickUsers: false
-      }
-    }
+
   }, {
     tableName: 'chat_members',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         fields: ['userId', 'chatId'],
@@ -94,14 +75,15 @@ const initChatMemberModel = (sequelize) => {
   };
 
   ChatMember.prototype.markAsRead = async function(messageId) {
-    this.lastReadMessageId = messageId;
-    this.unreadCount = 0;
-    return await this.save();
+    // This functionality would need to be implemented in a separate table
+    // For now, just return this instance
+    return this;
   };
 
   ChatMember.prototype.incrementUnreadCount = async function() {
-    this.unreadCount += 1;
-    return await this.save();
+    // This functionality would need to be implemented in a separate table
+    // For now, just return this instance
+    return this;
   };
 
   ChatMember.prototype.leave = async function() {
@@ -175,17 +157,9 @@ const initChatMemberModel = (sequelize) => {
   };
 
   ChatMember.getUserUnreadCount = async function(userId) {
-    const result = await this.findAll({
-      where: { 
-        userId,
-        isActive: true 
-      },
-      attributes: [
-        [sequelize.fn('SUM', sequelize.col('unreadCount')), 'totalUnread']
-      ]
-    });
-    
-    return result[0]?.dataValues?.totalUnread || 0;
+    // This functionality would need to be implemented with a separate unread messages table
+    // For now, return 0
+    return 0;
   };
 
   return ChatMember;

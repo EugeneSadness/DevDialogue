@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Op } = require('sequelize');
 
 let Notification;
 
@@ -12,6 +12,7 @@ const initNotificationModel = (sequelize) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'user_id',
       validate: {
         isInt: true,
         min: 1
@@ -20,6 +21,7 @@ const initNotificationModel = (sequelize) => {
     title: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      field: 'title',
       validate: {
         notEmpty: true,
         len: [1, 255]
@@ -28,89 +30,55 @@ const initNotificationModel = (sequelize) => {
     body: {
       type: DataTypes.TEXT,
       allowNull: false,
+      field: 'body',
       validate: {
         notEmpty: true,
         len: [1, 1000]
       }
     },
     type: {
-      type: DataTypes.ENUM('message', 'chat_invite', 'system', 'reminder'),
-      defaultValue: 'message'
-    },
-    priority: {
-      type: DataTypes.ENUM('low', 'normal', 'high', 'urgent'),
-      defaultValue: 'normal'
-    },
-    status: {
-      type: DataTypes.ENUM('pending', 'sent', 'delivered', 'failed', 'read'),
-      defaultValue: 'pending'
-    },
-    subscriptionId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'subscriptions',
-        key: 'id'
-      }
+      type: DataTypes.STRING(50),
+      defaultValue: 'message',
+      field: 'type'
     },
     data: {
       type: DataTypes.JSONB,
       allowNull: true,
+      field: 'data',
       defaultValue: {}
     },
-    scheduledAt: {
-      type: DataTypes.DATE,
-      allowNull: true
+    isRead: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      field: 'is_read'
+    },
+    isSent: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      field: 'is_sent'
     },
     sentAt: {
       type: DataTypes.DATE,
-      allowNull: true
-    },
-    deliveredAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    readAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    expiresAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    retryCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-      validate: {
-        min: 0,
-        max: 5
-      }
-    },
-    errorMessage: {
-      type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: true,
+      field: 'sent_at'
     }
   }, {
     tableName: 'notifications',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: false, // нет updated_at в реальной БД
     indexes: [
       {
-        fields: ['userId']
-      },
-      {
-        fields: ['status']
+        fields: ['user_id']
       },
       {
         fields: ['type']
       },
       {
-        fields: ['priority']
+        fields: ['is_read']
       },
       {
-        fields: ['scheduledAt']
-      },
-      {
-        fields: ['createdAt']
+        fields: ['created_at']
       }
     ]
   });
@@ -122,87 +90,53 @@ const initNotificationModel = (sequelize) => {
   };
 
   Notification.prototype.markAsSent = async function() {
-    this.status = 'sent';
+    this.isSent = true;
     this.sentAt = new Date();
     return await this.save();
   };
 
-  Notification.prototype.markAsDelivered = async function() {
-    this.status = 'delivered';
-    this.deliveredAt = new Date();
-    return await this.save();
-  };
-
   Notification.prototype.markAsRead = async function() {
-    this.status = 'read';
-    this.readAt = new Date();
-    return await this.save();
-  };
-
-  Notification.prototype.markAsFailed = async function(errorMessage) {
-    this.status = 'failed';
-    this.errorMessage = errorMessage;
-    this.retryCount += 1;
+    this.isRead = true;
     return await this.save();
   };
 
   // Class methods
   Notification.findByUserId = async function(userId, options = {}) {
-    const { limit = 20, offset = 0, status, type } = options;
-    
+    const { limit = 20, offset = 0, isRead, type } = options;
+
     const whereClause = { userId };
-    if (status) whereClause.status = status;
+    if (isRead !== undefined) whereClause.isRead = isRead;
     if (type) whereClause.type = type;
-    
+
     return await this.findAll({
       where: whereClause,
       limit,
       offset,
-      order: [['createdAt', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
   };
 
   Notification.findPending = async function(options = {}) {
     const { limit = 100 } = options;
-    
+
     return await this.findAll({
       where: {
-        status: 'pending',
-        [sequelize.Op.or]: [
-          { scheduledAt: null },
-          { scheduledAt: { [sequelize.Op.lte]: new Date() } }
-        ]
+        isSent: false
       },
       limit,
-      order: [['priority', 'DESC'], ['createdAt', 'ASC']]
-    });
-  };
-
-  Notification.findExpired = async function() {
-    return await this.findAll({
-      where: {
-        expiresAt: {
-          [sequelize.Op.lt]: new Date()
-        },
-        status: {
-          [sequelize.Op.in]: ['pending', 'sent']
-        }
-      }
+      order: [['created_at', 'ASC']]
     });
   };
 
   Notification.createForUser = async function(userId, notificationData) {
-    const { title, body, type = 'message', priority = 'normal', data = {}, scheduledAt = null } = notificationData;
-    
+    const { title, body, type = 'message', data = {} } = notificationData;
+
     return await this.create({
       userId,
       title,
       body,
       type,
-      priority,
-      data,
-      scheduledAt,
-      expiresAt: scheduledAt ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) : null // 7 days from now
+      data
     });
   };
 
@@ -210,25 +144,20 @@ const initNotificationModel = (sequelize) => {
     return await this.count({
       where: {
         userId,
-        status: {
-          [sequelize.Op.in]: ['sent', 'delivered']
-        }
+        isRead: false
       }
     });
   };
 
   Notification.markAllAsRead = async function(userId) {
     return await this.update(
-      { 
-        status: 'read',
-        readAt: new Date()
+      {
+        isRead: true
       },
       {
         where: {
           userId,
-          status: {
-            [sequelize.Op.in]: ['sent', 'delivered']
-          }
+          isRead: false
         }
       }
     );
@@ -237,15 +166,13 @@ const initNotificationModel = (sequelize) => {
   Notification.cleanupOld = async function(daysOld = 30) {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysOld);
-    
+
     return await this.destroy({
       where: {
-        createdAt: {
-          [sequelize.Op.lt]: cutoffDate
+        created_at: {
+          [Op.lt]: cutoffDate
         },
-        status: {
-          [sequelize.Op.in]: ['read', 'failed']
-        }
+        isRead: true
       }
     });
   };
