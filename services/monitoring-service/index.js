@@ -5,6 +5,7 @@ const compression = require('compression');
 const cron = require('node-cron');
 require('dotenv').config();
 
+const { connectDB } = require('./config/database');
 const healthRoutes = require('./routes/health');
 const metricsRoutes = require('./routes/metrics');
 const { setupMetrics } = require('./services/metricsService');
@@ -72,6 +73,10 @@ cron.schedule('* * * * *', () => {
 // Start server
 async function startServer() {
   try {
+    // Connect to database
+    await connectDB();
+    console.log('✅ Database connected');
+
     // Start health monitoring
     startHealthChecks();
     console.log('✅ Health monitoring started');

@@ -1,0 +1,253 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Master (основная база данных)
+  postgres-master:
+    image: postgres:13
+    container_name: postgres-master
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_REPLICATION_USER: replica
+      POSTGRES_REPLICATION_PASSWORD: replica_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./diploma-scripts/postgres-replication/master/config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./diploma-scripts/postgres-replication/master/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./diploma-scripts/postgres-replication/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_master_data:/var/lib/postgresql/data
+      - postgres_archive:/var/lib/postgresql/archive
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # PostgreSQL Slave (реплика для чтения)
+  postgres-slave:
+    image: postgres:13
+    container_name: postgres-slave
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      PGUSER: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./diploma-scripts/postgres-replication/slave/config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./diploma-scripts/postgres-replication/slave/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./diploma-scripts/postgres-replication/slave/config/recovery.conf:/var/lib/postgresql/recovery.conf
+      - postgres_slave_data:/var/lib/postgresql/data
+      - postgres_archive:/var/lib/postgresql/archive
+    command: >
+      bash -c "
+      if [ ! -f /var/lib/postgresql/data/PG_VERSION ]; then
+        echo 'Инициализация slave из master...'
+        pg_basebackup -h postgres-master -D /var/lib/postgresql/data -U replica -W -v -P -R
+        cp /var/lib/postgresql/recovery.conf /var/lib/postgresql/data/
+      fi
+      postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
+      "
+    networks:
+      - microservices-network
+    depends_on:
+      postgres-master:
+        condition: service_healthy
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DB_HOST: postgres-master
+      DB_PORT: 5432
+      DB_NAME: auth_db
+      DB_USER: auth_user
+      DB_PASS: auth_password
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-24h}
+      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-your-refresh-token-secret}
+      REFRESH_TOKEN_EXPIRES_IN: ${REFRESH_TOKEN_EXPIRES_IN:-7d}
+    ports:
+      - "3001:3001"
+    networks:
+      - microservices-network
+    depends_on:
+      postgres-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Message Service
+  message-service:
+    build:
+      context: ./services/message-service
+      dockerfile: Dockerfile
+    container_name: message-service
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      DB_HOST: postgres-master
+      DB_PORT: 5432
+      DB_NAME: message_db
+      DB_USER: message_user
+      DB_PASS: message_password
+      AUTH_SERVICE_URL: http://auth-service:3001
+      NOTIFICATION_SERVICE_URL: http://notification-service:3003
+    ports:
+      - "3002:3002"
+    networks:
+      - microservices-network
+    depends_on:
+      postgres-master:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Notification Service
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    container_name: notification-service
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+      DB_HOST: postgres-master
+      DB_PORT: 5432
+      DB_NAME: notification_db
+      DB_USER: notification_user
+      DB_PASS: notification_password
+      AUTH_SERVICE_URL: http://auth-service:3001
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:admin@messenger.local}
+    ports:
+      - "3003:3003"
+    networks:
+      - microservices-network
+    depends_on:
+      postgres-master:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Monitoring Service
+  monitoring-service:
+    build:
+      context: ./services/monitoring-service
+      dockerfile: Dockerfile
+    container_name: monitoring-service
+    environment:
+      NODE_ENV: production
+      PORT: 3004
+      DB_HOST: postgres-master
+      DB_PORT: 5432
+      DB_NAME: monitoring_db
+      DB_USER: monitoring_user
+      DB_PASS: monitoring_password
+      AUTH_SERVICE_URL: http://auth-service:3001
+      MESSAGE_SERVICE_URL: http://message-service:3002
+      NOTIFICATION_SERVICE_URL: http://notification-service:3003
+    ports:
+      - "3004:3004"
+    networks:
+      - microservices-network
+    depends_on:
+      postgres-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx (API Gateway / Reverse Proxy)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    networks:
+      - microservices-network
+    depends_on:
+      - auth-service
+      - message-service
+      - notification-service
+      - monitoring-service
+
+  # Frontend (React App)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    environment:
+      REACT_APP_API_URL: http://localhost
+      REACT_APP_WS_URL: ws://localhost
+    ports:
+      - "3000:3000"
+    networks:
+      - microservices-network
+    depends_on:
+      - nginx
+
+  # PgAdmin для управления базами данных
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@messenger.local
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - microservices-network
+    depends_on:
+      - postgres-master
+
+volumes:
+  postgres_master_data:
+  postgres_slave_data:
+  postgres_archive:
+  pgadmin_data:
+
+networks:
+  microservices-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
