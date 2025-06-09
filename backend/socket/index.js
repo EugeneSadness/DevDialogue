@@ -1,14 +1,34 @@
 const { Server } = require("socket.io");
 const messageHandler = require("./handlers/messageHandler.js");
-const { 
-  setUserOnline, 
-  setUserOffline, 
-  getOnlineUsers,
-  batchUpdateUserStatuses
-} = require("../redisClient");
 
-// Кэш для хранения пользовательских данных во избежание частых обращений к Redis
+// In-memory кэш для статусов пользователей (заменяет Redis)
 const userStatusCache = new Map();
+const onlineUsers = new Set();
+
+// Функции для работы со статусами пользователей (заменяют Redis функции)
+function setUserOnline(userId) {
+    onlineUsers.add(userId);
+    userStatusCache.set(userId, { isOnline: true, lastActive: Date.now() });
+}
+
+function setUserOffline(userId) {
+    onlineUsers.delete(userId);
+    userStatusCache.set(userId, { isOnline: false, lastActive: Date.now() });
+}
+
+function getOnlineUsers() {
+    return Array.from(onlineUsers);
+}
+
+function batchUpdateUserStatuses(updates) {
+    updates.forEach(update => {
+        if (update.isOnline) {
+            setUserOnline(update.userId);
+        } else {
+            setUserOffline(update.userId);
+        }
+    });
+}
 
 // Максимальное количество пользователей в пакете для обновления статусов
 const USER_STATUS_BATCH_SIZE = 50;

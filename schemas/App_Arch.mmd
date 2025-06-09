@@ -57,7 +57,7 @@ graph TB
         end
         
         POSTGRES[(PostgreSQL<br/>Основная БД<br/>:5432)]
-        REDIS[(Redis Cache<br/>Сессии и кэш<br/>:6379)]
+        MEMORY_CACHE[(In-Memory Cache<br/>Сессии и кэш<br/>Map/Set)]
     end
 
     %% Взаимодействие пользователей с фронтендом
@@ -120,9 +120,9 @@ graph TB
     FILE_MODEL <-->|SQL запросы| POSTGRES
 
     %% Кэширование
-    USER_STATUS <-->|Статусы онлайн| REDIS
-    TOKEN_SERVICE <-->|JWT токены| REDIS
-    MESSAGE_HANDLER <-->|Временные данные| REDIS
+    USER_STATUS <-->|Статусы онлайн| MEMORY_CACHE
+    TOKEN_SERVICE <-->|JWT токены| MEMORY_CACHE
+    MESSAGE_HANDLER <-->|Временные данные| MEMORY_CACHE
 
     %% Применение стилей
     class SIGNIN,SIGNUP,CHATLIST,CHAT,WEBSOCKET_CLIENT frontend

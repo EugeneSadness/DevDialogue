@@ -4,8 +4,25 @@ const jwt = require("jsonwebtoken");
 const modelsPromise = require('../models/models');
 const { tokenService } = require('../middleware/tokenService');
 const vault = require('../config/vault');
-const { isUserOnline, getOnlineUsers, getUserLastActive } = require('../redisClient');
 require("dotenv").config();
+
+// In-memory кэш для статусов пользователей (заменяет Redis)
+const userStatusCache = new Map();
+const onlineUsers = new Set();
+
+// Функции для работы со статусами пользователей (заменяют Redis функции)
+function isUserOnline(userId) {
+    return onlineUsers.has(userId);
+}
+
+function getOnlineUsers() {
+    return Array.from(onlineUsers);
+}
+
+function getUserLastActive(userId) {
+    const status = userStatusCache.get(userId);
+    return status ? status.lastActive : null;
+}
 
 async function getJwtSecret() {
     try {

@@ -2,7 +2,23 @@ const ApiError = require("../Error/ApiError");
 const router = require("../routes");
 const modelsPromise = require('../models/models');
 const tokenService = require('../middleware/tokenService');
-const { getCachedChatHistory, clearChatHistory } = require('../redisClient');
+
+// In-memory кэш для истории чатов (заменяет Redis)
+const chatHistoryCache = new Map();
+const CACHE_TTL = 300000; // 5 минут в миллисекундах
+
+// Функции для работы с кэшем (заменяют Redis функции)
+function getCachedChatHistory(chatId) {
+    const cached = chatHistoryCache.get(chatId);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+        return cached.data;
+    }
+    return null;
+}
+
+function clearChatHistory(chatId) {
+    chatHistoryCache.delete(chatId);
+}
 
 let ChatMessages, Chat, Message, User;
 

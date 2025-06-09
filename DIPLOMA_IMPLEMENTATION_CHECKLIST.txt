@@ -12,31 +12,31 @@
 
 1.1 УДАЛЕНИЕ REDIS ИЗ ПРОЕКТА
 ------------------------------
-[ ] Удалить файл backend/redisClient.js
-[ ] Убрать зависимость "redis": "^4.7.0" из backend/package.json
-[ ] Найти и заменить все импорты redisClient в коде
-[ ] Заменить Redis кэширование на in-memory Map или PostgreSQL
-[ ] Обновить Socket.io код для работы без Redis
-[ ] Удалить Redis из docker-compose.yml (если есть)
-[ ] Убрать Redis из всех конфигурационных файлов
-[ ] Обновить переменные окружения (убрать REDIS_HOST, REDIS_PORT)
-[ ] Протестировать работу приложения без Redis
+[✓] Удалить файл backend/redisClient.js
+[✓] Убрать зависимость "redis": "^4.7.0" из backend/package.json
+[✓] Найти и заменить все импорты redisClient в коде
+[✓] Заменить Redis кэширование на in-memory Map или PostgreSQL
+[✓] Обновить Socket.io код для работы без Redis
+[✓] Удалить Redis из docker-compose.yml (если есть)
+[✓] Убрать Redis из всех конфигурационных файлов
+[✓] Обновить переменные окружения (убрать REDIS_HOST, REDIS_PORT)
+[✓] Протестировать работу приложения без Redis
 
 1.2 РЕФАКТОРИНГ МОНОЛИТА В МИКРОСЕРВИСЫ
 ---------------------------------------
-[ ] Создать директорию services/ в корне проекта
-[ ] Создать auth-service (сервис аутентификации):
-    [ ] Перенести логику из backend/controllers/userController.js
-    [ ] Создать отдельный package.json
-    [ ] Создать Dockerfile
-    [ ] Настроить JWT токены
-[ ] Создать message-service (сервис сообщений):
-    [ ] Перенести логику из backend/controllers/messageController.js
-    [ ] Перенести Socket.io обработчики
-    [ ] Создать отдельный package.json
-    [ ] Создать Dockerfile
+[✓] Создать директорию services/ в корне проекта
+[✓] Создать auth-service (сервис аутентификации):
+    [✓] Перенести логику из backend/controllers/userController.js
+    [✓] Создать отдельный package.json
+    [✓] Создать Dockerfile
+    [✓] Настроить JWT токены
+[✓] Создать message-service (сервис сообщений):
+    [✓] Перенести логику из backend/controllers/messageController.js
+    [✓] Перенести Socket.io обработчики
+    [✓] Создать отдельный package.json
+    [✓] Создать Dockerfile
 [ ] Создать notification-service (сервис уведомлений):
-    [ ] Создать новый сервис для push-уведомлений
+    [ ] Создать новый сервис для push-уведомлений2
     [ ] Создать package.json и Dockerfile
 [ ] Создать api-gateway (API шлюз):
     [ ] Настроить маршрутизацию между сервисами

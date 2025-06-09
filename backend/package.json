@@ -7,9 +7,7 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "benchmark": "node benchmark.js",
-    "benchmark-websocket": "node websocket-benchmark.js",
-    "test-with-redis": "DISABLE_REDIS=false node index.js",
-    "test-without-redis": "DISABLE_REDIS=true node index.js"
+    "benchmark-websocket": "node websocket-benchmark.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +24,6 @@
     "nodemon": "^3.1.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
-    "redis": "^4.7.0",
     "sequelize": "^6.37.1",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",

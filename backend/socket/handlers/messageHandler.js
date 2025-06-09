@@ -2,10 +2,24 @@ const modelsPromise = require('../../models/models');
 const ApiError = require("../../Error/ApiError");
 const { json } = require('express');
 require("dotenv").config();
-const { 
-  cacheChatMessageBatch,
-  batchUpdateUnreadCounts
-} = require('../../redisClient');
+
+// In-memory кэш для сообщений и счетчиков (заменяет Redis)
+const messageCache = new Map();
+const unreadCountsCache = new Map();
+
+// Функции для работы с кэшем (заменяют Redis функции)
+function cacheChatMessageBatch(chatId, messages) {
+    messageCache.set(chatId, {
+        messages,
+        timestamp: Date.now()
+    });
+}
+
+function batchUpdateUnreadCounts(updates) {
+    updates.forEach(update => {
+        unreadCountsCache.set(update.userId + '_' + update.chatId, update.count);
+    });
+}
 
 let Message, Chat, ChatMessages, User, ChatUsers;
 
