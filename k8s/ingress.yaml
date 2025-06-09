@@ -1,0 +1,187 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: messenger-ingress
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: messenger-ingress
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/part-of: messenger
+  annotations:
+    # Nginx Ingress Controller annotations
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    
+    # Rate limiting
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    
+    # CORS settings
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    
+    # Security headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header X-Frame-Options DENY;
+      add_header X-Content-Type-Options nosniff;
+      add_header X-XSS-Protection "1; mode=block";
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+      add_header Referrer-Policy "strict-origin-when-cross-origin";
+    
+    # WebSocket support
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    
+    # Certificate management (if using cert-manager)
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - messenger.local
+    - api.messenger.local
+    secretName: messenger-tls
+  rules:
+  - host: messenger.local
+    http:
+      paths:
+      # Frontend application
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-gateway-service
+            port:
+              number: 80
+      
+      # Health check endpoint
+      - path: /health
+        pathType: Exact
+        backend:
+          service:
+            name: nginx-gateway-service
+            port:
+              number: 80
+  
+  - host: api.messenger.local
+    http:
+      paths:
+      # Auth service endpoints
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+      
+      # Message service endpoints
+      - path: /messages
+        pathType: Prefix
+        backend:
+          service:
+            name: message-service
+            port:
+              number: 3002
+      
+      # WebSocket endpoint for real-time messaging
+      - path: /socket.io
+        pathType: Prefix
+        backend:
+          service:
+            name: message-service
+            port:
+              number: 3002
+      
+      # Notification service endpoints
+      - path: /notifications
+        pathType: Prefix
+        backend:
+          service:
+            name: notification-service
+            port:
+              number: 3003
+      
+      # Monitoring service endpoints
+      - path: /monitoring
+        pathType: Prefix
+        backend:
+          service:
+            name: monitoring-service
+            port:
+              number: 3004
+      
+      # Metrics endpoint (for Prometheus)
+      - path: /metrics
+        pathType: Exact
+        backend:
+          service:
+            name: monitoring-service
+            port:
+              number: 3004
+---
+# Alternative Ingress for development/testing without TLS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: messenger-ingress-dev
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: messenger-ingress-dev
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/part-of: messenger
+    app.kubernetes.io/environment: development
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rate-limit: "200"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+spec:
+  rules:
+  - host: messenger-dev.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-gateway-service
+            port:
+              number: 80
+      
+      - path: /api/auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+      
+      - path: /api/messages
+        pathType: Prefix
+        backend:
+          service:
+            name: message-service
+            port:
+              number: 3002
+      
+      - path: /api/notifications
+        pathType: Prefix
+        backend:
+          service:
+            name: notification-service
+            port:
+              number: 3003
+      
+      - path: /api/monitoring
+        pathType: Prefix
+        backend:
+          service:
+            name: monitoring-service
+            port:
+              number: 3004

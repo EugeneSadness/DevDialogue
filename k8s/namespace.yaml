@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: messenger
+  labels:
+    name: messenger
+    app.kubernetes.io/name: messenger
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: namespace
+    app.kubernetes.io/part-of: messenger-microservices
+    app.kubernetes.io/managed-by: kubectl
+  annotations:
+    description: "Namespace для микросервисной архитектуры мессенджера"
+    contact: "admin@messenger.local"
+    version: "1.0.0"
+---
+# Resource Quota для ограничения ресурсов
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: messenger-quota
+  namespace: messenger
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "20"
+    services: "10"
+    secrets: "10"
+    configmaps: "10"
+    persistentvolumeclaims: "5"
+---
+# Limit Range для установки лимитов по умолчанию
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: messenger-limits
+  namespace: messenger
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 100m
+      memory: 128Mi
+    type: Container
+  - default:
+      storage: 1Gi
+    type: PersistentVolumeClaim

@@ -1,0 +1,417 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: default-deny-all
+    app.kubernetes.io/component: security
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: allow-dns
+    app.kubernetes.io/component: security
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-master-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: postgres-master-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgres-master
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow connections from microservices
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: microservice
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow replication from slave
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: postgres-slave
+    ports:
+    - protocol: TCP
+      port: 5432
+  egress:
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-slave-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: postgres-slave-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgres-slave
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow read-only connections from microservices
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: microservice
+    ports:
+    - protocol: TCP
+      port: 5432
+  egress:
+  # Allow connection to master for replication
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: postgres-master
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auth-service-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: auth-service-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: auth-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from nginx gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: nginx-gateway
+    ports:
+    - protocol: TCP
+      port: 3001
+  # Allow from other microservices
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: microservice
+    ports:
+    - protocol: TCP
+      port: 3001
+  # Allow from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3001
+  egress:
+  # Allow to postgres
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: message-service-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: message-service-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: message-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from nginx gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: nginx-gateway
+    ports:
+    - protocol: TCP
+      port: 3002
+  # Allow from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3002
+  egress:
+  # Allow to postgres
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow to auth service
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: auth-service
+    ports:
+    - protocol: TCP
+      port: 3001
+  # Allow to notification service
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: notification-service
+    ports:
+    - protocol: TCP
+      port: 3003
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: notification-service-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: notification-service-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: notification-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from nginx gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: nginx-gateway
+    ports:
+    - protocol: TCP
+      port: 3003
+  # Allow from message service
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: message-service
+    ports:
+    - protocol: TCP
+      port: 3003
+  # Allow from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3003
+  egress:
+  # Allow to postgres
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow to auth service
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: auth-service
+    ports:
+    - protocol: TCP
+      port: 3001
+  # Allow external push notification services
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-service-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: monitoring-service-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: monitoring-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from nginx gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: nginx-gateway
+    ports:
+    - protocol: TCP
+      port: 3004
+  # Allow from Prometheus (monitoring namespace)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 3004
+  # Allow from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3004
+  egress:
+  # Allow to postgres
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow to all microservices for health checks
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: microservice
+    ports:
+    - protocol: TCP
+      port: 3001
+    - protocol: TCP
+      port: 3002
+    - protocol: TCP
+      port: 3003
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nginx-gateway-policy
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: nginx-gateway-policy
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: nginx-gateway
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow all ingress traffic (external access)
+  - {}
+  egress:
+  # Allow to all microservices
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: microservice
+    ports:
+    - protocol: TCP
+      port: 3001
+    - protocol: TCP
+      port: 3002
+    - protocol: TCP
+      port: 3003
+    - protocol: TCP
+      port: 3004
+  # Allow DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53

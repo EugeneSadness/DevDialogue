@@ -1,0 +1,165 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-master-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: postgres-master
+    app.kubernetes.io/component: database
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+    name: postgres
+  selector:
+    app.kubernetes.io/name: postgres-master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-slave-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: postgres-slave
+    app.kubernetes.io/component: database
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+    name: postgres
+  selector:
+    app.kubernetes.io/name: postgres-slave
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: auth-service
+    app.kubernetes.io/component: microservice
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3001"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3001
+    targetPort: 3001
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: auth-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: message-service
+    app.kubernetes.io/component: microservice
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3002"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3002
+    targetPort: 3002
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: message-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: notification-service
+    app.kubernetes.io/component: microservice
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3003"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3003
+    targetPort: 3003
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: notification-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: monitoring-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: monitoring-service
+    app.kubernetes.io/component: microservice
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3004"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3004
+    targetPort: 3004
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: monitoring-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-gateway-service
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: nginx-gateway
+    app.kubernetes.io/component: gateway
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    app.kubernetes.io/name: nginx-gateway
+---
+# Headless service для PostgreSQL master (для репликации)
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-master-headless
+  namespace: messenger
+  labels:
+    app.kubernetes.io/name: postgres-master
+    app.kubernetes.io/component: database
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+    name: postgres
+  selector:
+    app.kubernetes.io/name: postgres-master
