@@ -1,0 +1,128 @@
+graph TB
+    %% Стили
+    classDef developer fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef cicd fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef app fill:#bbdefb,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef database fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef monitoring fill:#fff3e0,stroke:#ff9800,stroke-width:2px,color:#000
+    classDef security fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
+    classDef k8s fill:#e8eaf6,stroke:#326ce5,stroke-width:2px,color:#000
+
+    %% Разработка
+    DEV[👨‍💻 Разработчик]
+    GIT[📁 Git Repository]
+    
+    %% CI/CD Pipeline
+    subgraph CICD ["🚀 CI/CD Pipeline"]
+        GHA[GitHub Actions]
+        BUILD[🔨 Сборка и тесты]
+        SCAN[🔍 Security Scan<br/>Trivy]
+        DOCKERHUB[🐳 Docker Hub<br/>Реестр образов]
+    end
+
+    %% Kubernetes кластер
+    subgraph K8S ["☸️ Kubernetes Cluster"]
+        subgraph INGRESS_LAYER ["🌐 Ingress Layer"]
+            NGINX[Nginx Ingress<br/>WAF + Load Balancer]
+        end
+        
+        subgraph APP_LAYER ["📱 Application Layer"]
+            FRONTEND[Frontend Pods<br/>React/JS<br/>:3000]
+            BACKEND[Backend Pods<br/>Node.js/Express<br/>:4000]
+        end
+        
+        subgraph DATA_LAYER ["💾 Data Layer"]
+            PG_MASTER[(PostgreSQL Master<br/>Запись<br/>:5432)]
+            PG_SLAVE1[(PostgreSQL Slave 1<br/>Чтение)]
+            PG_SLAVE2[(PostgreSQL Slave 2<br/>Чтение)]
+            REDIS[(Redis Cache<br/>:6379)]
+        end
+        
+        subgraph DEPLOY_STRATEGY ["🔄 Deployment Strategy"]
+            BLUE[Blue Environment]
+            GREEN[Green Environment]
+            HPA[HPA<br/>Auto Scaling]
+        end
+    end
+
+    %% Безопасность
+    subgraph SECURITY ["🔒 Security Layer"]
+        VAULT[HashiCorp Vault<br/>Управление секретами<br/>:8200]
+        NETWORK_POLICY[Network Policies<br/>Фильтрация трафика]
+        TLS[TLS/HTTPS<br/>Let's Encrypt]
+    end
+
+    %% Мониторинг и логирование
+    subgraph MONITORING ["📊 Monitoring & Logging"]
+        PROMETHEUS[Prometheus<br/>Сбор метрик<br/>:9090]
+        GRAFANA[Grafana<br/>Визуализация<br/>:3001]
+        NODE_EXP[Node Exporter<br/>:9100]
+        PG_EXP[Postgres Exporter<br/>:9187]
+        
+        subgraph ELK ["📋 ELK Stack"]
+            ELASTICSEARCH[(Elasticsearch<br/>Хранение логов)]
+            LOGSTASH[Logstash<br/>Обработка логов]
+            KIBANA[Kibana<br/>Анализ логов]
+        end
+    end
+
+    %% Пользователи
+    USERS[👥 Пользователи]
+
+    %% Основные потоки данных
+    DEV --> GIT
+    GIT -->|Webhook| GHA
+    GHA --> BUILD
+    BUILD --> SCAN
+    SCAN --> DOCKERHUB
+    DOCKERHUB -->|Pull Images| K8S
+
+    %% Пользовательский трафик
+    USERS -->|HTTPS| NGINX
+    NGINX --> FRONTEND
+    NGINX --> BACKEND
+
+    %% Внутренние связи приложения
+    FRONTEND <-->|WebSocket/REST API| BACKEND
+    BACKEND -->|Запись SQL| PG_MASTER
+    BACKEND -->|Чтение SQL| PG_SLAVE1
+    BACKEND -->|Чтение SQL| PG_SLAVE2
+    BACKEND <-->|Кэширование| REDIS
+
+    %% Репликация БД
+    PG_MASTER -.->|Потоковая репликация| PG_SLAVE1
+    PG_MASTER -.->|Потоковая репликация| PG_SLAVE2
+
+    %% Безопасность
+    BACKEND <-->|Секреты| VAULT
+    NETWORK_POLICY -.->|Контроль доступа| APP_LAYER
+    TLS -.->|Шифрование| NGINX
+
+    %% Blue-Green Deployment
+    DOCKERHUB -.->|Deploy| BLUE
+    DOCKERHUB -.->|Deploy| GREEN
+    HPA -.->|Масштабирование| BACKEND
+
+    %% Мониторинг
+    PROMETHEUS -->|Сбор метрик| BACKEND
+    PROMETHEUS -->|Сбор метрик| PG_MASTER
+    PROMETHEUS -->|Сбор метрик| REDIS
+    NODE_EXP -->|Системные метрики| PROMETHEUS
+    PG_EXP -->|Метрики БД| PROMETHEUS
+    PROMETHEUS --> GRAFANA
+
+    %% Логирование
+    BACKEND -.->|Логи| LOGSTASH
+    FRONTEND -.->|Логи| LOGSTASH
+    NGINX -.->|Access логи| LOGSTASH
+    LOGSTASH --> ELASTICSEARCH
+    ELASTICSEARCH --> KIBANA
+
+    %% Применение стилей
+    class DEV developer
+    class GIT,GHA,BUILD,SCAN,DOCKERHUB cicd
+    class FRONTEND,BACKEND app
+    class PG_MASTER,PG_SLAVE1,PG_SLAVE2,REDIS,ELASTICSEARCH database
+    class PROMETHEUS,GRAFANA,NODE_EXP,PG_EXP,LOGSTASH,KIBANA monitoring
+    class VAULT,NETWORK_POLICY,TLS security
+    class NGINX,BLUE,GREEN,HPA k8s

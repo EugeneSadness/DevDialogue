@@ -1,0 +1,132 @@
+graph TB
+    %% Стили
+    classDef frontend fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef backend fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef database fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef cache fill:#fff3e0,stroke:#ff9800,stroke-width:2px,color:#000
+    classDef api fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
+
+    %% Пользователи
+    USERS[👥 Пользователи<br/>Веб-браузер]
+
+    %% Frontend Layer
+    subgraph FRONTEND ["🎨 Frontend Layer (React)"]
+        SIGNIN[SignIn Component<br/>Авторизация]
+        SIGNUP[SignUp Component<br/>Регистрация]
+        CHATLIST[ChatList Component<br/>Список чатов]
+        CHAT[Chat Component<br/>Интерфейс чата]
+        WEBSOCKET_CLIENT[WebSocket Client<br/>Socket.IO]
+    end
+
+    %% Backend Layer
+    subgraph BACKEND ["⚙️ Backend Layer (Node.js/Express)"]
+        subgraph ROUTES ["🛣️ API Routes"]
+            USER_ROUTER[User Router<br/>Пользователи]
+            CHAT_ROUTER[Chat Router<br/>Чаты]
+            MESSAGE_ROUTER[Message Router<br/>Сообщения]
+            FILE_ROUTER[File Router<br/>Файлы]
+        end
+        
+        subgraph CONTROLLERS ["🎮 Controllers"]
+            USER_CTRL[User Controller<br/>Логика пользователей]
+            CHAT_CTRL[Chat Controller<br/>Логика чатов]
+            MESSAGE_CTRL[Message Controller<br/>Логика сообщений]
+        end
+        
+        subgraph MIDDLEWARE ["🔒 Middleware"]
+            AUTH_MW[Auth Middleware<br/>JWT проверка]
+            ERROR_MW[Error Middleware<br/>Обработка ошибок]
+            TOKEN_SERVICE[Token Service<br/>JWT токены]
+        end
+        
+        subgraph SOCKET ["🔌 WebSocket Layer"]
+            SOCKET_SERVER[Socket.IO Server<br/>Реальное время]
+            MESSAGE_HANDLER[Message Handler<br/>Обработка сообщений]
+            USER_STATUS[User Status<br/>Статусы онлайн]
+        end
+    end
+
+    %% Data Layer
+    subgraph DATA ["💾 Data Layer"]
+        subgraph MODELS ["📋 Data Models (Sequelize ORM)"]
+            USER_MODEL[User Model<br/>Пользователи]
+            CHAT_MODEL[Chat Model<br/>Чаты]
+            MESSAGE_MODEL[Message Model<br/>Сообщения]
+            FRIENDSHIP_MODEL[Friendship Model<br/>Дружба]
+            FILE_MODEL[File Model<br/>Файлы]
+        end
+        
+        POSTGRES[(PostgreSQL<br/>Основная БД<br/>:5432)]
+        REDIS[(Redis Cache<br/>Сессии и кэш<br/>:6379)]
+    end
+
+    %% Взаимодействие пользователей с фронтендом
+    USERS -->|HTTP/HTTPS| SIGNIN
+    USERS -->|HTTP/HTTPS| SIGNUP
+    USERS -->|HTTP/HTTPS| CHATLIST
+    USERS -->|HTTP/HTTPS| CHAT
+    USERS <-->|WebSocket| WEBSOCKET_CLIENT
+
+    %% Взаимодействие фронтенда с бэкендом
+    SIGNIN -->|POST /api/auth/login| USER_ROUTER
+    SIGNUP -->|POST /api/auth/register| USER_ROUTER
+    CHATLIST -->|GET /api/chats| CHAT_ROUTER
+    CHAT -->|GET /api/messages| MESSAGE_ROUTER
+    CHAT -->|POST /api/messages| MESSAGE_ROUTER
+    WEBSOCKET_CLIENT <-->|Socket.IO| SOCKET_SERVER
+
+    %% Внутренние связи бэкенда
+    USER_ROUTER --> USER_CTRL
+    CHAT_ROUTER --> CHAT_CTRL
+    MESSAGE_ROUTER --> MESSAGE_CTRL
+    FILE_ROUTER --> MESSAGE_CTRL
+
+    %% Middleware обработка
+    USER_ROUTER -.-> AUTH_MW
+    CHAT_ROUTER -.-> AUTH_MW
+    MESSAGE_ROUTER -.-> AUTH_MW
+    AUTH_MW --> TOKEN_SERVICE
+    
+    %% Error handling
+    USER_CTRL -.-> ERROR_MW
+    CHAT_CTRL -.-> ERROR_MW
+    MESSAGE_CTRL -.-> ERROR_MW
+
+    %% WebSocket обработка
+    SOCKET_SERVER --> MESSAGE_HANDLER
+    SOCKET_SERVER --> USER_STATUS
+    MESSAGE_HANDLER --> MESSAGE_CTRL
+
+    %% Взаимодействие с моделями данных
+    USER_CTRL <--> USER_MODEL
+    CHAT_CTRL <--> CHAT_MODEL
+    CHAT_CTRL <--> USER_MODEL
+    MESSAGE_CTRL <--> MESSAGE_MODEL
+    MESSAGE_CTRL <--> FILE_MODEL
+    MESSAGE_CTRL <--> CHAT_MODEL
+    USER_STATUS <--> USER_MODEL
+
+    %% Связи между моделями
+    USER_MODEL -.->|Many-to-Many| CHAT_MODEL
+    CHAT_MODEL -.->|One-to-Many| MESSAGE_MODEL
+    MESSAGE_MODEL -.->|Many-to-Many| FILE_MODEL
+    USER_MODEL -.->|One-to-Many| FRIENDSHIP_MODEL
+
+    %% Взаимодействие с базами данных
+    USER_MODEL <-->|SQL запросы| POSTGRES
+    CHAT_MODEL <-->|SQL запросы| POSTGRES
+    MESSAGE_MODEL <-->|SQL запросы| POSTGRES
+    FRIENDSHIP_MODEL <-->|SQL запросы| POSTGRES
+    FILE_MODEL <-->|SQL запросы| POSTGRES
+
+    %% Кэширование
+    USER_STATUS <-->|Статусы онлайн| REDIS
+    TOKEN_SERVICE <-->|JWT токены| REDIS
+    MESSAGE_HANDLER <-->|Временные данные| REDIS
+
+    %% Применение стилей
+    class SIGNIN,SIGNUP,CHATLIST,CHAT,WEBSOCKET_CLIENT frontend
+    class USER_ROUTER,CHAT_ROUTER,MESSAGE_ROUTER,FILE_ROUTER,USER_CTRL,CHAT_CTRL,MESSAGE_CTRL,SOCKET_SERVER,MESSAGE_HANDLER,USER_STATUS api
+    class AUTH_MW,ERROR_MW,TOKEN_SERVICE backend
+    class USER_MODEL,CHAT_MODEL,MESSAGE_MODEL,FRIENDSHIP_MODEL,FILE_MODEL,POSTGRES database
+    class REDIS cache
